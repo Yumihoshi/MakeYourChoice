@@ -1,0 +1,42 @@
+# AGENTS.md — MakeYourChoice
+
+48 小时 Game Jam 项目（游趣无限2026 × 紫与灰gj）。Unity 2022.3.62f3c1，2D URP（URP 14.0.12 + 2D Renderer）。
+项目自有场景只有 `Assets/Scenes/Game.unity`（其余 `.unity` 都在插件示例与场景模板目录里）。
+
+## 策划案（需求与玩法的唯一来源）
+
+飞书 wiki《做出选择！！！》：https://bqt4a2kph6x.feishu.cn/wiki/WTnnwjY2Pi1a7kkdBgFctWRRnze
+实现玩法前先读它，不要自行发明设计。正文文字很少，实质内容在画板里：用 `lark-cli docs +fetch --doc <URL>` 取 `<whiteboard token=...>`，再 `lark-cli docs +media-download --type whiteboard --token <token> --output <路径>` 导出图片查看。
+
+## 本项目硬约束
+
+- **48h 优先出可玩版本**：能跑 > 优雅。不要引入复杂抽象层——不自研框架、DI 容器、ECS、事件总线或额外分层；需要架构时用 QFramework 现有的 MVC。
+- **先查再用，不重复造轮子**：动手实现前，先确认下表中的插件/框架是否已经提供了这个能力。
+- **第三方与框架目录只读**：`Assets/Plugins`（DOTween Pro、Easy Save 3、Odin Inspector、vFolders）与 `Assets/QFramework` 不在本项目维护范围内，不要修改；需要扩展时在 `Assets/Scripts` 下写自己的代码。
+
+## 已有能力（实现前先看这里）
+
+| 需求 | 用什么 |
+| --- | --- |
+| UI 面板、层级、面板代码生成 | QFramework UIKit + CodeGenKit（命名空间 `Game.UI`，脚本 `Assets/Scripts/UI`，预制体 `Assets/Prefabs/UI`，配置见 `Assets/QFrameworkData/ProjectConfig/ProjectConfig.json`） |
+| 音频播放、BGM | QFramework AudioKit |
+| 资源加载 | QFramework ResKit |
+| 补间动画 | DOTween Pro |
+| 存档、读档 | Easy Save 3 |
+| 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
+
+## 代码约定
+
+- 游戏代码写在 `Assets/Scripts`（目前没有 asmdef，全部编入 Assembly-CSharp）；不要为小功能新建程序集。
+- 编辑器专用代码放 `Editor` 目录，运行时程序集不得引用 `UnityEditor`。
+- 输入使用旧版 Input Manager（未安装 Input System 包），不要写 Input System 的 API。
+- 已开启 Enter Play Mode Options，只关闭了 Domain Reload（`ProjectSettings/EditorSettings.asset`：`m_EnterPlayModeOptionsEnabled: 1`、`m_EnterPlayModeOptions: 1`，场景仍会重载）：静态字段、静态事件订阅、单例状态会跨 Play 残留，二次 Play 前必须自己重置（`[RuntimeInitializeOnLoadMethod]` 清静态、退订静态事件），不要依赖域重载帮你清理。
+- 不手改 `.meta`；移动、重命名、删除资产时连同 `.meta` 一起处理。
+- 场景、预制体、`.asset` 等序列化文件通过 Unity 编辑器或 Unity MCP 修改，不手写 YAML。
+
+## 验证
+
+- 本项目没有 CI，也没有无头构建/测试脚本；不要臆造 Unity `-batchmode` 命令。
+- 改完脚本在 Unity 编辑器里等编译结束，确认 Console 无报错。
+- 本项目已安装 `com.coplaydev.unity-mcp`：可用 Unity MCP 刷新资源、读 Console、进入 Play 模式检查；MCP 不可用时改用手动检查。
+- 交付前至少在 `Game.unity` 里 Play 一次，确认核心玩法流程能走通；打包前确认 Build Settings 的场景列表包含 `Game.unity`。

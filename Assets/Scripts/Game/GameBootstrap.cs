@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using QFramework;
 using Game.UI;
 
@@ -27,7 +28,7 @@ namespace Game
 
 		void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.Escape))
+			if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
 			{
 				TogglePausePanel();
 			}

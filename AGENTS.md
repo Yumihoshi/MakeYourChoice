@@ -30,7 +30,9 @@
 
 - 游戏代码写在 `Assets/Scripts`（目前没有 asmdef，全部编入 Assembly-CSharp）；不要为小功能新建程序集。
 - 编辑器专用代码放 `Editor` 目录，运行时程序集不得引用 `UnityEditor`。
-- 输入使用旧版 Input Manager（未安装 Input System 包），不要写 Input System 的 API。
+- 输入使用新版 Input System（`com.unity.inputsystem` 1.14.2 已安装；`ProjectSettings/ProjectSettings.asset` 里 `activeInputHandler: 2` 表示新旧都开，旧 API 仍能编译，只能靠本约定约束）：一律走 `UnityEngine.InputSystem`（`Keyboard.current` / `Mouse.current` / `InputAction`），不要写旧版 `UnityEngine.Input`。`Assets/Scripts` 下已无旧版调用。
+- 对外开放到 Inspector 的序列化字段（`public` 或 `[SerializeField]`），一律加 Odin 的 `[LabelText("中文")]` 标中文名（`using Sirenix.OdinInspector;`，属性程序集在 `Assets/Plugins/Sirenix/Assemblies/`），不让英文变量名直接出现在 Inspector 里。CodeGenKit 生成的 `*.Designer.cs` 会被工具重新生成覆盖，属例外，不要手改。
+- 物体优先在场景/预制体里摆好，不要在代码里 `new`：相机、Canvas、UI、管理器这类数量固定的对象，直接在场景或预制体里加好，脚本只负责取引用和驱动逻辑；只有运行时才能确定数量或内容的（按数据实例化、运行时生成的纹理等）才用代码创建。
 - 已开启 Enter Play Mode Options，只关闭了 Domain Reload（`ProjectSettings/EditorSettings.asset`：`m_EnterPlayModeOptionsEnabled: 1`、`m_EnterPlayModeOptions: 1`，场景仍会重载）：静态字段、静态事件订阅、单例状态会跨 Play 残留，二次 Play 前必须自己重置（`[RuntimeInitializeOnLoadMethod]` 清静态、退订静态事件），不要依赖域重载帮你清理。已知踩坑：QFramework UIKit 的 `UIKit.Config`（含 PanelLoaderPool）与 `UIKit.Table` 跨 Play 残留，会让面板只实例化出空壳（`Info == null`、按钮无监听、Table 计数错乱），入口用 `Assets/Scripts/Game/GameBootstrap.cs` 的 `ResetUIKitState()` 在 `SubsystemRegistration` 阶段重置；新增场景入口时照此重置一次。
 - 不手改 `.meta`；移动、重命名、删除资产时连同 `.meta` 一起处理。
 - 场景、预制体、`.asset` 等序列化文件通过 Unity 编辑器或 Unity MCP 修改，不手写 YAML。

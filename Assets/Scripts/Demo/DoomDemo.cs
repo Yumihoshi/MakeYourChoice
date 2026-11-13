@@ -1,5 +1,6 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Demo
@@ -13,12 +14,26 @@ namespace Demo
         private const int Width = 320;
         private const int Height = 200;
 
-        [SerializeField] private float moveSpeed = 3.2f;
-        [SerializeField] private float runMultiplier = 1.7f;
-        [SerializeField] private float turnSpeed = 130f;
-        [SerializeField] private float mouseSensitivity = 2.6f;
-        [SerializeField] private Vector2 startPosition = new Vector2(8.5f, 6.5f);
-        [SerializeField] private float startYaw = 90f;
+        [SerializeField, LabelText("移动速度")]
+        private float moveSpeed = 3.2f;
+
+        [SerializeField, LabelText("奔跑速度倍率")]
+        private float runMultiplier = 1.7f;
+
+        [SerializeField, LabelText("转向速度")]
+        private float turnSpeed = 130f;
+
+        [SerializeField, LabelText("鼠标灵敏度")]
+        private float mouseSensitivity = 2.6f;
+
+        [SerializeField, LabelText("起始位置")]
+        private Vector2 startPosition = new Vector2(8.5f, 6.5f);
+
+        [SerializeField, LabelText("起始朝向")]
+        private float startYaw = 90f;
+
+        [SerializeField, LabelText("画面")]
+        private RawImage screen;
 
         private DoomDemoMap _map;
         private DoomRaycaster _raycaster;
@@ -27,23 +42,6 @@ namespace Demo
 
         private Vector2 _position;
         private float _yaw;
-
-        /// <summary>DoomDemo 场景是空场景，靠这里自动把自己挂起来。</summary>
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void AutoStart()
-        {
-            if (SceneManager.GetActiveScene().name != "DoomDemo")
-            {
-                return;
-            }
-
-            if (FindObjectOfType<DoomDemo>() != null)
-            {
-                return;
-            }
-
-            new GameObject("DoomDemo").AddComponent<DoomDemo>();
-        }
 
         private void Awake()
         {
@@ -55,8 +53,7 @@ namespace Demo
 
             Application.targetFrameRate = 60;
 
-            EnsureCamera();
-            CreateScreen();
+            CreateFrame();
         }
 
         private void Update()
@@ -67,47 +64,59 @@ namespace Demo
 
         private void HandleInput()
         {
+            Keyboard keyboard = Keyboard.current;
+            if (keyboard == null)
+            {
+                // 没有键盘设备（无头运行等）时没有可读的输入，跳过本帧。
+                return;
+            }
+
             float deltaTime = Mathf.Min(Time.deltaTime, 0.05f);
 
             float forward = 0f;
             float strafe = 0f;
             float turn = 0f;
 
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed)
             {
                 forward += 1f;
             }
 
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed)
             {
                 forward -= 1f;
             }
 
-            if (Input.GetKey(KeyCode.D))
+            if (keyboard.dKey.isPressed)
             {
                 strafe += 1f;
             }
 
-            if (Input.GetKey(KeyCode.A))
+            if (keyboard.aKey.isPressed)
             {
                 strafe -= 1f;
             }
 
-            if (Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.RightArrow))
+            if (keyboard.eKey.isPressed || keyboard.rightArrowKey.isPressed)
             {
                 turn += 1f;
             }
 
-            if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))
+            if (keyboard.qKey.isPressed || keyboard.leftArrowKey.isPressed)
             {
                 turn -= 1f;
             }
 
-            turn += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
+            // 旧版 "Mouse X" 轴自带 0.1 的灵敏度缩放，新版 delta 是原始像素位移，乘回 0.1 保持同样手感。
+            Mouse mouse = Mouse.current;
+            if (mouse != null)
+            {
+                turn += mouse.delta.ReadValue().x * 0.1f * mouseSensitivity;
+            }
 
             _yaw -= turn * turnSpeed * deltaTime;
 
-            float speed = moveSpeed * (Input.GetKey(KeyCode.LeftShift) ? runMultiplier : 1f);
+            float speed = moveSpeed * (keyboard.leftShiftKey.isPressed ? runMultiplier : 1f);
             if (speed <= 0f)
             {
                 return;
@@ -170,25 +179,17 @@ namespace Demo
             _frame.Apply(false);
         }
 
-        private void EnsureCamera()
+        /// <summary>
+        /// 生成本次运行的画面纹理并挂到场景里的 RawImage 上；纹理只能在运行时创建，无法序列化。
+        /// </summary>
+        private void CreateFrame()
         {
-            if (Camera.main != null)
+            if (screen == null)
             {
+                Debug.LogError("DoomDemo：场景里的 RawImage 引用没有连线，画面无法显示。", this);
                 return;
             }
 
-            GameObject cameraObject = new GameObject("DoomDemoCamera");
-            cameraObject.tag = "MainCamera";
-            Camera camera = cameraObject.AddComponent<Camera>();
-            camera.clearFlags = CameraClearFlags.SolidColor;
-            camera.backgroundColor = Color.black;
-            camera.cullingMask = 0;
-            camera.orthographic = true;
-            cameraObject.transform.position = new Vector3(0f, 0f, -10f);
-        }
-
-        private void CreateScreen()
-        {
             _frame = new Texture2D(Width, Height, TextureFormat.RGBA32, false)
             {
                 name = "DoomDemoFrame",
@@ -196,30 +197,7 @@ namespace Demo
                 wrapMode = TextureWrapMode.Clamp,
             };
 
-            GameObject canvasObject = new GameObject("DoomDemoCanvas", typeof(Canvas), typeof(CanvasScaler));
-            Canvas canvas = canvasObject.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
-            scaler.scaleFactor = 1f;
-
-            GameObject screenObject = new GameObject("Screen",
-                typeof(RectTransform), typeof(RawImage), typeof(AspectRatioFitter));
-            screenObject.transform.SetParent(canvasObject.transform, false);
-
-            RectTransform rect = (RectTransform)screenObject.transform;
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
-
-            AspectRatioFitter fitter = screenObject.GetComponent<AspectRatioFitter>();
-            fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
-            fitter.aspectRatio = (float)Width / Height;
-
-            RawImage image = screenObject.GetComponent<RawImage>();
-            image.raycastTarget = false;
-            image.texture = _frame;
+            screen.texture = _frame;
         }
 
         private void OnGUI()

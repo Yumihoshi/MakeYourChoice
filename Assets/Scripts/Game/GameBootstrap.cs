@@ -24,5 +24,32 @@ namespace Game
 		{
 			UIKit.OpenPanel<StartPanel>();
 		}
+
+		void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				TogglePausePanel();
+			}
+		}
+
+		/// <summary>
+		/// ESC 开关暂停面板；开始菜单打开时忽略，避免在菜单界面弹出暂停面板。
+		/// </summary>
+		static void TogglePausePanel()
+		{
+			if (UIKit.GetPanel<PausePanel>())
+			{
+				UIKit.ClosePanel<PausePanel>();
+				return;
+			}
+
+			if (UIKit.GetPanel<StartPanel>())
+			{
+				return;
+			}
+
+			UIKit.OpenPanel<PausePanel>();
+		}
 	}
 }

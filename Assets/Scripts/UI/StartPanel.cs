@@ -42,11 +42,7 @@ namespace Game.UI
 
 		void OnExitButtonClick()
 		{
-#if UNITY_EDITOR
-			UnityEditor.EditorApplication.isPlaying = false;
-#else
-			Application.Quit();
-#endif
+			GameApplication.Quit();
 		}
 	}
 }

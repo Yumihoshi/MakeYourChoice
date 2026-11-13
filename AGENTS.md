@@ -21,6 +21,7 @@
 | UI 面板、层级、面板代码生成 | QFramework UIKit + CodeGenKit（命名空间 `Game.UI`，脚本 `Assets/Scripts/UI`，预制体 `Assets/Prefabs/UI`，配置见 `Assets/QFrameworkData/ProjectConfig/ProjectConfig.json`） |
 | 音频播放、BGM | QFramework AudioKit |
 | 资源加载 | QFramework ResKit |
+| 中文文本渲染 | `Assets/Fonts/SourceHanSansCN-Medium SDF.asset`（思源黑体 Medium，OFL 可随游戏分发；Dynamic + 4096 图集，已预烘 `Assets/Fonts/常用字.txt` 的 3654 字，生僻字运行时会自动补字形）。UI 中文一律用它，不要运行时自建字体资产 |
 | 补间动画 | DOTween Pro |
 | 存档、读档 | Easy Save 3 |
 | 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
@@ -30,7 +31,7 @@
 - 游戏代码写在 `Assets/Scripts`（目前没有 asmdef，全部编入 Assembly-CSharp）；不要为小功能新建程序集。
 - 编辑器专用代码放 `Editor` 目录，运行时程序集不得引用 `UnityEditor`。
 - 输入使用旧版 Input Manager（未安装 Input System 包），不要写 Input System 的 API。
-- 已开启 Enter Play Mode Options，只关闭了 Domain Reload（`ProjectSettings/EditorSettings.asset`：`m_EnterPlayModeOptionsEnabled: 1`、`m_EnterPlayModeOptions: 1`，场景仍会重载）：静态字段、静态事件订阅、单例状态会跨 Play 残留，二次 Play 前必须自己重置（`[RuntimeInitializeOnLoadMethod]` 清静态、退订静态事件），不要依赖域重载帮你清理。
+- 已开启 Enter Play Mode Options，只关闭了 Domain Reload（`ProjectSettings/EditorSettings.asset`：`m_EnterPlayModeOptionsEnabled: 1`、`m_EnterPlayModeOptions: 1`，场景仍会重载）：静态字段、静态事件订阅、单例状态会跨 Play 残留，二次 Play 前必须自己重置（`[RuntimeInitializeOnLoadMethod]` 清静态、退订静态事件），不要依赖域重载帮你清理。已知踩坑：QFramework UIKit 的 `UIKit.Config`（含 PanelLoaderPool）与 `UIKit.Table` 跨 Play 残留，会让面板只实例化出空壳（`Info == null`、按钮无监听、Table 计数错乱），入口用 `Assets/Scripts/Game/GameBootstrap.cs` 的 `ResetUIKitState()` 在 `SubsystemRegistration` 阶段重置；新增场景入口时照此重置一次。
 - 不手改 `.meta`；移动、重命名、删除资产时连同 `.meta` 一起处理。
 - 场景、预制体、`.asset` 等序列化文件通过 Unity 编辑器或 Unity MCP 修改，不手写 YAML。
 

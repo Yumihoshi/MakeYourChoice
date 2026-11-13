@@ -247,10 +247,14 @@ namespace Demo
                 }
 
                 double textureStep = (double)TextureSize / lineHeight;
-                double texturePos = (drawStart - _halfHeight + lineHeight / 2.0) * textureStep;
 
                 int from = Math.Max(drawStart, 0);
                 int to = Math.Min(drawEnd, height - 1);
+
+                // 从「裁剪后的首行」开始采样：贴近墙时 drawStart 为负（墙比屏幕高），
+                // 必须按 from 与 drawStart 的差算出纵向起点，否则贴图从第 0 行开始铺，
+                // 横缝会随距离弯折。
+                double texturePos = (from - drawStart) * textureStep;
 
                 for (int y = from; y <= to; y++)
                 {

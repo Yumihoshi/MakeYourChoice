@@ -1,6 +1,6 @@
 # AGENTS.md — MakeYourChoice
 
-48 小时 Game Jam 项目（游趣无限2026 × 紫与灰gj）。Unity 2022.3.62f3c1，2D URP（URP 14.0.12 + 2D Renderer）。
+48 小时 Game Jam 项目（游趣无限2026 × 紫与灰gj）。Unity 2022.3.62f3c1，URP 14.0.12（3D Universal Renderer；2026-11-14 由 2D 渲染转 3D）。
 项目自有场景只有 `Assets/Scenes/Game.unity`（其余 `.unity` 都在插件示例与场景模板目录里）。
 
 ## 策划案（需求与玩法的唯一来源）
@@ -24,6 +24,7 @@
 | 中文文本渲染 | `Assets/Fonts/SourceHanSansCN-Medium SDF.asset`（思源黑体 Medium，OFL 可随游戏分发；Dynamic + 4096 图集，已预烘 `Assets/Fonts/常用字.txt` 的 3654 字，生僻字运行时会自动补字形）。UI 中文一律用它，不要运行时自建字体资产 |
 | 补间动画 | DOTween Pro |
 | 存档、读档 | Easy Save 3 |
+| 关卡几何、第一人称视角 | ProBuilder（5.2.4）搭 3D 几何 + Cinemachine 第一人称；运行时组件在 `Assets/Scripts/Level`（`LowResDisplay` 低分辨率显示、`FirstPersonController`、`AutoDoor`、`TriggerVolume`） |
 | 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
 
 ## 代码约定

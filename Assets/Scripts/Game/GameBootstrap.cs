@@ -32,6 +32,29 @@ namespace Game
 			{
 				TogglePausePanel();
 			}
+
+			UpdateCursorState();
+		}
+
+		/// <summary>
+		/// 菜单打开时显示并解锁光标，游戏中锁定光标用于第一人称视角。
+		/// </summary>
+		static void UpdateCursorState()
+		{
+			var menuOpen = UIKit.GetPanel<StartPanel>() != null || UIKit.GetPanel<PausePanel>() != null;
+			if (menuOpen)
+			{
+				if (Cursor.lockState != CursorLockMode.None)
+				{
+					Cursor.lockState = CursorLockMode.None;
+					Cursor.visible = true;
+				}
+			}
+			else if (Cursor.lockState != CursorLockMode.Locked)
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
+			}
 		}
 
 		/// <summary>

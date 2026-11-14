@@ -38,12 +38,14 @@ MonoBehaviour:
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - AudioKit
+    - Cinemachine
     - MCPForUnity.Runtime
     - QFramework
     - QFramework.CoreKit
     - ResKit
     - SupportOldQF
     - UIKit
+    - YarnSpinner.Unity
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

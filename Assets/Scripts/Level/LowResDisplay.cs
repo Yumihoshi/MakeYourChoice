@@ -69,12 +69,13 @@ namespace Game.Level
 
         void OnDestroy()
         {
-            if (renderCamera != null)
+            // 场景重载时旧实例会晚于新实例销毁；只清理仍指向自己的引用。
+            if (renderCamera != null && renderCamera.targetTexture == _renderTexture)
             {
                 renderCamera.targetTexture = null;
             }
 
-            if (targetImage != null)
+            if (targetImage != null && targetImage.texture == _renderTexture)
             {
                 targetImage.texture = null;
             }

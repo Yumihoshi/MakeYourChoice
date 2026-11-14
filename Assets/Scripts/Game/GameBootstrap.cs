@@ -16,6 +16,7 @@ namespace Game
 		[LabelText("电梯运行晃动"), Required, SerializeField] ElevatorRideMotion rideMotion;
 		[LabelText("到站楼层"), SerializeField] int arrivalFloor = 1;
 		[LabelText("到站后关闭菜单的延迟"), SerializeField] float closeDelay = 0.65f;
+		[LabelText("到站音效提前量"), SerializeField] float arrivalSfxLead = 1.5f;
 
 		bool _starting;
 
@@ -28,6 +29,15 @@ namespace Game
 			UIKit.Config = new UIKitConfig();
 			UIKit.Config.PanelLoaderPool = new ResKitPanelLoaderPool();
 			UIKit.Table.Clear();
+		}
+
+		void Awake()
+		{
+			// 面板与音效都通过 ResKit 按名字加载。编辑器下 ResKit 会在场景加载后按模拟模式自动初始化，
+			// 真机没有这层自动初始化，所以只在真机上显式初始化。
+#if !UNITY_EDITOR
+			ResKit.Init();
+#endif
 		}
 
 		void Start()
@@ -68,10 +78,24 @@ namespace Game
 			{
 				_starting = false;
 				Debug.LogError("电梯已经在到站过程中，忽略了重复的开始请求", this);
+				return;
 			}
+
+			StartCoroutine(PlayArrivalSfx(floorDisplay.ArrivalPresentationSeconds - arrivalSfxLead));
 		}
 
-		/// <summary>电梯停稳：播放镜头下沉回弹，稍后关闭开始菜单把控制权交还玩家。</summary>
+		/// <summary>到站音效提前于电梯停稳播放，让声音的渐入与到站动作对齐。</summary>
+		IEnumerator PlayArrivalSfx(float delaySeconds)
+		{
+			if (delaySeconds > 0f)
+			{
+				yield return new WaitForSeconds(delaySeconds);
+			}
+
+			GameSfx.Play(GameSfx.ElevatorArrive);
+		}
+
+		/// <summary>电梯停稳：镜头下沉回弹，稍后关闭开始菜单把控制权交还玩家。</summary>
 		void OnArrived()
 		{
 			rideMotion.Arrive();

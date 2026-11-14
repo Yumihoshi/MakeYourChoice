@@ -1,4 +1,5 @@
 using Game.Dialogue;
+using QFramework;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -27,6 +28,7 @@ namespace Game.Level
         float distance = 1.8f;
 
         float _elapsed;
+        AudioPlayer _windPlayer;
 
         void Update()
         {
@@ -37,10 +39,11 @@ namespace Game.Level
 
             if (state.ListenStarted)
             {
-                // 风声剧情播完（或没能播起来）之后才解锁电梯门。
+                // 风声剧情播完（或没能播起来）之后才解锁电梯门，同时停掉循环的风声。
                 if (!state.ListenFinished && !dialogue.IsRunning)
                 {
                     state.MarkListenFinished();
+                    StopWind();
                 }
 
                 return;
@@ -65,7 +68,25 @@ namespace Game.Level
             }
 
             state.MarkListenStarted();
+            _windPlayer = GameSfx.PlayLoop(GameSfx.Wind);
             dialogue.StartDialogue();
+        }
+
+        void OnDisable()
+        {
+            StopWind();
+        }
+
+        /// <summary>停止循环播放的风声；没有在播时什么都不做。</summary>
+        void StopWind()
+        {
+            if (_windPlayer == null)
+            {
+                return;
+            }
+
+            _windPlayer.Stop();
+            _windPlayer = null;
         }
     }
 }

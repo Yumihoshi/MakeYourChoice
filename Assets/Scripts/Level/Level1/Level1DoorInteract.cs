@@ -43,6 +43,7 @@ namespace Game.Level
             var input = PlayerInputRouter.Instance;
             if (input != null && input.Interact.WasPressedThisFrame() && state.OpenElevatorDoor())
             {
+                GameSfx.Play(GameSfx.ElevatorDoorOpen);
                 if (openDialogue != null)
                 {
                     openDialogue.StartDialogue();

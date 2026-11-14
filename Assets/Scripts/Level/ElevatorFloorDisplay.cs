@@ -30,6 +30,7 @@ namespace Game.Level
         const float RollTravel = 0.06f;
         const float ArrowCycleSeconds = 1.1f;
         const float ArrowFadeSeconds = 0.12f;
+        const float SettleSeconds = 0.28f;
 
         static ElevatorFloorDisplay _instance;
 
@@ -54,6 +55,9 @@ namespace Game.Level
 
         /// <summary>是否已经停稳在目标楼层。</summary>
         public bool HasArrived => _arrived;
+
+        /// <summary>到站演出从开始请求到回调的预计总时长：减速滚动、楼号滑入居中与停留。</summary>
+        public float ArrivalPresentationSeconds => arrivalSeconds + SettleSeconds + arrivalHoldSeconds;
 
         /// <summary>场景中的楼层显示器；不存在时为 null。</summary>
         public static ElevatorFloorDisplay Instance => _instance;
@@ -203,7 +207,7 @@ namespace Game.Level
             _rollSequence.Join(DOTween.To(
                 () => floorText.rectTransform.localPosition,
                 value => floorText.rectTransform.localPosition = value,
-                target, 0.28f).SetEase(Ease.OutQuad));
+                target, SettleSeconds).SetEase(Ease.OutQuad));
             yield return _rollSequence.WaitForCompletion();
         }
 

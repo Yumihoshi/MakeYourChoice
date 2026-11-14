@@ -15,6 +15,7 @@ namespace Game.Dialogue
         [SerializeField, Required, LabelText("世界相机")] Camera worldCamera;
         [SerializeField, LabelText("地面层")] LayerMask groundMask;
         [SerializeField, LabelText("最大实例数"), MinValue(1)] int maxLines = 4;
+        [SerializeField, LabelText("最近可读距离（更近就改用对话框）"), MinValue(0f)] float minReadableDistance = 1.2f;
 
         readonly List<FloatingLine> allLines = new List<FloatingLine>();
         readonly Queue<FloatingLine> idle = new Queue<FloatingLine>();
@@ -23,14 +24,16 @@ namespace Game.Dialogue
         public bool HasActive => active != null;
 
         /// <summary>
-        /// 指定世界位置上的 3D 字在相机画面里是否看得清：相机到字的距离不超过 readableDistance、
-        /// 字在视锥内，且视线没有被场景挡住。没有配置世界相机时返回 false（3D 字本来就无法正确显示）。
+        /// 指定世界位置上的 3D 字在相机画面里是否看得清：相机到字的距离在 [minReadableDistance, readableDistance] 之间、
+        /// 字在视锥内，且视线没有被场景挡住。太近时字会糊满屏幕，同样算看不清（调用方改用对话框）。
+        /// 没有配置世界相机时返回 false（3D 字本来就无法正确显示）。
         /// </summary>
         /// <param name="worldPosition">3D 字的世界位置，通常是文字锚点。</param>
         /// <param name="readableDistance">相机到字的最大可读距离，超过即认为看不清。</param>
         public bool IsLineVisible(Vector3 worldPosition, float readableDistance)
         {
             if (worldCamera == null) return false;
+            if (Vector3.Distance(worldCamera.transform.position, worldPosition) < minReadableDistance) return false;
 
             int mask = ~LayerMask.GetMask("Player");
             return ScreenVisibility.IsOnScreen(worldCamera, worldPosition, readableDistance, mask);

@@ -35,7 +35,6 @@ namespace Game.Dialogue
         LineDisplay display;
         LinePhase phase;
         string bodyText = string.Empty;
-        string speakerName = string.Empty;
         int revealed;
         bool isDialogueActive;
         bool lineVisible;
@@ -67,7 +66,6 @@ namespace Game.Dialogue
 
             anchor = storyAnchor;
             bodyText = string.Empty;
-            speakerName = string.Empty;
             revealed = 0;
             phase = LinePhase.Idle;
             isDialogueActive = false;
@@ -110,7 +108,6 @@ namespace Game.Dialogue
             }
 
             bodyText = line.TextWithoutCharacterName.Text;
-            speakerName = line.CharacterName ?? string.Empty;
             revealed = 0;
             phase = LinePhase.Revealing;
             ApplyDisplay();
@@ -172,7 +169,6 @@ namespace Game.Dialogue
 
             phase = LinePhase.Idle;
             bodyText = string.Empty;
-            speakerName = string.Empty;
             revealed = 0;
             return YarnTask.CompletedTask;
         }
@@ -183,7 +179,6 @@ namespace Game.Dialogue
             isDialogueActive = false;
             phase = LinePhase.Idle;
             bodyText = string.Empty;
-            speakerName = string.Empty;
             revealed = 0;
 
             if (worldLines != null) worldLines.HideAll();
@@ -254,7 +249,7 @@ namespace Game.Dialogue
 
             if (phase == LinePhase.Revealing || phase == LinePhase.Holding)
             {
-                dialogueBox.SetLine(speakerName, bodyText, revealed);
+                dialogueBox.SetLine(bodyText, revealed);
                 dialogueBox.Show();
                 return;
             }

@@ -6,7 +6,7 @@
 
 **架构：** 一个 `FloatingDialoguePresenter`（继承 Yarn Spinner 3.2.8 的 `DialoguePresenterBase`）持有当前行、逐字进度和显示方式，每帧向 `WorldLineView.IsLineVisible` 询问可见性并做时间防抖；`WorldLineView` 与 `DialogueBoxView` 只负责按进度渲染；`FloatingLine` 用 TMP 网格顶点做逐字掉落与缩小；`DialogueTrigger` 在 TriggerVolume 进入时启动 Yarn 节点。
 
-> **变更记录（实现后修订）：** 本文任务里的代码块是首版实现（按玩家与锚点的 XZ 距离 + near/far 滞回判定、整句下落缩放、预制体 scale `0.016`）。实现后按用户要求改了三处，**以当前代码与 spec 为准**：① 显示方式改为视角可见性判定（`IsLineVisible(worldPosition, readableDistance)`：距离 ≤ 6m + 视口内 + `Linecast` 不遮挡），用 `displaySwitchDelay = 0.15s` 防抖；② 收尾改为逐字纸片掉落 + 平铺 + 逐字缩到 0；③ 预制体 scale 改 `0.075`（`0.016` 时 320×180 下只有约 4px）。下面 §1.1 的三张图与 §3 验收清单已同步为新逻辑。
+> **变更记录（实现后修订）：** 本文任务里的代码块是首版实现（按玩家与锚点的 XZ 距离 + near/far 滞回判定、整句下落缩放、预制体 scale `0.016`）。实现后按用户要求改了三处，**以当前代码与 spec 为准**：① 显示方式改为视角可见性判定（`IsLineVisible(worldPosition, readableDistance)`：距离 ≤ 6m + 视口内 + `Linecast` 不遮挡），用 `displaySwitchDelay = 0.15s` 防抖；② 收尾改为逐字纸片掉落 + 平铺 + 逐字缩到 0；③ 预制体 scale 改 `0.075`（`0.016` 时 320×180 下只有约 4px）；④ 3D 字改走 `Dialogue3D` 层 + `Dialogue3DCamera`/`Dialogue3DOverlay` 全分辨率叠加（主相机 `cullingMask` 排除该层，描边 `_OutlineWidth = 0.2`），不再被低分辨率画面像素化。下面 §1 文件表、§1.1 的三张图与 §3 验收清单均已同步为新逻辑。
 
 **技术栈：** Unity 2022.3.62f3c1、URP 14.0.12、Yarn Spinner 3.2.8、DOTween、Odin Inspector、TextMeshPro、新 Input System（本功能不使用输入）。
 
@@ -60,9 +60,10 @@ MCP 不可用时：手动点 Play / Stop，观察 Game 视图与 Console。
 | `Assets/Scripts/Dialogue/DialogueBoxView.cs` | 底部对话框：CanvasGroup 淡入淡出、按字数截断 |
 | `Assets/Scripts/Dialogue/FloatingDialoguePresenter.cs` | 继承 `DialoguePresenterBase`：行状态、打字进度、显示方式（3D/对话框）、阶段切换 |
 | `Assets/Scripts/Dialogue/DialogueTrigger.cs` | 剧情触发：校验引用、`BeginStory`、`await StartDialogue` |
-| `Assets/Prefabs/Dialogue/FloatingLine.prefab` | 3D TMP 飘字预制体 |
+| `Assets/Scripts/Dialogue/Dialogue3DOverlay.cs` | 3D 字全分辨率叠加：同步主相机位姿/FOV、把 `Dialogue3D` 层渲进全屏 RT、交给 `RawImage` |
+| `Assets/Prefabs/Dialogue/FloatingLine.prefab` | 3D TMP 飘字预制体（`Dialogue3D` 层） |
 | `Assets/Materials/Dialogue/FloatingLine.mat` | 3D TMP 材质（白字黑描边） |
-| `Assets/Scenes/Game.unity` | `DialogueSystem`、`WorldLines`、`DialogueCanvas/DialogueBox`、`DialogueTrigger` 接线 |
+| `Assets/Scenes/Game.unity` | `DialogueSystem`、`WorldLines`、`DialogueCanvas/DialogueBox`、`Dialogue3DCamera`、`Dialogue3DCanvas`、`DialogueTrigger` 接线 |
 | `Assets/Yarn/TestDialogue.yarn` | 临时测试台词（3 句，无选项） |
 | `Assets/Yarn/TestDialogue.yarnproject` | 通过 Yarn Spinner 编辑器创建，不手写 |
 | `AGENTS.md` | 最后用 `agents-gen` 技能补一行“剧情对话 / 3D 飘字”能力 |
@@ -82,9 +83,13 @@ flowchart LR
     P --> B["DialogueBoxView"]
     C["Main Camera"] -->|视锥 / 遮挡 / 可读距离| W
     W -->|IsLineVisible| P
-    W --> F["FloatingLine 预制体"]
+    W --> F["FloatingLine 预制体（Dialogue3D 层）"]
     F --> TMP["3D TextMeshPro 网格"]
-    B --> UI["底部对话框 Canvas"]
+    C -.->|同步位姿 / FOV / aspect| O["Dialogue3DOverlay"]
+    F -->|只渲 Dialogue3D 层| O
+    O -->|全分辨率 RT| I["Dialogue3DCanvas/RawImage<br/>sortingOrder -75"]
+    I --> L["LowResCanvas 320×180 画面"]
+    B --> UI["底部对话框 Canvas<br/>sortingOrder -50"]
 ```
 
 ### 数据流
@@ -95,6 +100,9 @@ flowchart TD
     P --> PR["逐字 revealed"]
     PR --> N{"display"}
     N -->|World| W["WorldLineView.SetVisibleCount"]
+    W --> F3["FloatingLine（Dialogue3D 层）"]
+    F3 --> O3["Dialogue3DOverlay：全分辨率 RT"]
+    O3 --> IMG3["RawImage 叠在 320×180 画面上"]
     N -->|Panel| B["DialogueBoxView.SetVisibleCount"]
     CAM["Main Camera → 锚点"] --> V{"IsLineVisible"}
     V -->|距离≤6m 且 视口内 且 未遮挡| World["World"]
@@ -116,6 +124,7 @@ sequenceDiagram
     participant W as WorldLineView
     participant F as FloatingLine
     participant B as DialogueBoxView
+    participant O as Dialogue3DOverlay
 
     T->>D: onPlayerEnter
     D->>P: BeginStory(anchor)
@@ -133,6 +142,7 @@ sequenceDiagram
     F-->>W: Finished
     R->>P: OnDialogueCompleteAsync()
     P->>B: Hide()
+    O->>O: 每帧同步主相机并渲 Dialogue3D 层到全屏 RT
 ```
 
 ---
@@ -1416,6 +1426,7 @@ title: Start
 - [ ] 对话框模式对话框保持到下一句，不每句闪烁。
 - [ ] 对话结束对话框淡出；最后一句 3D 字允许正常掉完，无残留。
 - [ ] 无选项、无输入依赖；测试 Yarn 节点没有选项。
+- [ ] 3D 字与黑色描边是全分辨率的（1080p 下字高约 139px、描边约 2px），320×180 画面里没有 3D 字重影。
 - [ ] Console 无红色错误；无地面/池耗尽等异常有明确警告。
 - [ ] 退出 Play 再进入 Play，没有跨域重载残留。
 - [ ] `Assets/Plugins`、`Assets/QFramework` 未被修改；没有手改 `.meta`；没有手写场景/预制体 YAML。

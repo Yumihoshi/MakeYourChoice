@@ -21,7 +21,7 @@
 - 自动推进，不需要玩家按键；
 - 48 小时内可完成，不自研对话框架。
 
-世界画面由 `Main Camera` 渲染到 320×180 RenderTexture，再由全屏 `RawImage` 点采样放大；UI 使用全分辨率。3D 字属于世界画面，跟随低分辨率；对话框属于 UI，全分辨率。
+世界画面由 `Main Camera` 渲染到 320×180 RenderTexture，再由全屏 `RawImage` 点采样放大；UI 使用全分辨率。3D 字**不走进**这条低分辨率路径：它单独放在 `Dialogue3D` 层，由 `Dialogue3DCamera` 渲到与屏幕同尺寸的全分辨率 RenderTexture，再由全屏 `RawImage` 叠在低分辨率画面之上，所以字和描边是清晰的；对话框属于 UI，同样是全分辨率。
 
 ## 2. 用户决定
 
@@ -29,7 +29,7 @@
 | --- | --- |
 | 每句生命周期 | 每句独立：切下一句时旧句逐字掉落，新句用另一个实例出现，允许短暂同屏 |
 | 文字锚点 | 锚定剧情触发点上方约 1.8m，不跟随角色或玩家 |
-| 3D 字分辨率 | 跟随 320×180 低分辨率画面，不单独做高分辨率叠加层 |
+| 3D 字分辨率 | 单独一层（`Dialogue3D`）走全分辨率叠加，不进 320×180 低分辨率画面；字与描边都不被像素化 |
 | 消失方式 | 逐字掉落：每个字像纸片一样带随机旋转下落，落地后变成平铺贴地；全部落地后逐字缩放到 0；不做弹跳、不用 Rigidbody |
 | 显示切换 | 只看玩家视角能不能看清 3D 字，不看与触发点的距离；两种形态共享同一份打字进度，不重播 |
 | 可见性判定 | 相机视锥内（`viewport.z > 0` 且 x/y ∈ [0,1]）+ 视线 `Linecast` 未被遮挡 + 相机到字的距离 ≤ 可读距离（默认 6m） |
@@ -49,7 +49,8 @@
 - `WorldLineView` 管理 3D 字实例池，`DialogueBoxView` 管理底部对话框；
 - 两个视图都不持有对话状态，只接收 Presenter 下发的文本、字数、位置和显隐指令；
 - 显示方式由 Presenter 每帧向 `WorldLineView` 询问 `IsLineVisible(anchor.position, readableDistance)`（视锥 + 遮挡 + 可读距离），并用 `displaySwitchDelay` 做时间防抖；
-- 3D 字的逐字掉落、平铺与缩小由 `FloatingLine` 自己的状态机驱动，逐个改写 TMP 网格顶点，不依赖物理引擎。
+- 3D 字的逐字掉落、平铺与缩小由 `FloatingLine` 自己的状态机驱动，逐个改写 TMP 网格顶点，不依赖物理引擎；
+- 3D 字只有在 `Dialogue3D` 层：主相机的 `cullingMask` 去掉该层（不进 320×180 画面），`Dialogue3DCamera` 只渲染该层，`Dialogue3DOverlay` 每帧同步主相机位姿与 FOV、把结果输出到全屏 `RawImage`。
 
 ```
 TriggerVolume.onPlayerEnter
@@ -61,7 +62,11 @@ FloatingDialoguePresenter.BeginStory(anchor)
 DialogueRunner.StartDialogue(node)
         ↓
 FloatingDialoguePresenter.RunLineAsync(line)
-        ├─ 视角看得清 → WorldLineView → FloatingLine（3D TMP）
+        ├─ 视角看得清 → WorldLineView → FloatingLine（3D TMP，Dialogue3D 层）
+        │                              ↓
+        │                  Dialogue3DCamera 渲到全分辨率 RT
+        │                              ↓
+        │                  Dialogue3DCanvas/RawImage 叠在 320×180 画面上
         └─ 看不清 → DialogueBoxView（全屏 Canvas 底部对话框）
         ↓
 打字完成 → 停留 1.2s → 旧 3D 字逐字掉落平铺、缩到 0 → 下一句
@@ -113,6 +118,7 @@ FloatingDialoguePresenter.RunLineAsync(line)
 | `WorldLineView` | `WorldLines` 根节点 | 管理 3D 字实例池；显示当前行、更新字数、回答可见性判定、触发收尾、全部隐藏 |
 | `FloatingLine` | 3D 字预制体 | 单句 3D 字：设置文本/可见字数、面向相机、浮动、逐字纸片掉落并平铺、逐字缩 0、回收 |
 | `DialogueBoxView` | `DialogueCanvas/DialogueBox` | 底部对话框：CanvasGroup 显隐、正文/角色名、按字数截断 |
+| `Dialogue3DOverlay` | `Dialogue3DCamera` | 只渲 `Dialogue3D` 层的相机：每帧同步主相机位姿/FOV、输出全分辨率 RT 给 `Dialogue3DCanvas/Dialogue3DImage` |
 
 ### 5.1 DialogueTrigger
 
@@ -245,21 +251,36 @@ FloatingDialoguePresenter.RunLineAsync(line)
 - `Show()` / `Hide()`：CanvasGroup alpha 用 DOTween 淡入淡出；切换前 `Kill` 旧 Tween，避免叠加。
 - 面板常驻场景、初始 alpha = 0，不反复 `SetActive`；所有 Graphic `raycastTarget = false`，`CanvasGroup.blocksRaycasts = false`。
 
+### 5.6 Dialogue3DOverlay
+
+序列化字段：
+
+- `Camera mainCamera`
+- `RawImage targetImage`
+
+行为：
+
+- `Awake()` 取自身 `Camera`；`mainCamera` 或 `targetImage` 为空时 `Debug.LogError` 并 `enabled = false`（不静默兜底）；主相机 `cullingMask` 仍包含文字层时 `Debug.LogWarning`，提示低分辨率画面会出现重影。
+- `LateUpdate()` 每帧同步位姿与投影：位置/朝向、`fieldOfView`、`nearClipPlane`、`farClipPlane`、`orthographic`、`orthographicSize`，并把 `aspect` 强制设成主相机的 `aspect`（主相机渲 320×180，`aspect` 是 1.7778）；屏幕尺寸变化时重建 RenderTexture。
+- RenderTexture：`Screen.width × Screen.height`、深度 24、`ARGB32`、`FilterMode.Bilinear`、`antiAliasing = 1`，命名 `Dialogue3DOverlay`；创建后赋给当前相机 `targetTexture` 与 `targetImage.texture`；`OnDestroy()` 释放并销毁。
+- 相机本身在场景里摆好：`cullingMask` 只含 `Dialogue3D`、`clearFlags = SolidColor` 且背景 alpha = 0、`allowHDR/allowMSAA = false`、`UniversalAdditionalCameraData` 的 `renderType = Base`、`renderPostProcessing = false`、`antialiasing = None`、`renderShadows = false`，不带 `AudioListener`。
+- 因为 RawImage 是全屏拉伸的，overlay 相机用与主相机相同的 `aspect` 渲染后同样被拉伸，几何上与 320×180 路径重合，文字不会错位。
+
 ## 6. 3D 飘字表现
 
 ### 6.1 预制体
 
 `Assets/Prefabs/Dialogue/FloatingLine.prefab`：
 
-- 根节点挂 3D `TextMeshPro` 与 `FloatingLine`；
-- TMP 初值：字号 48、整体 scale `0.075`、矩形 `400×120`、自动字号 `28–48`；实测世界尺寸约 `1.8m 宽 × 0.36m 高`，2.5m 处约占画面高 10%（320×180 下约 18px），可读；
-- 为什么是 `0.075`：`0.016` 时世界尺寸只有 `0.38 × 0.077m`，同一距离下 320×180 里约 4px，等于不可读，已实测调整；
+- 根节点挂 3D `TextMeshPro` 与 `FloatingLine`，`layer` 为 `Dialogue3D`（跟随预制体下所有渲染器）；
+- TMP 初值：字号 48、整体 scale `0.075`、矩形 `400×120`、自动字号 `28–48`；实测世界尺寸约 `1.8m 宽 × 0.36m 高`，2.5m 处在 1080p 下约 139px 高，可读；
+- 为什么是 `0.075`：`0.016` 时世界尺寸只有 `0.38 × 0.077m`，低分辨率下约 4px，等于不可读，已实测调整；
 - 字体：`Assets/Fonts/SourceHanSansCN-Medium SDF.asset`；
-- 颜色白色，黑色描边宽度 `0.15`，提高 320×180 下的可读性；
+- 颜色白色，黑色描边（`OUTLINE_ON`，`_OutlineWidth = 0.2`，`_OutlineSoftness = 0`）：描边是全分辨率渲染的，1080p 下约 2px，清晰可见；
 - 只显示正文，不显示角色名；
 - TMP 轴心保持中心，`FloatingLine` 根节点位置即文字中心；
 - 逐字收尾直接改写 TMP 网格顶点，所有枢轴与缩放都在 TMP 局部空间里计算，根节点不要再叠加额外的非均匀缩放，否则需要换算；
-- 这些数值是初值，Play 时按 320×180 实际观感调整，不写死在代码里。
+- 这些数值是初值，Play 时按实际观感调整，不写死在代码里。
 
 ### 6.2 打字机
 
@@ -351,6 +372,9 @@ FloatingDialoguePresenter.RunLineAsync(line)
 | `WorldLines` | `WorldLineView` | 指定 FloatingLine 预制体、池根节点、Main Camera、地面层、maxLines = 4 |
 | 剧情触发对象 | 现有 `TriggerVolume` + 新增 `DialogueTrigger` | 指定 runner、presenter、nodeName、文字锚点 |
 | 文字锚点 | 触发对象下的空子物体 | 局部 `(0, 1.8, 1.2)`，需要时再调高度 |
+| `Dialogue3DCamera` | `Camera` + `UniversalAdditionalCameraData` + `Dialogue3DOverlay` | 只渲 `Dialogue3D` 层；SolidColor 且 alpha = 0；无后处理、无抗锯齿、无阴影、无 AudioListener；`Dialogue3DOverlay` 指定 Main Camera 与 `Dialogue3DImage` |
+| `Dialogue3DCanvas/Dialogue3DImage` | `RawImage` | 全屏拉伸（anchorMin 0 / anchorMax 1 / offset 0）、`raycastTarget = false`、图片由脚本在运行时指向 RT；Canvas sortingOrder = -75 |
+| 主相机 `Main Camera` | CinemachineBrain（已有） | `cullingMask` 去掉 `Dialogue3D` 层（当前为 `-9`） |
 
 步骤：
 
@@ -361,7 +385,10 @@ FloatingDialoguePresenter.RunLineAsync(line)
 5. 新建临时 `Assets/Yarn/TestDialogue.yarn` 与 `.yarnproject`，节点 `Start` 放几句测试台词；`.yarnproject` 通过 Yarn Spinner 编辑器创建，不手写序列化文件。
 6. 在场景的剧情触发对象上追加 `DialogueTrigger`，创建文字锚点子物体；把 `TriggerVolume.onPlayerEnter` 连到 `DialogueTrigger.StartDialogue`。
 7. 确认 `DialogueCanvas` 的 sortingOrder 在低分辨率画面之上、UIKit 菜单之下。
-8. 不改通用 `TriggerVolume` 预制体；场景、预制体、YarnProject 用 Unity 编辑器或 Unity MCP 修改，不手写 YAML；不手改 `.meta`，不新建 asmdef（脚本编入 Assembly-CSharp）。
+8. 新建 `Dialogue3D` 层（当前是第 3 层）；把 `FloatingLine.prefab` 的根节点设为该层；主相机 `cullingMask` 去掉该层。
+9. 创建 `Dialogue3DCamera`：相机 + `UniversalAdditionalCameraData`（Base / 无后处理）+ `Dialogue3DOverlay`，`clearFlags = SolidColor` 且背景 alpha = 0。
+10. 创建 `Dialogue3DCanvas`（sortingOrder -75）与全屏 `Dialogue3DImage`（`RawImage`，`raycastTarget = false`），把两者引用填进 `Dialogue3DOverlay`。
+11. 不改通用 `TriggerVolume` 预制体；场景、预制体、YarnProject 用 Unity 编辑器或 Unity MCP 修改，不手写 YAML；不手改 `.meta`，不新建 asmdef（脚本编入 Assembly-CSharp）。
 
 ## 10. 图
 
@@ -376,8 +403,10 @@ graph TD
         PRES[FloatingDialoguePresenter]
         BOX[DialogueCanvas/DialogueBox<br/>DialogueBoxView]
         WL[WorldLines<br/>WorldLineView]
-        LINE[FloatingLine 实例池]
+        LINE[FloatingLine 实例池<br/>Dialogue3D 层]
         CAM[Main Camera]
+        CAM3D[Dialogue3DCamera<br/>Dialogue3DOverlay]
+        IMG3D[Dialogue3DCanvas<br/>Dialogue3DImage]
         LOW[LowResCanvas<br/>320×180 RawImage]
         UI[UIKit 菜单]
     end
@@ -391,6 +420,10 @@ graph TD
     WL --> LINE
     CAM -->|视锥 / 遮挡 / 可读距离| WL
     CAM -->|targetTexture| LOW
+    CAM -.->|同步位姿 / FOV / aspect| CAM3D
+    LINE -->|只渲 Dialogue3D 层| CAM3D
+    CAM3D -->|全分辨率 RT| IMG3D
+    IMG3D -->|sortingOrder -75| LOW
     BOX -->|sortingOrder -50| LOW
     UI -->|sortingOrder 0| BOX
 ```
@@ -408,6 +441,9 @@ flowchart LR
     PRES -->|正文 / 字数 / 锚点| WL
     PRES -->|display| WL
     WL --> LINE[FloatingLine]
+    LINE -->|Dialogue3D 层| CAM3D[Dialogue3DCamera]
+    CAM3D -->|全分辨率 RT| IMG3D[Dialogue3DImage]
+    IMG3D -->|叠在 320×180 画面上| SCREEN[屏幕]
     LINE -->|逐字掉落 / 平铺 / 缩 0| POOL[实例回收]
     POOL --> WL
 ```
@@ -423,6 +459,7 @@ sequenceDiagram
     participant PR as FloatingDialoguePresenter
     participant W as WorldLineView
     participant B as DialogueBoxView
+    participant O as Dialogue3DOverlay
 
     P->>T: OnTriggerEnter
     T->>DT: onPlayerEnter.Invoke()
@@ -450,6 +487,7 @@ sequenceDiagram
     alt 3D 字模式
         PR->>W: DismissActive()
         Note over W: 逐字掉落 → 平铺 → 逐字缩 0 → 回收
+        Note over O: 每帧同步主相机位姿/FOV → 渲 Dialogue3D 层到全分辨率 RT
     else 对话框模式
         Note over PR,B: 对话框保持全文，等下一句替换
     end
@@ -474,6 +512,11 @@ FloatingLine.Update():
              → ApplyGlyphMeshes() 写回 TMP 顶点
              → LateUpdate 跳过转向，平铺的字不再跟相机转
   Finished   → 抛 Finished 事件，WorldLineView 回收
+
+Dialogue3DOverlay.LateUpdate()（每帧）:
+  → 同步主相机位置/朝向/FOV/near/far/正交与 aspect
+  → 屏幕尺寸变化时重建 Screen.width×Screen.height 的 ARGB32 RT
+  → 相机只渲 Dialogue3D 层，结果经 RawImage 叠在 320×180 画面上
 ```
 
 ## 11. 错误处理
@@ -488,6 +531,8 @@ FloatingLine.Update():
 - `WorldLineView.prefab` / `poolRoot` 为空：`Debug.LogError`，不显示 3D 字。
 - `DialogueBoxView.canvasGroup` / `bodyText` 为空：`Debug.LogError`，不显示对话框。
 - `worldLines.worldCamera` 为空：`IsLineVisible` 返回 false，直接走对话框，不每帧刷错误。
+- `Dialogue3DOverlay.mainCamera` / `targetImage` 为空：`Debug.LogError` 并禁用该组件，不自行查找对象。
+- 主相机 `cullingMask` 仍包含 `Dialogue3D` 层：`Debug.LogWarning`（低分辨率画面里会出现重影）。
 - 对话被取消：检查 `LineCancellationToken`，停止打字与停留，交给完成/下一次开始清理。
 - 不静默吞异常；所有可预期失败至少有一条 Console 警告或错误。
 
@@ -502,20 +547,22 @@ FloatingLine.Update():
 7. 对话结束：对话框消失；最后一句正常掉完，没有残留 3D 字。
 8. 再次进入触发区：能重新开始；没有重复监听、没有上次残留。
 9. 连续 Play 两次（Domain Reload 关闭）：第二次仍正常，无静态状态残留。
-10. Console 无报错、无未处理空引用；320×180 下 2–4 个 TMP 不造成明显掉帧。
+10. 3D 字与描边是全分辨率的：1080p 下字高约 139px、黑描边约 2px 清晰可见；320×180 画面里没有 3D 字的重影。
+11. Console 无报错、无未处理空引用；1080p 下 2–4 个 TMP 不造成明显掉帧。
 
 ## 13. 风险与对策
 
 | 风险 | 对策 |
 | --- | --- |
-| 320×180 下 3D 字可读性不足 | 预制体已按实测把 scale 调到 `0.075`（世界约 1.8×0.36m，2.5m 处约 18px）；仍不够就继续加大字号/描边，对话框承担远距离可读性 |
+| 3D 字被像素化、描边看不见 | 已改为 `Dialogue3D` 层 + `Dialogue3DCamera` 全分辨率叠加（不进 320×180），1080p 下字高约 139px、描边约 2px；对话框仍承担远距离可读性 |
+| 全分辨率叠加层与低分辨率画面错位 | overlay 相机每帧同步主相机位姿/FOV 并强制同 `aspect`，RawImage 整屏拉伸，几何上与 320×180 路径等价；改相机参数后需 Play 复核 |
 | 平铺在地上的纸片在低视角下被压扁、不易看清 | 目前接受（物理上正确）；落地停顿给到 0.35s，让玩家能看见平铺瞬间；如需更明显可缩短缩小前的停顿并加大字距 |
 | TMP 对无空格中文不自动换行 | 在 320×180 与 1080p 对话框各测一次；必要时在 Presenter 里按最大字数手动插换行 |
 | 逐字改写 TMP 顶点与 TMP 自身刷新冲突 | 只在 `Dissolving` 阶段写顶点；`Show()` 会 `ForceMeshUpdate()` 重建网格，不残留旧顶点 |
 | Yarn 3.2.8 `RunLineAsync` 返回后不自动推进 | 实测验证（已确认会自动推进）；若不推进，在停留结束后显式请求下一句，并加防重入 |
 | 超长台词在 220px 高对话框溢出 | 限制单句长度，或后续加自动滚动；本期不做滚动 |
 | 3D 字被墙体遮挡时误判 | 用 `Linecast` 判定；锚点尽量放在开阔处；本期不做穿透墙体显示 |
-| 对话框与 UIKit 菜图层级冲突 | 对话框固定 -50，低分辨率画面 -100，UIKit 0；Play 验证通过 |
+| 对话框与 UIKit 菜图层级冲突 | 对话框固定 -50，3D 字叠加层 -75，低分辨率画面 -100，UIKit 0；Play 验证通过 |
 | 关闭 Domain Reload 导致静态状态残留 | 本功能不使用静态事件或静态状态；实例事件随场景重载释放 |
 | 对话启动失败后卡在忙状态 | `isDialogueActive` 只在 `OnDialogueStartedAsync` 设为 true；`StartDialogue` 失败不会置忙 |
 | 多个剧情触发区同时触发 | 对话进行中再次触发只警告并忽略；不做排队 |
@@ -528,7 +575,7 @@ FloatingLine.Update():
 - 多个对话同时进行、对话排队；
 - 暂停时对话计时、跳过对话；
 - 纸片落地后的物理弹跳、碰撞反馈、可拾取（用户只要求平铺后逐字缩小）；
-- 高分辨率 3D 字叠加层、3D 字穿透墙体显示；
+- 3D 字穿透墙体显示（可见性判定仍然把被墙挡住的情况交给对话框）；
 - 自研对话框架或替换 Yarn Spinner。
 
 ## 15. 涉及文件与实施顺序
@@ -540,6 +587,8 @@ FloatingLine.Update():
 - `Assets/Scripts/Dialogue/WorldLineView.cs`
 - `Assets/Scripts/Dialogue/FloatingLine.cs`
 - `Assets/Scripts/Dialogue/DialogueBoxView.cs`
+- `Assets/Scripts/Dialogue/Dialogue3DOverlay.cs`
+- `Assets/Materials/Dialogue/FloatingLine.mat`（TMP 白色 + 黑色描边）
 - `Assets/Prefabs/Dialogue/FloatingLine.prefab`
 - `Assets/Yarn/TestDialogue.yarn` + `.yarnproject`
 - `docs/superpowers/specs/2026-11-14-floating-3d-dialogue-design.md`

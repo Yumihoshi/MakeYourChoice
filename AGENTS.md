@@ -13,6 +13,7 @@
 - **48h 优先出可玩版本**：能跑 > 优雅。不要引入复杂抽象层——不自研框架、DI 容器、ECS、事件总线或额外分层；需要架构时用 QFramework 现有的 MVC。
 - **先查再用，不重复造轮子**：动手实现前，先确认下表中的插件/框架是否已经提供了这个能力。
 - **第三方与框架目录只读**：`Assets/Plugins`（DOTween Pro、Easy Save 3、Odin Inspector、vFolders）与 `Assets/QFramework` 不在本项目维护范围内，不要修改；需要扩展时在 `Assets/Scripts` 下写自己的代码。
+- **不用 superpowers 的 `brainstorming` skill**：需求有疑问就直接问用户确认，不要走该 skill 的问答流程。
 
 ## 已有能力（实现前先看这里）
 
@@ -25,7 +26,7 @@
 | 补间动画 | DOTween Pro |
 | 存档、读档 | Easy Save 3 |
 | 关卡几何、第一人称视角 | ProBuilder（5.2.4）搭 3D 几何 + Cinemachine 第一人称；运行时组件在 `Assets/Scripts/Level`（`LowResDisplay` 低分辨率显示、`FirstPersonController`、`AutoDoor`、`TriggerVolume`） |
-| 剧情对话、3D 飘字 | Yarn Spinner 3.2.8 + `Assets/Scripts/Dialogue`（`FloatingDialoguePresenter` 决定显示 3D 字还是对话框、`DialogueTrigger`、`WorldLineView`、`FloatingLine`、`DialogueBoxView`）；对话文本改 `Assets/Yarn/*.yarn`，不要自己写解析器 |
+| 剧情对话、3D 飘字 | Yarn Spinner 3.2.8 + `Assets/Scripts/Dialogue`（`FloatingDialoguePresenter` 决定显示 3D 字还是对话框、`DialogueTrigger`、`WorldLineView`、`FloatingLine`、`DialogueBoxView`、`Dialogue3DOverlay`）；对话文本改 `Assets/Yarn/*.yarn`，不要自己写解析器；3D 字必须在 `Dialogue3D` 层（由 `Dialogue3DCamera` 全分辨率叠加，主相机 `cullingMask` 排除该层） |
 | 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
 
 ## 代码约定
@@ -38,6 +39,10 @@
 - 已开启 Enter Play Mode Options，只关闭了 Domain Reload（`ProjectSettings/EditorSettings.asset`：`m_EnterPlayModeOptionsEnabled: 1`、`m_EnterPlayModeOptions: 1`，场景仍会重载）：静态字段、静态事件订阅、单例状态会跨 Play 残留，二次 Play 前必须自己重置（`[RuntimeInitializeOnLoadMethod]` 清静态、退订静态事件），不要依赖域重载帮你清理。已知踩坑：QFramework UIKit 的 `UIKit.Config`（含 PanelLoaderPool）与 `UIKit.Table` 跨 Play 残留，会让面板只实例化出空壳（`Info == null`、按钮无监听、Table 计数错乱），入口用 `Assets/Scripts/Game/GameBootstrap.cs` 的 `ResetUIKitState()` 在 `SubsystemRegistration` 阶段重置；新增场景入口时照此重置一次。
 - 不手改 `.meta`；移动、重命名、删除资产时连同 `.meta` 一起处理。
 - 场景、预制体、`.asset` 等序列化文件通过 Unity 编辑器或 Unity MCP 修改，不手写 YAML。
+
+## 文档
+
+- 改了功能后**不需要**同步 `docs/superpowers` 下的 spec/plan 文档（它们只是当时的过程产物）；只需同步本文件的「已有能力」表。
 
 ## 验证
 

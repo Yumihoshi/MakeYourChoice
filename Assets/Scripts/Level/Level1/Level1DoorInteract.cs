@@ -6,6 +6,7 @@ namespace Game.Level
 {
     /// <summary>
     /// 电梯门的交互：玩家视线正对门时按交互键（鼠标左键 / 手柄 A）开门并播放开门后的剧情。
+    /// 看过红字但还没听完风声剧情时门保持锁定，既不显示交互提示也开不了门。
     /// 对话播放期间与菜单打开时都不接受交互。
     /// </summary>
     public sealed class Level1DoorInteract : MonoBehaviour
@@ -40,9 +41,8 @@ namespace Game.Level
             }
 
             var input = PlayerInputRouter.Instance;
-            if (input != null && input.Interact.WasPressedThisFrame())
+            if (input != null && input.Interact.WasPressedThisFrame() && state.OpenElevatorDoor())
             {
-                state.OpenElevatorDoor();
                 if (openDialogue != null)
                 {
                     openDialogue.StartDialogue();
@@ -52,10 +52,10 @@ namespace Game.Level
 
         void OnDisable() => InteractFocus.Clear(this);
 
-        /// <summary>视线正对门、视线没被挡住，且门未开、没有对话在播、光标已锁定。</summary>
+        /// <summary>视线正对门、视线没被挡住，且门未开、允许开门、没有对话在播、光标已锁定。</summary>
         bool IsAimingAtDoor()
         {
-            if (state == null || eye == null || state.DoorOpened)
+            if (state == null || eye == null || state.DoorOpened || !state.CanOpenDoor)
             {
                 return false;
             }

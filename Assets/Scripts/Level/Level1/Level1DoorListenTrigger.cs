@@ -6,6 +6,7 @@ namespace Game.Level
 {
     /// <summary>
     /// 关卡一：玩家看过红字之后，在电梯门前站满 3 秒听门外声音，播放一次剧情。
+    /// 风声剧情播完之前电梯门一直锁着（见 <see cref="Level1State.CanOpenDoor"/>），播完才允许开门。
     /// 门一旦打开就不再触发。
     /// </summary>
     public sealed class Level1DoorListenTrigger : MonoBehaviour
@@ -26,12 +27,22 @@ namespace Game.Level
         float distance = 1.8f;
 
         float _elapsed;
-        bool _fired;
 
         void Update()
         {
-            if (_fired || state == null || player == null || dialogue == null)
+            if (state == null || player == null || dialogue == null)
             {
+                return;
+            }
+
+            if (state.ListenStarted)
+            {
+                // 风声剧情播完（或没能播起来）之后才解锁电梯门。
+                if (!state.ListenFinished && !dialogue.IsRunning)
+                {
+                    state.MarkListenFinished();
+                }
+
                 return;
             }
 
@@ -53,7 +64,7 @@ namespace Game.Level
                 return;
             }
 
-            _fired = true;
+            state.MarkListenStarted();
             dialogue.StartDialogue();
         }
     }

@@ -1,0 +1,20 @@
+{
+  "nodes": [
+    {
+      "angle": 0,
+      "height": 1657.0189208984375,
+      "id": "d5:3",
+      "image": {
+        "token": "QKVwbCe9Yoz5FVxFnBMckuS3nNd"
+      },
+      "style": {
+        "border_style": "none"
+      },
+      "type": "image",
+      "width": 1308.728271484375,
+      "x": 218.49588012695312,
+      "y": -75.81698608398438,
+      "z_index": 0
+    }
+  ]
+}

@@ -1,0 +1,345 @@
+{
+  "title": {
+    "id": "title",
+    "absX": 1698,
+    "absY": -210,
+    "width": 920,
+    "height": 38
+  },
+  "root": {
+    "id": "root",
+    "absX": 1650,
+    "absY": -76,
+    "width": 1226,
+    "height": 3814
+  },
+  "S": {
+    "id": "S",
+    "absX": 2048,
+    "absY": -28,
+    "width": 180,
+    "height": 64
+  },
+  "E1": {
+    "id": "E1",
+    "absX": 1998,
+    "absY": 201,
+    "width": 280,
+    "height": 87
+  },
+  "D1": {
+    "id": "D1",
+    "absX": 2048,
+    "absY": 453,
+    "width": 180,
+    "height": 104
+  },
+  "E2": {
+    "id": "E2",
+    "absX": 1898,
+    "absY": 1182,
+    "width": 280,
+    "height": 65
+  },
+  "E3": {
+    "id": "E3",
+    "absX": 2398,
+    "absY": 722,
+    "width": 280,
+    "height": 65
+  },
+  "E4": {
+    "id": "E4",
+    "absX": 2398,
+    "absY": 952,
+    "width": 280,
+    "height": 65
+  },
+  "E5": {
+    "id": "E5",
+    "absX": 2048,
+    "absY": 722,
+    "width": 280,
+    "height": 65
+  },
+  "E6": {
+    "id": "E6",
+    "absX": 1898,
+    "absY": 1412,
+    "width": 280,
+    "height": 87
+  },
+  "E7": {
+    "id": "E7",
+    "absX": 1898,
+    "absY": 1664,
+    "width": 280,
+    "height": 65
+  },
+  "D7": {
+    "id": "D7",
+    "absX": 1948,
+    "absY": 1894,
+    "width": 180,
+    "height": 104
+  },
+  "E8": {
+    "id": "E8",
+    "absX": 2448,
+    "absY": 2163,
+    "width": 280,
+    "height": 87
+  },
+  "E9": {
+    "id": "E9",
+    "absX": 2048,
+    "absY": 2163,
+    "width": 280,
+    "height": 87
+  },
+  "E10": {
+    "id": "E10",
+    "absX": 1698,
+    "absY": 2163,
+    "width": 280,
+    "height": 87
+  },
+  "E11": {
+    "id": "E11",
+    "absX": 1798,
+    "absY": 2435,
+    "width": 280,
+    "height": 65
+  },
+  "D8": {
+    "id": "D8",
+    "absX": 2498,
+    "absY": 2415,
+    "width": 180,
+    "height": 104
+  },
+  "E14": {
+    "id": "E14",
+    "absX": 2198,
+    "absY": 2684,
+    "width": 280,
+    "height": 65
+  },
+  "E12": {
+    "id": "E12",
+    "absX": 2548,
+    "absY": 2684,
+    "width": 280,
+    "height": 65
+  },
+  "E13": {
+    "id": "E13",
+    "absX": 2548,
+    "absY": 2914,
+    "width": 280,
+    "height": 87
+  },
+  "E15": {
+    "id": "E15",
+    "absX": 2548,
+    "absY": 3166,
+    "width": 280,
+    "height": 65
+  },
+  "E16": {
+    "id": "E16",
+    "absX": 2548,
+    "absY": 3396,
+    "width": 280,
+    "height": 65
+  },
+  "END16": {
+    "id": "END16",
+    "absX": 2598,
+    "absY": 3626,
+    "width": 180,
+    "height": 64
+  },
+  "END5": {
+    "id": "END5",
+    "absX": 2098,
+    "absY": 952,
+    "width": 180,
+    "height": 64
+  },
+  "dagre-edge-root-S-E1": {
+    "id": "dagre-edge-root-S-E1",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E1-D1": {
+    "id": "dagre-edge-root-E1-D1",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-D1-E2": {
+    "id": "dagre-edge-root-D1-E2",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-D1-E3": {
+    "id": "dagre-edge-root-D1-E3",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-D1-E5": {
+    "id": "dagre-edge-root-D1-E5",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E3-E4": {
+    "id": "dagre-edge-root-E3-E4",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E4-E2": {
+    "id": "dagre-edge-root-E4-E2",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E2-E6": {
+    "id": "dagre-edge-root-E2-E6",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E6-E7": {
+    "id": "dagre-edge-root-E6-E7",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E7-D7": {
+    "id": "dagre-edge-root-E7-D7",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-D7-E8": {
+    "id": "dagre-edge-root-D7-E8",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-D7-E9": {
+    "id": "dagre-edge-root-D7-E9",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-D7-E10": {
+    "id": "dagre-edge-root-D7-E10",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E9-D7": {
+    "id": "dagre-edge-root-E9-D7",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E10-E11": {
+    "id": "dagre-edge-root-E10-E11",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E11-D7": {
+    "id": "dagre-edge-root-E11-D7",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E8-D8": {
+    "id": "dagre-edge-root-E8-D8",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-D8-E14": {
+    "id": "dagre-edge-root-D8-E14",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-D8-E12": {
+    "id": "dagre-edge-root-D8-E12",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E14-D8": {
+    "id": "dagre-edge-root-E14-D8",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E12-E13": {
+    "id": "dagre-edge-root-E12-E13",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E13-E15": {
+    "id": "dagre-edge-root-E13-E15",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E15-E16": {
+    "id": "dagre-edge-root-E15-E16",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E16-END16": {
+    "id": "dagre-edge-root-E16-END16",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  },
+  "dagre-edge-root-E5-END5": {
+    "id": "dagre-edge-root-E5-END5",
+    "absX": 0,
+    "absY": 0,
+    "width": 0,
+    "height": 0
+  }
+}

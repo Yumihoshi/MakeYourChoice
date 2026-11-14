@@ -1,0 +1,4427 @@
+{
+  "nodes": [
+    {
+      "id": "a001:1",
+      "type": "text_shape",
+      "x": 1698,
+      "y": -210,
+      "width": 920,
+      "height": 38,
+      "text": {
+        "text": "关卡一 · 流程分支图",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 0,
+        "text_background_color_type": 0,
+        "theme_text_color_code": -1,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 26,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "关卡一 · 流程分支图"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "o001:1",
+      "type": "composite_shape",
+      "x": 1650,
+      "y": -76,
+      "width": 1226,
+      "height": 3814,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#5178c6",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#f0f4fc",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "o001:2",
+      "type": "composite_shape",
+      "x": 2048,
+      "y": -28,
+      "width": 180,
+      "height": 64,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#509863",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#dff5e5",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "ellipse"
+      }
+    },
+    {
+      "id": "a001:2",
+      "type": "text_shape",
+      "x": 2048,
+      "y": -7,
+      "width": 180,
+      "height": 22,
+      "text": {
+        "text": "开始",
+        "font_weight": "regular",
+        "font_size": 15,
+        "horizontal_align": "center",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:3",
+      "type": "composite_shape",
+      "x": 1998,
+      "y": 201,
+      "width": 280,
+      "height": 87,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#5178c6",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:3",
+      "type": "text_shape",
+      "x": 2012,
+      "y": 211,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "1 第一次位于 A",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "1 第一次位于 A"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:4",
+      "type": "text_shape",
+      "x": 2012,
+      "y": 236,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "欢迎来到后室",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "a001:5",
+      "type": "text_shape",
+      "x": 2012,
+      "y": 259,
+      "width": 252,
+      "height": 19,
+      "text": {
+        "text": "门外有声音，快开门",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:4",
+      "type": "composite_shape",
+      "x": 2048,
+      "y": 453,
+      "width": 180,
+      "height": 104,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#d4b45b",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#fef1ce",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "diamond"
+      }
+    },
+    {
+      "id": "a001:6",
+      "type": "text_shape",
+      "x": 2048,
+      "y": 495,
+      "width": 180,
+      "height": 20,
+      "text": {
+        "text": "开门前行动",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "center",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:5",
+      "type": "composite_shape",
+      "x": 1898,
+      "y": 1182,
+      "width": 280,
+      "height": 65,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#5178c6",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:7",
+      "type": "text_shape",
+      "x": 1912,
+      "y": 1192,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "2 打开电梯门",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "2 打开电梯门"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:8",
+      "type": "text_shape",
+      "x": 1912,
+      "y": 1217,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "“看，我没骗你”",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:6",
+      "type": "composite_shape",
+      "x": 2398,
+      "y": 722,
+      "width": 280,
+      "height": 65,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#5178c6",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:9",
+      "type": "text_shape",
+      "x": 2412,
+      "y": 732,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "3 看到红字警告",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "3 看到红字警告"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:10",
+      "type": "text_shape",
+      "x": 2412,
+      "y": 757,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "先贴门听再决定",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:7",
+      "type": "composite_shape",
+      "x": 2398,
+      "y": 952,
+      "width": 280,
+      "height": 65,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#5178c6",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:11",
+      "type": "text_shape",
+      "x": 2412,
+      "y": 962,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "4 靠近电梯门 3s",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "4 靠近电梯门 3s"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:12",
+      "type": "text_shape",
+      "x": 2412,
+      "y": 987,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "只是风声，可以验证",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:8",
+      "type": "composite_shape",
+      "x": 2048,
+      "y": 722,
+      "width": 280,
+      "height": 65,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#d25d5a",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:13",
+      "type": "text_shape",
+      "x": 2062,
+      "y": 732,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "5 THE END 最速传说",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "5 THE END 最速传说"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:14",
+      "type": "text_shape",
+      "x": 2062,
+      "y": 757,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "在电梯里待满 5 分钟",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:9",
+      "type": "composite_shape",
+      "x": 1898,
+      "y": 1412,
+      "width": 280,
+      "height": 87,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#8569cb",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:15",
+      "type": "text_shape",
+      "x": 1912,
+      "y": 1422,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "6 出电梯，交互安全门",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "6 出电梯，交互安全门"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:16",
+      "type": "text_shape",
+      "x": 1912,
+      "y": 1447,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "无门禁卡，打不开",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "a001:17",
+      "type": "text_shape",
+      "x": 1912,
+      "y": 1470,
+      "width": 252,
+      "height": 19,
+      "text": {
+        "text": "建议先去找门禁卡",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:10",
+      "type": "composite_shape",
+      "x": 1898,
+      "y": 1664,
+      "width": 280,
+      "height": 65,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#8569cb",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:18",
+      "type": "text_shape",
+      "x": 1912,
+      "y": 1674,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "7 第一次位于 B",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "7 第一次位于 B"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:19",
+      "type": "text_shape",
+      "x": 1912,
+      "y": 1699,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "红字吓人；蓝箭头指路",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:11",
+      "type": "composite_shape",
+      "x": 1948,
+      "y": 1894,
+      "width": 180,
+      "height": 104,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#d4b45b",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#fef1ce",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "diamond"
+      }
+    },
+    {
+      "id": "a001:20",
+      "type": "text_shape",
+      "x": 1948,
+      "y": 1936,
+      "width": 180,
+      "height": 20,
+      "text": {
+        "text": "B 区行动",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "center",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:12",
+      "type": "composite_shape",
+      "x": 2448,
+      "y": 2163,
+      "width": 280,
+      "height": 87,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#509863",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:21",
+      "type": "text_shape",
+      "x": 2462,
+      "y": 2173,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "8 进入打印室",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "8 进入打印室"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:22",
+      "type": "text_shape",
+      "x": 2462,
+      "y": 2198,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "复印机闪紫光",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "a001:23",
+      "type": "text_shape",
+      "x": 2462,
+      "y": 2221,
+      "width": 252,
+      "height": 19,
+      "text": {
+        "text": "柜子绿色高光只是反光，去复印机看看",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:13",
+      "type": "composite_shape",
+      "x": 2048,
+      "y": 2163,
+      "width": 280,
+      "height": 87,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#8569cb",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:24",
+      "type": "text_shape",
+      "x": 2062,
+      "y": 2173,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "9 蓝箭头的解释",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "9 蓝箭头的解释"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:25",
+      "type": "text_shape",
+      "x": 2062,
+      "y": 2198,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "蓝箭头通向隔间区，那里有卡",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "a001:26",
+      "type": "text_shape",
+      "x": 2062,
+      "y": 2221,
+      "width": 252,
+      "height": 19,
+      "text": {
+        "text": "红字门里也有东西，但不想让你被困",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:14",
+      "type": "composite_shape",
+      "x": 1698,
+      "y": 2163,
+      "width": 280,
+      "height": 87,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#d25d5a",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:27",
+      "type": "text_shape",
+      "x": 1712,
+      "y": 2173,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "10 进入储藏室",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "10 进入储藏室"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:28",
+      "type": "text_shape",
+      "x": 1712,
+      "y": 2198,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "门被锁；可远程开但需一分钟",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "a001:29",
+      "type": "text_shape",
+      "x": 1712,
+      "y": 2221,
+      "width": 252,
+      "height": 19,
+      "text": {
+        "text": "或找别的出口",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:15",
+      "type": "composite_shape",
+      "x": 1798,
+      "y": 2435,
+      "width": 280,
+      "height": 65,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#d25d5a",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:30",
+      "type": "text_shape",
+      "x": 1812,
+      "y": 2445,
+      "width": 252,
+      "height": 23,
+      "text": {
+        "text": "11 发现维护记录",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "11 发现维护记录"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:31",
+      "type": "text_shape",
+      "x": 1812,
+      "y": 2470,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "“蓝箭头有时绕远，但安全”",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:16",
+      "type": "composite_shape",
+      "x": 2498,
+      "y": 2415,
+      "width": 180,
+      "height": 104,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#d4b45b",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#fef1ce",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "diamond"
+      }
+    },
+    {
+      "id": "a001:32",
+      "type": "text_shape",
+      "x": 2498,
+      "y": 2457,
+      "width": 180,
+      "height": 20,
+      "text": {
+        "text": "打印室行动",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "center",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:17",
+      "type": "composite_shape",
+      "x": 2198,
+      "y": 2684,
+      "width": 280,
+      "height": 65,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#509863",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:33",
+      "type": "text_shape",
+      "x": 2212,
+      "y": 2694,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "14 柜子 A 只是反光",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "14 柜子 A 只是反光"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:34",
+      "type": "text_shape",
+      "x": 2212,
+      "y": 2719,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "继续探索",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:18",
+      "type": "composite_shape",
+      "x": 2548,
+      "y": 2684,
+      "width": 280,
+      "height": 65,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#509863",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:35",
+      "type": "text_shape",
+      "x": 2562,
+      "y": 2694,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "12 获得“临时门禁卡”",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "12 获得“临时门禁卡”"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:36",
+      "type": "text_shape",
+      "x": 2562,
+      "y": 2719,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "锁定柜子无法交互",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:19",
+      "type": "composite_shape",
+      "x": 2548,
+      "y": 2914,
+      "width": 280,
+      "height": 87,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#509863",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:37",
+      "type": "text_shape",
+      "x": 2562,
+      "y": 2924,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "13 用临时门禁卡试安全门",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "13 用临时门禁卡试安全门"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:38",
+      "type": "text_shape",
+      "x": 2562,
+      "y": 2949,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "没有反应，卡过期",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "a001:39",
+      "type": "text_shape",
+      "x": 2562,
+      "y": 2972,
+      "width": 252,
+      "height": 19,
+      "text": {
+        "text": "若未触发 14，则说柜子里没东西",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:20",
+      "type": "composite_shape",
+      "x": 2548,
+      "y": 3166,
+      "width": 280,
+      "height": 65,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#509863",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:40",
+      "type": "text_shape",
+      "x": 2562,
+      "y": 3176,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "15 获得“门禁卡”",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "15 获得“门禁卡”"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:41",
+      "type": "text_shape",
+      "x": 2562,
+      "y": 3201,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "“你比我想的细心，我确实不知道夹层”",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:21",
+      "type": "composite_shape",
+      "x": 2548,
+      "y": 3396,
+      "width": 280,
+      "height": 65,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#509863",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:42",
+      "type": "text_shape",
+      "x": 2562,
+      "y": 3406,
+      "width": 252,
+      "height": 22,
+      "text": {
+        "text": "16 交互安全门，有门禁卡",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "dark_text_color": "#000000",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1,
+        "rich_text": {
+          "paragraphs": [
+            {
+              "paragraph_type": 0,
+              "elements": [
+                {
+                  "element_type": 0,
+                  "text_element": {
+                    "text_style": {
+                      "font_weight": "bold",
+                      "font_size": 15,
+                      "italic": false,
+                      "underline": false,
+                      "line_through": false,
+                      "text_color": "#1f2329"
+                    },
+                    "text": "16 交互安全门，有门禁卡"
+                  }
+                }
+              ],
+              "indent": 0,
+              "list_begin_index": 0,
+              "quote": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a001:43",
+      "type": "text_shape",
+      "x": 2562,
+      "y": 3431,
+      "width": 252,
+      "height": 20,
+      "text": {
+        "text": "表中未写后续 / 通关结果",
+        "font_weight": "regular",
+        "font_size": 13,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:22",
+      "type": "composite_shape",
+      "x": 2598,
+      "y": 3626,
+      "width": 180,
+      "height": 64,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#509863",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#dff5e5",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "ellipse"
+      }
+    },
+    {
+      "id": "a001:44",
+      "type": "text_shape",
+      "x": 2598,
+      "y": 3647,
+      "width": 180,
+      "height": 22,
+      "text": {
+        "text": "通关 / 后续",
+        "font_weight": "regular",
+        "font_size": 15,
+        "horizontal_align": "center",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:23",
+      "type": "composite_shape",
+      "x": 2098,
+      "y": 952,
+      "width": 180,
+      "height": 64,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#d25d5a",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#fee3e2",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "ellipse"
+      }
+    },
+    {
+      "id": "a001:45",
+      "type": "text_shape",
+      "x": 2098,
+      "y": 973,
+      "width": 180,
+      "height": 22,
+      "text": {
+        "text": "结局：最速传说",
+        "font_weight": "regular",
+        "font_size": 15,
+        "horizontal_align": "center",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:24",
+      "type": "composite_shape",
+      "x": 1698,
+      "y": 3794,
+      "width": 713,
+      "height": 48,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#dee0e3",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:46",
+      "type": "text_shape",
+      "x": 1720,
+      "y": 3808,
+      "width": 56,
+      "height": 21,
+      "text": {
+        "text": "分区图例",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#646a73",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:25",
+      "type": "composite_shape",
+      "x": 1804,
+      "y": 3808,
+      "width": 98,
+      "height": 20,
+      "style": {
+        "border_style": "none",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "o001:26",
+      "type": "composite_shape",
+      "x": 1804,
+      "y": 3810,
+      "width": 16,
+      "height": 16,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#5178c6",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#5178c6",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:47",
+      "type": "text_shape",
+      "x": 1828,
+      "y": 3808,
+      "width": 75,
+      "height": 21,
+      "text": {
+        "text": "电梯间 A 区",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:27",
+      "type": "composite_shape",
+      "x": 1930,
+      "y": 3808,
+      "width": 93,
+      "height": 20,
+      "style": {
+        "border_style": "none",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "o001:28",
+      "type": "composite_shape",
+      "x": 1930,
+      "y": 3810,
+      "width": 16,
+      "height": 16,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#8569cb",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#8569cb",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:48",
+      "type": "text_shape",
+      "x": 1954,
+      "y": 3808,
+      "width": 70,
+      "height": 21,
+      "text": {
+        "text": "B 区办公层",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:29",
+      "type": "composite_shape",
+      "x": 2051,
+      "y": 3808,
+      "width": 66,
+      "height": 20,
+      "style": {
+        "border_style": "none",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "o001:30",
+      "type": "composite_shape",
+      "x": 2051,
+      "y": 3810,
+      "width": 16,
+      "height": 16,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#509863",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#509863",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:49",
+      "type": "text_shape",
+      "x": 2075,
+      "y": 3808,
+      "width": 42,
+      "height": 21,
+      "text": {
+        "text": "打印室",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:31",
+      "type": "composite_shape",
+      "x": 2145,
+      "y": 3808,
+      "width": 136,
+      "height": 20,
+      "style": {
+        "border_style": "none",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "o001:32",
+      "type": "composite_shape",
+      "x": 2145,
+      "y": 3810,
+      "width": 16,
+      "height": 16,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#d25d5a",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#d25d5a",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:50",
+      "type": "text_shape",
+      "x": 2169,
+      "y": 3808,
+      "width": 112,
+      "height": 21,
+      "text": {
+        "text": "储藏室（红字门）",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "o001:33",
+      "type": "composite_shape",
+      "x": 2309,
+      "y": 3808,
+      "width": 80,
+      "height": 20,
+      "style": {
+        "border_style": "none",
+        "fill_opacity": 100,
+        "fill_color": "#ffffff",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "o001:34",
+      "type": "composite_shape",
+      "x": 2309,
+      "y": 3810,
+      "width": 16,
+      "height": 16,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#d4b45b",
+        "border_color_type": 1,
+        "border_style": "solid",
+        "fill_opacity": 100,
+        "fill_color": "#d4b45b",
+        "fill_color_type": 1
+      },
+      "composite_shape": {
+        "type": "round_rect"
+      }
+    },
+    {
+      "id": "a001:51",
+      "type": "text_shape",
+      "x": 2333,
+      "y": 3808,
+      "width": 56,
+      "height": 21,
+      "text": {
+        "text": "行动判断",
+        "font_weight": "regular",
+        "font_size": 14,
+        "horizontal_align": "left",
+        "vertical_align": "top",
+        "line_through": false,
+        "underline": false,
+        "italic": false,
+        "angle": 0,
+        "text_color": "#1f2329",
+        "text_color_type": 1,
+        "text_background_color_type": 0,
+        "theme_text_background_color_code": -1
+      }
+    },
+    {
+      "id": "c001:1",
+      "type": "connector",
+      "x": 2138,
+      "y": 36,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:2",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:3",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:2",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:3",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:2",
+      "type": "connector",
+      "x": 2138,
+      "y": 288,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:3",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:4",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:3",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:4",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:3",
+      "type": "connector",
+      "x": 1988,
+      "y": 557,
+      "width": 92.00743494423796,
+      "height": 625,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:4",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.1778190830235442,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:5",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.44953416149068304,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "直接交互电梯门",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 76.6728624535317,
+            "y": 13.75
+          },
+          {
+            "x": 15.334572490706478,
+            "y": 87.91666666666663
+          },
+          {
+            "x": 0,
+            "y": 197.5
+          },
+          {
+            "x": 0,
+            "y": 312.5
+          },
+          {
+            "x": 0,
+            "y": 427.5
+          },
+          {
+            "x": 5.978260869565247,
+            "y": 537.0833333333333
+          },
+          {
+            "x": 29.891304347826008,
+            "y": 611.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:4",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.1778190830235442,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:5",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.44953416149068304,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:4",
+      "type": "connector",
+      "x": 2228,
+      "y": 535.2625,
+      "width": 310,
+      "height": 186.73749999999995,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:4",
+            "snap_to": "auto",
+            "position": {
+              "x": 1,
+              "y": 0.7909855769230774
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:6",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "回头看向红字「别开」",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 51.666666666666515,
+            "y": 17.372916666666583
+          },
+          {
+            "x": 258.3333333333335,
+            "y": 100.61458333333326
+          },
+          {
+            "x": 310,
+            "y": 172.98749999999995
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:4",
+          "snap_to": "auto",
+          "position": {
+            "x": 1,
+            "y": 0.7909855769230774
+          }
+        },
+        "end_object": {
+          "id": "o001:6",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:5",
+      "type": "connector",
+      "x": 2157.3308550185875,
+      "y": 557,
+      "width": 30.6691449814125,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:4",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.6073936389921528,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:8",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "未开门，在电梯里待 5 分钟",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 5.111524163568447,
+            "y": 13.75
+          },
+          {
+            "x": 25.5576208178436,
+            "y": 82.5
+          },
+          {
+            "x": 30.6691449814125,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:4",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.6073936389921528,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:8",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:6",
+      "type": "connector",
+      "x": 2538,
+      "y": 787,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:6",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:7",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:6",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:7",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:7",
+      "type": "connector",
+      "x": 2178,
+      "y": 1017,
+      "width": 360,
+      "height": 165.29999999999995,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:7",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:5",
+            "snap_to": "auto",
+            "position": {
+              "x": 1,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "验证后开门",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 360,
+            "y": 13.75
+          },
+          {
+            "x": 300,
+            "y": 82.54999999999995
+          },
+          {
+            "x": 60,
+            "y": 151.5
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:7",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:5",
+          "snap_to": "auto",
+          "position": {
+            "x": 1,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:8",
+      "type": "connector",
+      "x": 2038,
+      "y": 1247,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:5",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:9",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:5",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:9",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:9",
+      "type": "connector",
+      "x": 2038,
+      "y": 1499,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:9",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:10",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:9",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:10",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:10",
+      "type": "connector",
+      "x": 2038,
+      "y": 1729,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:10",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:11",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:10",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:11",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:11",
+      "type": "connector",
+      "x": 2128,
+      "y": 1968.009090909091,
+      "width": 460,
+      "height": 194.9909090909091,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:11",
+            "snap_to": "auto",
+            "position": {
+              "x": 1,
+              "y": 0.7116258741258741
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:12",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "跟着蓝箭头进入打印室",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 76.66666666666652,
+            "y": 18.74848484848485
+          },
+          {
+            "x": 383.3333333333335,
+            "y": 107.49242424242402
+          },
+          {
+            "x": 460,
+            "y": 181.2409090909091
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:11",
+          "snap_to": "auto",
+          "position": {
+            "x": 1,
+            "y": 0.7116258741258741
+          }
+        },
+        "end_object": {
+          "id": "o001:12",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:12",
+      "type": "connector",
+      "x": 2038,
+      "y": 1998,
+      "width": 98.21428571428578,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:11",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:13",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.3150510204081635,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "对蓝箭头交互追问",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 16.369047619047706,
+            "y": 82.5
+          },
+          {
+            "x": 81.84523809523807,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:11",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:13",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.3150510204081635,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:13",
+      "type": "connector",
+      "x": 1838,
+      "y": 1998,
+      "width": 122.67657992565046,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:11",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.07042544403139143,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:14",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "进红字门",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 102.2304832713753,
+            "y": 13.75
+          },
+          {
+            "x": 20.446096654274925,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:11",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.07042544403139143,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:14",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:14",
+      "type": "connector",
+      "x": 2105.657992565056,
+      "y": 1998,
+      "width": 93.70113441907097,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:13",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5308248299319724,
+              "y": 0
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:11",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.8758777364725322,
+              "y": 1
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 93.70113441907097,
+            "y": 151.25
+          },
+          {
+            "x": 86.72349825927904,
+            "y": 82.5
+          },
+          {
+            "x": 17.8903345724907,
+            "y": 13.75
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:13",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5308248299319724,
+            "y": 0
+          }
+        },
+        "end_object": {
+          "id": "o001:11",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.8758777364725322,
+            "y": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:15",
+      "type": "connector",
+      "x": 1838,
+      "y": 2250,
+      "width": 75.83643122676585,
+      "height": 184.5,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:14",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:15",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.41370154009559235,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "打开柜子 B",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 12.6394052044609,
+            "y": 85.75
+          },
+          {
+            "x": 63.197026022304954,
+            "y": 167.5
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:14",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:15",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.41370154009559235,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:16",
+      "type": "connector",
+      "x": 2046.736059479554,
+      "y": 1980.5857142857144,
+      "width": 341.2639405204461,
+      "height": 453.9142857142856,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:15",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.8883430695698353,
+              "y": 0
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:11",
+            "snap_to": "auto",
+            "position": {
+              "x": 1,
+              "y": 0.8325549450549462
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "离开，继续探索",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 56.87732342007462,
+            "y": 436.9142857142856
+          },
+          {
+            "x": 284.3866171003717,
+            "y": 347.9142857142856
+          },
+          {
+            "x": 341.2639405204461,
+            "y": 225.9142857142856
+          },
+          {
+            "x": 297.9306071871126,
+            "y": 104.26190476190459
+          },
+          {
+            "x": 124.5972738537796,
+            "y": 16.65238095238101
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:15",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.8883430695698353,
+            "y": 0
+          }
+        },
+        "end_object": {
+          "id": "o001:11",
+          "snap_to": "auto",
+          "position": {
+            "x": 1,
+            "y": 0.8325549450549462
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:17",
+      "type": "connector",
+      "x": 2588,
+      "y": 2250,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:12",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:16",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:12",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:16",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:18",
+      "type": "connector",
+      "x": 2317.891304347826,
+      "y": 2507.35,
+      "width": 180.108695652174,
+      "height": 176.6500000000001,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:16",
+            "snap_to": "auto",
+            "position": {
+              "x": 0,
+              "y": 0.8879807692307684
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:17",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.44953416149068226,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "第一次交互柜子 A",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 145.108695652174,
+            "y": 15.691666666666606
+          },
+          {
+            "x": 11.086956521739467,
+            "y": 92.20833333333348
+          },
+          {
+            "x": 0,
+            "y": 162.9000000000001
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:16",
+          "snap_to": "auto",
+          "position": {
+            "x": 0,
+            "y": 0.8879807692307684
+          }
+        },
+        "end_object": {
+          "id": "o001:17",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.44953416149068226,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:19",
+      "type": "connector",
+      "x": 2626.661710037175,
+      "y": 2519,
+      "width": 61.338289962825,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:16",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.7147872779843055,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:18",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "交互复印机",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 10.223048327137349,
+            "y": 13.75
+          },
+          {
+            "x": 51.11524163568765,
+            "y": 82.5
+          },
+          {
+            "x": 61.338289962825,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:16",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.7147872779843055,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:18",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:20",
+      "type": "connector",
+      "x": 2373.326086956522,
+      "y": 2519,
+      "width": 166.34677549700973,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:17",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.6261645962732928,
+              "y": 0
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:16",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.2315159025196206,
+              "y": 1
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "继续探索",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 14.945652173913004,
+            "y": 151.25
+          },
+          {
+            "x": 87.50707127848682,
+            "y": 82.5
+          },
+          {
+            "x": 153.56796508808793,
+            "y": 13.75
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:17",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.6261645962732928,
+            "y": 0
+          }
+        },
+        "end_object": {
+          "id": "o001:16",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.2315159025196206,
+            "y": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:21",
+      "type": "connector",
+      "x": 2688,
+      "y": 2749,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:18",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:19",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:18",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:19",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:22",
+      "type": "connector",
+      "x": 2688,
+      "y": 3001,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:19",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:20",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "captions": {
+          "data": [
+            {
+              "text": "第二次交互柜子 A",
+              "font_weight": "regular",
+              "font_size": 14,
+              "horizontal_align": "left",
+              "vertical_align": "top",
+              "line_through": false,
+              "underline": false,
+              "italic": false,
+              "angle": 0,
+              "text_color": "#1f2329",
+              "text_color_type": 0,
+              "text_background_color_type": 0,
+              "theme_text_color_code": -1,
+              "theme_text_background_color_code": -1
+            }
+          ]
+        },
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "caption_position": 0.5,
+        "start_object": {
+          "id": "o001:19",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:20",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:23",
+      "type": "connector",
+      "x": 2688,
+      "y": 3231,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:20",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:21",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:20",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:21",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:24",
+      "type": "connector",
+      "x": 2688,
+      "y": 3461,
+      "width": 1,
+      "height": 165,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:21",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:22",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.5
+          },
+          {
+            "x": 0,
+            "y": 151.25
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:21",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:22",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "c001:25",
+      "type": "connector",
+      "x": 2188,
+      "y": 787,
+      "width": 1,
+      "height": 165.5,
+      "style": {
+        "border_opacity": 100,
+        "border_width": "narrow",
+        "border_color": "#a3a3a3",
+        "border_color_type": 1,
+        "border_style": "solid"
+      },
+      "connector": {
+        "start": {
+          "attached_object": {
+            "id": "o001:8",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 1
+            }
+          },
+          "arrow_style": "none"
+        },
+        "end": {
+          "attached_object": {
+            "id": "o001:23",
+            "snap_to": "auto",
+            "position": {
+              "x": 0.5,
+              "y": 0
+            }
+          },
+          "arrow_style": "line_arrow"
+        },
+        "shape": "curve",
+        "turning_points": [
+          {
+            "x": 0,
+            "y": 13.75
+          },
+          {
+            "x": 0,
+            "y": 82.58333333333337
+          },
+          {
+            "x": 0,
+            "y": 151.66666666666663
+          }
+        ],
+        "caption_auto_direction": false,
+        "specified_coordinate": true,
+        "start_object": {
+          "id": "o001:8",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        "end_object": {
+          "id": "o001:23",
+          "snap_to": "auto",
+          "position": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
+      }
+    }
+  ]
+}

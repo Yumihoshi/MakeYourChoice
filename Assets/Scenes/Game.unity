@@ -1125,7 +1125,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.86, z: 0.1}
+  m_LocalScale: {x: 0.6530246, y: 0.86, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1467096125}
@@ -5767,6 +5767,7 @@ MonoBehaviour:
   idleStepSeconds: 0.75
   arrivalSeconds: 2.4
   arrivalHoldSeconds: 0.45
+  arrivalFloorLabel: NaN
 --- !u!4 &1467096125
 Transform:
   m_ObjectHideFlags: 0

@@ -24,6 +24,7 @@ namespace Game.Level
         [LabelText("待机换层间隔"), SerializeField] float idleStepSeconds = 0.75f;
         [LabelText("到站用时"), SerializeField] float arrivalSeconds = 2.4f;
         [LabelText("到站停留"), SerializeField] float arrivalHoldSeconds = 0.45f;
+        [LabelText("到站楼层显示"), SerializeField] string arrivalFloorLabel = "NaN";
 
         static readonly Color DigitColor = new Color(1f, 0.68f, 0.22f, 1f);
         static readonly Color ArrowColor = new Color(1f, 0.55f, 0.12f, 1f);
@@ -173,13 +174,13 @@ namespace Game.Level
                     }
                     else
                     {
-                        yield return RollTo(targetFloor, rollSeconds);
+                        yield return RollTo(targetFloor, rollSeconds, arrivalFloorLabel);
                     }
                 }
             }
             else
             {
-                SetFloor(targetFloor);
+                SetFloor(targetFloor, arrivalFloorLabel);
             }
 
             _arrowsRunning = false;
@@ -218,10 +219,11 @@ namespace Game.Level
             return Mathf.Lerp(0.35f, 1.75f, p * p);
         }
 
-        IEnumerator RollTo(int targetFloor, float duration)
+        IEnumerator RollTo(int targetFloor, float duration, string displayLabel = null)
         {
+            var label = string.IsNullOrEmpty(displayLabel) ? Format(targetFloor) : displayLabel;
             _floor = targetFloor;
-            nextFloorText.text = Format(targetFloor);
+            nextFloorText.text = label;
             nextFloorText.alpha = 0f;
 
             var nextFrom = _nextHome + new Vector3(0f, RollTravel, 0f);
@@ -246,7 +248,7 @@ namespace Game.Level
 
             yield return _rollSequence.WaitForCompletion();
 
-            floorText.text = Format(targetFloor);
+            floorText.text = label;
             floorText.alpha = 1f;
             floorText.rectTransform.localPosition = _floorHome;
             nextFloorText.alpha = 0f;
@@ -294,7 +296,7 @@ namespace Game.Level
             }
         }
 
-        void SetFloor(int value)
+        void SetFloor(int value, string displayLabel = null)
         {
             _floor = value;
             _rollSequence?.Kill();
@@ -302,7 +304,7 @@ namespace Game.Level
             floorText.alpha = 1f;
             floorText.rectTransform.localPosition = _floorHome;
             floorText.rectTransform.localScale = Vector3.one;
-            floorText.text = Format(value);
+            floorText.text = string.IsNullOrEmpty(displayLabel) ? Format(value) : displayLabel;
             nextFloorText.alpha = 0f;
             nextFloorText.rectTransform.localPosition = _nextHome;
         }

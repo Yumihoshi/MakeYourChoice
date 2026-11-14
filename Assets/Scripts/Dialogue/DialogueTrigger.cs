@@ -13,6 +13,9 @@ namespace Game.Dialogue
         [SerializeField, Required, LabelText("文字锚点")] Transform textAnchor;
         [SerializeField, LabelText("剧情节点")] string nodeName = "Start";
 
+        /// <summary>对话是否正在播放；用于剧情点之间互斥，避免打断当前台词。</summary>
+        public bool IsRunning => runner != null && (runner.IsDialogueRunning || (presenter != null && presenter.IsBusy));
+
         public async void StartDialogue()
         {
             if (runner == null)

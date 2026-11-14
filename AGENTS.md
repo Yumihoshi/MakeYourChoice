@@ -22,11 +22,12 @@
 | UI 面板、层级、面板代码生成 | QFramework UIKit + CodeGenKit（命名空间 `Game.UI`，脚本 `Assets/Scripts/UI`，预制体 `Assets/Prefabs/UI`，配置见 `Assets/QFrameworkData/ProjectConfig/ProjectConfig.json`） |
 | 音频播放、BGM | QFramework AudioKit |
 | 资源加载 | QFramework ResKit |
-| 中文文本渲染 | `Assets/Fonts/SourceHanSansCN-Medium SDF.asset`（思源黑体 Medium，OFL 可随游戏分发；Dynamic + 4096 图集，已预烘 `Assets/Fonts/常用字.txt` 的 3654 字，生僻字运行时会自动补字形）。UI 中文一律用它，不要运行时自建字体资产 |
+| 中文文本渲染 | `Assets/Fonts/SourceHanSansCN-Medium SDF.asset`（思源黑体 Medium，OFL 可随游戏分发；Dynamic + 4096 图集，已预烘 `Assets/Fonts/常用字.txt` 的 3654 字，生僻字运行时会自动补字形）。UI 中文一律用它，不要运行时自建字体资产。世界空间 TMP 文字的朝向：正面法线 = `(sinθ, 0, cosθ)`（θ=eulerAngles.y），θ=0 时正面朝 -Z、相机在 -Z 侧才看得到正面；字形「→」指向 `(cosθ, 0, -sinθ)`。想同时"字朝玩家"又"箭头指向某方向"要先算这个组合，不要靠补 180° 兜底（会看到背面镜像） |
 | 补间动画 | DOTween Pro |
 | 存档、读档 | Easy Save 3 |
 | 关卡几何、第一人称视角 | ProBuilder（5.2.4）搭 3D 几何 + Cinemachine 第一人称；运行时组件在 `Assets/Scripts/Level`（`LowResDisplay` 低分辨率显示、`FirstPersonController`、`AutoDoor`、`TriggerVolume`） |
-| 剧情对话、3D 飘字 | Yarn Spinner 3.2.8 + `Assets/Scripts/Dialogue`（`FloatingDialoguePresenter` 决定显示 3D 字还是对话框、`DialogueTrigger`、`WorldLineView`、`FloatingLine`、`DialogueBoxView`、`Dialogue3DOverlay`）；对话文本改 `Assets/Yarn/*.yarn`，不要自己写解析器；3D 字必须在 `Dialogue3D` 层（由 `Dialogue3DCamera` 全分辨率叠加，主相机 `cullingMask` 排除该层） |
+| 剧情对话、3D 飘字 | Yarn Spinner 3.2.8 + `Assets/Scripts/Dialogue`（`FloatingDialoguePresenter` 决定显示 3D 字还是对话框、`DialogueTrigger`、`WorldLineView`、`FloatingLine`、`DialogueBoxView`、`Dialogue3DOverlay`）；对话文本改 `Assets/Yarn/*.yarn`，不要自己写解析器；3D 字必须在 `Dialogue3D` 层（由 `Dialogue3DCamera` 全分辨率叠加，主相机 `cullingMask` 排除该层）。"走进去就播一段剧情"用 `DialogueZoneTrigger`（放在触发区上，配 `DialogueTrigger` + `BoxCollider`）；`Assets/Prefabs/Dialogue/FloatingLine.prefab` 的 root 缩放必须是 0.02，改成 0.08 会让一句字宽到 100 m |
+| 关卡一的流程触发 | `Assets/Scripts/Level/Level1`（`Level1State` 关卡开关状态、`Level1DoorInteract` 按 E 开电梯门、`Level1RedTextTrigger` 看向红字、`Level1DoorListenTrigger` 门前听 3 s、`Level1ElevatorCountdown` 电梯内倒计时结局），触发区在 `Level/Level1/Triggers` |
 | 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
 
 ## 代码约定

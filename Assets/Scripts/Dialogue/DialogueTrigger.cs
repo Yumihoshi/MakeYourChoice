@@ -16,7 +16,13 @@ namespace Game.Dialogue
         /// <summary>对话是否正在播放；用于剧情点之间互斥，避免打断当前台词。</summary>
         public bool IsRunning => runner != null && (runner.IsDialogueRunning || (presenter != null && presenter.IsBusy));
 
-        public async void StartDialogue()
+        public void StartDialogue()
+        {
+            StartDialogue(nodeName);
+        }
+
+        /// <summary>播放指定的 Yarn 剧情节点；播放期间重复触发会被忽略。</summary>
+        public async void StartDialogue(string node)
         {
             if (runner == null)
             {
@@ -36,7 +42,7 @@ namespace Game.Dialogue
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(nodeName))
+            if (string.IsNullOrWhiteSpace(node))
             {
                 Debug.LogError("DialogueTrigger 的剧情节点为空", this);
                 return;
@@ -70,7 +76,7 @@ namespace Game.Dialogue
 
             try
             {
-                await runner.StartDialogue(nodeName);
+                await runner.StartDialogue(node);
             }
             catch (Exception e)
             {

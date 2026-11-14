@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 926201396
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: startpanel_prefab
+      Dependencies: {}
+    Info_1:
+      Name: pausepanel_prefab
+      Dependencies: {}

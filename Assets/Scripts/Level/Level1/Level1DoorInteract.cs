@@ -1,12 +1,11 @@
 using Game.Dialogue;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Game.Level
 {
     /// <summary>
-    /// 玩家正对电梯门时显示交互提示，按 E 开门并播放开门后的剧情。
+    /// 电梯门的交互：玩家视线正对门时按交互键（鼠标左键 / 手柄 A）开门并播放开门后的剧情。
     /// 对话播放期间与菜单打开时都不接受交互。
     /// </summary>
     public sealed class Level1DoorInteract : MonoBehaviour
@@ -14,35 +13,34 @@ namespace Game.Level
         [SerializeField, Required, LabelText("关卡状态")]
         Level1State state;
 
-        [SerializeField, Required, LabelText("玩家")]
-        Transform player;
-
-        [SerializeField, Required, LabelText("交互提示")]
-        GameObject prompt;
+        [SerializeField, Required, LabelText("视线起点（玩家眼睛）")]
+        Transform eye;
 
         [SerializeField, Required, LabelText("开门剧情")]
         DialogueTrigger openDialogue;
 
         [SerializeField, LabelText("交互距离")]
-        float maxDistance = 2.6f;
-
-        [SerializeField, LabelText("正对角度")]
-        float maxAngle = 40f;
+        float maxDistance = 3f;
 
         void Update()
         {
-            bool canInteract = IsPlayerFacingDoor();
-            if (prompt != null && prompt.activeSelf != canInteract)
+            bool aimed = IsAimingAtDoor();
+            if (aimed)
             {
-                prompt.SetActive(canInteract);
+                InteractFocus.Set(this);
+            }
+            else
+            {
+                InteractFocus.Clear(this);
             }
 
-            if (!canInteract)
+            if (!aimed)
             {
                 return;
             }
 
-            if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
+            var input = PlayerInputRouter.Instance;
+            if (input != null && input.Interact.WasPressedThisFrame())
             {
                 state.OpenElevatorDoor();
                 if (openDialogue != null)
@@ -52,15 +50,17 @@ namespace Game.Level
             }
         }
 
-        /// <summary>玩家在交互距离内、面朝门，且门未开、没有对话在播、光标已锁定。</summary>
-        bool IsPlayerFacingDoor()
+        void OnDisable() => InteractFocus.Clear(this);
+
+        /// <summary>视线正对门、视线没被挡住，且门未开、没有对话在播、光标已锁定。</summary>
+        bool IsAimingAtDoor()
         {
-            if (state == null || player == null)
+            if (state == null || eye == null || state.DoorOpened)
             {
                 return false;
             }
 
-            if (state.DoorOpened || Cursor.lockState != CursorLockMode.Locked)
+            if (Cursor.lockState != CursorLockMode.Locked)
             {
                 return false;
             }
@@ -70,19 +70,14 @@ namespace Game.Level
                 return false;
             }
 
-            if (Vector3.Distance(player.position, transform.position) > maxDistance)
+            // 视线从眼睛沿着朝向打一条射线，射线起点在玩家胶囊体内部，不会打到自己。
+            if (!Physics.Raycast(eye.position, eye.forward, out var hit, maxDistance, ~0,
+                    QueryTriggerInteraction.Ignore))
             {
                 return false;
             }
 
-            Vector3 toDoor = transform.position - player.position;
-            toDoor.y = 0f;
-            if (toDoor.sqrMagnitude < 0.0001f)
-            {
-                return true;
-            }
-
-            return Vector3.Angle(player.forward, toDoor) <= maxAngle;
+            return hit.collider.transform.IsChildOf(transform);
         }
     }
 }

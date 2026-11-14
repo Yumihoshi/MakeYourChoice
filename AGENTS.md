@@ -27,7 +27,9 @@
 | 存档、读档 | Easy Save 3 |
 | 关卡几何、第一人称视角 | ProBuilder（5.2.4）搭 3D 几何 + Cinemachine 第一人称；运行时组件在 `Assets/Scripts/Level`（`LowResDisplay` 低分辨率显示、`FirstPersonController`、`AutoDoor`、`TriggerVolume`） |
 | 剧情对话、3D 飘字 | Yarn Spinner 3.2.8 + `Assets/Scripts/Dialogue`（`FloatingDialoguePresenter` 决定显示 3D 字还是对话框、`DialogueTrigger`、`WorldLineView`、`FloatingLine`、`DialogueBoxView`、`Dialogue3DOverlay`）；对话文本改 `Assets/Yarn/*.yarn`，不要自己写解析器；3D 字必须在 `Dialogue3D` 层（由 `Dialogue3DCamera` 全分辨率叠加，主相机 `cullingMask` 排除该层）。"走进去就播一段剧情"用 `DialogueZoneTrigger`（放在触发区上，配 `DialogueTrigger` + `BoxCollider`）；`Assets/Prefabs/Dialogue/FloatingLine.prefab` 的 root 缩放必须是 0.02，改成 0.08 会让一句字宽到 100 m |
-| 关卡一的流程触发 | `Assets/Scripts/Level/Level1`（`Level1State` 关卡开关状态、`Level1DoorInteract` 按 E 开电梯门、`Level1RedTextTrigger` 看向红字、`Level1DoorListenTrigger` 门前听 3 s、`Level1ElevatorCountdown` 电梯内倒计时结局），触发区在 `Level/Level1/Triggers`。玩家侧还有 `PlayerControlLock`（挂在 Player 上，开场剧情播完前禁用 `FirstPersonController`，即开场不能走动/回头） |
+| 关卡一的流程触发 | `Assets/Scripts/Level/Level1`（`Level1State` 关卡开关状态、`Level1DoorInteract` 瞄准电梯门按交互键开门、`Level1RedTextTrigger` 看向红字、`Level1DoorListenTrigger` 门前听 3 s、`Level1ElevatorCountdown` 电梯内倒计时结局），触发区在 `Level/Level1/Triggers`。玩家侧还有 `PlayerControlLock`（挂在 Player 上，开场剧情播完前禁用 `FirstPersonController`，即开场不能走动/回头） |
+| 输入（键位/手柄） | `Assets/Scripts/Game/PlayerInputRouter.cs`：代码里建一张 `InputActionMap("Player")`，动作 Move / Look / Interact / Sprint / Menu，键位按飞书 3C 表（WASD + 左摇杆、鼠标 + 右摇杆、鼠标左键 + 手柄 A、Shift + 扳机、Esc + Start）。`CurrentDevice` 会在键鼠/手柄之间自动切换（`DeviceChanged` 事件），新增输入一律从 `PlayerInputRouter.Instance` 取动作，不要直接读 `Keyboard.current`。注意本版本 Input System 的 `AddAction` 没有 `expectedControlType` 参数 |
+| 交互聚焦与准心 HUD | `Assets/Scripts/Game/InteractFocus.cs`（静态登记"当前瞄准的可交互物"）+ `Assets/Scripts/UI/InteractPromptView.cs`（场景 `HUD` 的 Overlay Canvas：四角矩形准心 `Assets/Art/UI/hud_crosshair.png` + 右侧交互键图标 `key_mouse_left.png` / `key_pad_a.png`，按 `CurrentDevice` 切换）。可交互物在 `Update` 里用 `Physics.Raycast(eye.position, eye.forward, ~0, QueryTriggerInteraction.Ignore)` 打自己后 `InteractFocus.Set(this)`，`OnDisable` 清掉；注意别用 `~(1 << 玩家层)` 排除自己（Eye 在 Default 层会把墙也排掉） |
 | 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
 
 ## 代码约定

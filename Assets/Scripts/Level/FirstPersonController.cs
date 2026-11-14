@@ -1,11 +1,10 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Game.Level
 {
     /// <summary>
-    /// 第一人称移动：CharacterController + 新版 Input System，只允许左右转。
+    /// 第一人称移动：CharacterController + 新版 Input System 的动作输入，只允许左右转。
     /// </summary>
     [RequireComponent(typeof(CharacterController))]
     public sealed class FirstPersonController : MonoBehaviour
@@ -27,47 +26,38 @@ namespace Game.Level
 
         void Update()
         {
-            if (Cursor.lockState != CursorLockMode.Locked)
+            var input = PlayerInputRouter.Instance;
+            if (input == null || Cursor.lockState != CursorLockMode.Locked)
             {
                 return;
             }
 
-            HandleLook();
-            HandleMove();
+            HandleLook(input);
+            HandleMove(input);
         }
 
-        void HandleLook()
+        void HandleLook(PlayerInputRouter input)
         {
-            if (Mouse.current == null)
-            {
-                return;
-            }
+            // 鼠标是位移量、手柄摇杆是推量，两者换算方式不同。
+            float degreesPerFrame = input.CurrentDevice == InputDeviceKind.Gamepad
+                ? input.ReadGamepadLookDegreesPerSecond() * Time.deltaTime
+                : input.Look.ReadValue<Vector2>().x * lookSensitivity;
 
-            _yaw += Mouse.current.delta.ReadValue().x * lookSensitivity;
+            _yaw += degreesPerFrame;
             transform.rotation = Quaternion.Euler(0f, _yaw, 0f);
         }
 
-        void HandleMove()
+        void HandleMove(PlayerInputRouter input)
         {
-            if (Keyboard.current == null)
-            {
-                return;
-            }
-
-            var input = Vector2.zero;
-            if (Keyboard.current.wKey.isPressed) input.y += 1f;
-            if (Keyboard.current.sKey.isPressed) input.y -= 1f;
-            if (Keyboard.current.dKey.isPressed) input.x += 1f;
-            if (Keyboard.current.aKey.isPressed) input.x -= 1f;
-            input = Vector2.ClampMagnitude(input, 1f);
+            var axis = Vector2.ClampMagnitude(input.Move.ReadValue<Vector2>(), 1f);
 
             var speed = moveSpeed;
-            if (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed)
+            if (input.Sprint.IsPressed())
             {
                 speed *= sprintMultiplier;
             }
 
-            var move = (transform.right * input.x + transform.forward * input.y) * speed;
+            var move = (transform.right * axis.x + transform.forward * axis.y) * speed;
             if (_controller.isGrounded && _verticalVelocity < 0f)
             {
                 _verticalVelocity = -2f;

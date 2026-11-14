@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using QFramework;
 using Game.UI;
 
@@ -28,7 +27,8 @@ namespace Game
 
 		void Update()
 		{
-			if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+			var input = PlayerInputRouter.Instance;
+			if (input != null && input.Menu.WasPressedThisFrame())
 			{
 				TogglePausePanel();
 			}

@@ -31,6 +31,7 @@
 | 关卡一的流程触发 | `Assets/Scripts/Level/Level1`（`Level1State` 关卡开关状态、`Level1DoorInteract` 瞄准电梯门按交互键开门、`Level1RedTextTrigger` 红字要在可视距离内、视线对准且真的出现在画面里、`Level1DoorListenTrigger` 门前听 3 s、`Level1ElevatorCountdown` 电梯内倒计时结局），触发区在 `Level/Level1/Triggers`。**看过红字后电梯门上锁**：`Level1State.CanOpenDoor` 在风声剧情（`LV1_Listen`）播完前为 false，门既不显示交互提示也开不了，`Level1DoorListenTrigger` 在剧情播完后才 `MarkListenFinished()` 解锁。玩家侧还有 `PlayerControlLock`（挂在 Player 上，开场剧情播完前禁用 `FirstPersonController`，即开场不能走动/回头） |
 | 输入（键位/手柄） | `Assets/Scripts/Game/PlayerInputRouter.cs`：代码里建一张 `InputActionMap("Player")`，动作 Move / Look / Interact / Sprint / Menu，键位按飞书 3C 表（WASD + 左摇杆、鼠标 + 右摇杆、鼠标左键 + 手柄 A、Shift + 扳机、Esc + Start）。`CurrentDevice` 会在键鼠/手柄之间自动切换（`DeviceChanged` 事件），新增输入一律从 `PlayerInputRouter.Instance` 取动作，不要直接读 `Keyboard.current`。注意本版本 Input System 的 `AddAction` 没有 `expectedControlType` 参数 |
 | 交互聚焦与准心 HUD | `Assets/Scripts/Game/InteractFocus.cs`（静态登记"当前瞄准的可交互物"）+ `Assets/Scripts/UI/InteractPromptView.cs`（场景 `HUD` 的 Overlay Canvas：四角矩形准心 `Assets/Art/UI/hud_crosshair.png` + 右侧交互键图标 `key_mouse_left.png` / `key_pad_a.png`，按 `CurrentDevice` 切换）。可交互物在 `Update` 里用 `Physics.Raycast(eye.position, eye.forward, ~0, QueryTriggerInteraction.Ignore)` 打自己后 `InteractFocus.Set(this)`，`OnDisable` 清掉；注意别用 `~(1 << 玩家层)` 排除自己（Eye 在 Default 层会把墙也排掉） |
+| 开始菜单与开场电梯演出 | `Assets/Scripts/Game/GameBootstrap.cs`（`Start` 先 `floorDisplay.BeginIdleDescent()` + `rideMotion.Ride()` 再开 `StartPanel`；点「开始游戏」后 `ArriveAt(arrivalFloor=1)`，到站停稳再关面板）、`Assets/Scripts/Level/ElevatorFloorDisplay.cs`（电梯门外红墙上的竖版楼层牌：上方楼号滚动、下方两枚「▼」循环下移，到站减速停稳后箭头淡出、楼号滑到面板竖直中央再回调；箭头起点/滚动距离/到站高度在组件上配，版式改动不改代码常量；静态 `Instance`）、`Assets/Scripts/Level/ElevatorRideMotion.cs`（挂在 PlayerVCam 上：菜单期间轻微晃动、到站下沉回弹）。面板不直接引用场景，靠 `Assets/Scripts/UI/StartPanel.cs` 的 `StartPanelData.StartRequested` 回调驱动；面板背景是半透明压暗，让开场相机画面透出来 |
 | 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
 
 ## 代码约定
@@ -53,6 +54,6 @@
 
 - 本项目没有 CI，也没有无头构建/测试脚本；不要臆造 Unity `-batchmode` 命令。
 - 改完脚本在 Unity 编辑器里等编译结束，确认 Console 无报错。
-- 本项目已安装 `com.coplaydev.unity-mcp`：可用 Unity MCP 刷新资源、读 Console、进入 Play 模式检查；MCP 不可用时改用手动检查。
+- 本项目已安装 `com.coplaydev.unity-mcp`：可用 Unity MCP 刷新资源、读 Console、进入 Play 模式检查；MCP 不可用时改用手动检查。**Play 检查时保持 Unity 是前台窗口**：`ProjectSettings.asset` 的 `runInBackground: 0`，编辑器一失焦 Play 就暂停（`Time.time`、楼号、动画都不推进，`ScreenCapture` 也可能不落盘），切回窗口才继续；不要误判成脚本卡死。
 - 用 MCP 联调时，`pwsh Start-Sleep` 单次不要超过 10 秒（长等待拆成多次，便于及时观测）；不要在 `execute_code` 里 `Thread.Sleep` 等动画/对话——会冻结编辑器主线程，用协程采样代替。
 - 交付前至少在 `Game.unity` 里 Play 一次，确认核心玩法流程能走通；打包前确认 Build Settings 的场景列表包含 `Game.unity`。

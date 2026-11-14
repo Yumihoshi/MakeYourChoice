@@ -51,6 +51,12 @@ namespace Game.Level
                 return;
             }
 
+            if (Cursor.lockState != CursorLockMode.Locked)
+            {
+                _elapsed = 0f;
+                return;
+            }
+
             _elapsed += Time.deltaTime;
             if (_elapsed < waitTimeout)
             {

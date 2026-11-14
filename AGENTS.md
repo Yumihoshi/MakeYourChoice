@@ -27,7 +27,7 @@
 | 存档、读档 | Easy Save 3 |
 | 关卡几何、第一人称视角 | ProBuilder（5.2.4）搭 3D 几何 + Cinemachine 第一人称；运行时组件在 `Assets/Scripts/Level`（`LowResDisplay` 低分辨率显示、`FirstPersonController`、`AutoDoor`、`TriggerVolume`） |
 | 剧情对话、3D 飘字 | Yarn Spinner 3.2.8 + `Assets/Scripts/Dialogue`（`FloatingDialoguePresenter` 决定显示 3D 字还是对话框、`DialogueTrigger`、`WorldLineView`、`FloatingLine`、`DialogueBoxView`、`Dialogue3DOverlay`）；对话文本改 `Assets/Yarn/*.yarn`，不要自己写解析器；3D 字必须在 `Dialogue3D` 层（由 `Dialogue3DCamera` 全分辨率叠加，主相机 `cullingMask` 排除该层）。"走进去就播一段剧情"用 `DialogueZoneTrigger`（放在触发区上，配 `DialogueTrigger` + `BoxCollider`）；`Assets/Prefabs/Dialogue/FloatingLine.prefab` 的 root 缩放必须是 0.02，改成 0.08 会让一句字宽到 100 m |
-| 关卡一的流程触发 | `Assets/Scripts/Level/Level1`（`Level1State` 关卡开关状态、`Level1DoorInteract` 按 E 开电梯门、`Level1RedTextTrigger` 看向红字、`Level1DoorListenTrigger` 门前听 3 s、`Level1ElevatorCountdown` 电梯内倒计时结局），触发区在 `Level/Level1/Triggers` |
+| 关卡一的流程触发 | `Assets/Scripts/Level/Level1`（`Level1State` 关卡开关状态、`Level1DoorInteract` 按 E 开电梯门、`Level1RedTextTrigger` 看向红字、`Level1DoorListenTrigger` 门前听 3 s、`Level1ElevatorCountdown` 电梯内倒计时结局），触发区在 `Level/Level1/Triggers`。玩家侧还有 `PlayerControlLock`（挂在 Player 上，开场剧情播完前禁用 `FirstPersonController`，即开场不能走动/回头） |
 | 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
 
 ## 代码约定
@@ -38,6 +38,7 @@
 - 对外开放到 Inspector 的序列化字段（`public` 或 `[SerializeField]`），一律加 Odin 的 `[LabelText("中文")]` 标中文名（`using Sirenix.OdinInspector;`，属性程序集在 `Assets/Plugins/Sirenix/Assemblies/`），不让英文变量名直接出现在 Inspector 里。CodeGenKit 生成的 `*.Designer.cs` 会被工具重新生成覆盖，属例外，不要手改。
 - 物体优先在场景/预制体里摆好，不要在代码里 `new`：相机、Canvas、UI、管理器这类数量固定的对象，直接在场景或预制体里加好，脚本只负责取引用和驱动逻辑；只有运行时才能确定数量或内容的（按数据实例化、运行时生成的纹理等）才用代码创建。
 - 已开启 Enter Play Mode Options，只关闭了 Domain Reload（`ProjectSettings/EditorSettings.asset`：`m_EnterPlayModeOptionsEnabled: 1`、`m_EnterPlayModeOptions: 1`，场景仍会重载）：静态字段、静态事件订阅、单例状态会跨 Play 残留，二次 Play 前必须自己重置（`[RuntimeInitializeOnLoadMethod]` 清静态、退订静态事件），不要依赖域重载帮你清理。已知踩坑：QFramework UIKit 的 `UIKit.Config`（含 PanelLoaderPool）与 `UIKit.Table` 跨 Play 残留，会让面板只实例化出空壳（`Info == null`、按钮无监听、Table 计数错乱），入口用 `Assets/Scripts/Game/GameBootstrap.cs` 的 `ResetUIKitState()` 在 `SubsystemRegistration` 阶段重置；新增场景入口时照此重置一次。
+- Yarn 台词要换行时写 `<br>`（TMP 富文本标签，逐字显示时也能正确换行）；**不要写 `\n`**——Yarn 3 会在编译期报 `Syntax error: Unexpected "n" while reading a line statement`，整份 `.yarn` 编译失败、`YarnProject.Program.Nodes` 变空，运行时报 `Cannot load node ...: No nodes have been loaded`。
 - 不手改 `.meta`；移动、重命名、删除资产时连同 `.meta` 一起处理。
 - 场景、预制体、`.asset` 等序列化文件通过 Unity 编辑器或 Unity MCP 修改，不手写 YAML。
 
@@ -50,4 +51,5 @@
 - 本项目没有 CI，也没有无头构建/测试脚本；不要臆造 Unity `-batchmode` 命令。
 - 改完脚本在 Unity 编辑器里等编译结束，确认 Console 无报错。
 - 本项目已安装 `com.coplaydev.unity-mcp`：可用 Unity MCP 刷新资源、读 Console、进入 Play 模式检查；MCP 不可用时改用手动检查。
+- 用 MCP 联调时，`pwsh Start-Sleep` 单次不要超过 10 秒（长等待拆成多次，便于及时观测）；不要在 `execute_code` 里 `Thread.Sleep` 等动画/对话——会冻结编辑器主线程，用协程采样代替。
 - 交付前至少在 `Game.unity` 里 Play 一次，确认核心玩法流程能走通；打包前确认 Build Settings 的场景列表包含 `Game.unity`。

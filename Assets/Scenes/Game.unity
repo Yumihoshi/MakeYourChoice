@@ -4104,6 +4104,7 @@ GameObject:
   - component: {fileID: 1078034790}
   - component: {fileID: 1078034789}
   - component: {fileID: 1078034788}
+  - component: {fileID: 1078034791}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -4118,7 +4119,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078034787}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 599d947f44e4bff44bc6affcc66c211c, type: 3}
   m_Name: 
@@ -4169,6 +4170,21 @@ Transform:
   - {fileID: 589012435}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1078034791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078034787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ece01477b03c6545a850f6fbd8d21ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1078034788}
+  gate: {fileID: 402619297}
+  waitTimeout: 8
 --- !u!1 &1218868752
 GameObject:
   m_ObjectHideFlags: 0

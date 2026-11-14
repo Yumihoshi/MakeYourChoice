@@ -32,16 +32,8 @@ namespace Game.Dialogue
         {
             if (worldCamera == null) return false;
 
-            Vector3 cameraPosition = worldCamera.transform.position;
-            if (Vector3.Distance(cameraPosition, worldPosition) > readableDistance) return false;
-
-            Vector3 viewport = worldCamera.WorldToViewportPoint(worldPosition);
-            if (viewport.z <= 0f) return false;
-            if (viewport.x < 0f || viewport.x > 1f) return false;
-            if (viewport.y < 0f || viewport.y > 1f) return false;
-
             int mask = ~LayerMask.GetMask("Player");
-            return !Physics.Linecast(cameraPosition, worldPosition, mask, QueryTriggerInteraction.Ignore);
+            return ScreenVisibility.IsOnScreen(worldCamera, worldPosition, readableDistance, mask);
         }
 
         void Awake()

@@ -8,10 +8,10 @@ namespace Game.UI
 {
 	public class StartPanelData : UIPanelData
 	{
-		/// <summary>玩家点击开始按钮后的处理；由场景入口注入电梯到站流程。</summary>
-		public Action StartRequested { get; }
+		/// <summary>玩家点击开始按钮后的处理；由场景入口注入，返回是否接受了本次开始请求（接受时入口会立即关闭本面板）。</summary>
+		public Func<bool> StartRequested { get; }
 
-		public StartPanelData(Action startRequested = null)
+		public StartPanelData(Func<bool> startRequested = null)
 		{
 			StartRequested = startRequested;
 		}
@@ -40,6 +40,7 @@ namespace Game.UI
 		protected override void OnShow()
 		{
 			_startRequested = false;
+			SetButtonsInteractable(true);
 
 			var eventSystem = EventSystem.current;
 			if (eventSystem == null)
@@ -76,15 +77,48 @@ namespace Game.UI
 				return;
 			}
 
-			// 电梯到站前面板要一直开着：按钮禁用会让焦点失效、十字键动不了，
-			// 所以只挡住重复触发，按钮本身保持可用。
 			if (_startRequested)
 			{
 				return;
 			}
 
+			// 先置灰防止连点：回调成功后场景入口会立即关闭本面板，回调返回 false 时才需要恢复。
 			_startRequested = true;
-			_data.StartRequested.Invoke();
+			SetButtonsInteractable(false);
+
+			if (_data.StartRequested.Invoke())
+			{
+				return;
+			}
+
+			_startRequested = false;
+			SetButtonsInteractable(true);
+		}
+
+		/// <summary>
+		/// 设置开始与退出按钮是否可用：不可用时按钮变灰，既不响应点击也不参与手柄导航。
+		/// </summary>
+		void SetButtonsInteractable(bool interactable)
+		{
+			SetInteractable(Btn_Start, interactable);
+			SetInteractable(Btn_Exit, interactable);
+
+			if (!interactable)
+			{
+				UiNavigation.ClearFocus(transform);
+			}
+		}
+
+		static void SetInteractable(Selectable button, bool interactable)
+		{
+			button.interactable = interactable;
+
+			// 按钮的过渡方式为 None，选中与禁用配色都由 SelectableHighlight 负责，这里催它立刻重绘。
+			var highlight = button.GetComponent<SelectableHighlight>();
+			if (highlight != null)
+			{
+				highlight.Refresh();
+			}
 		}
 
 		void OnExitButtonClick()

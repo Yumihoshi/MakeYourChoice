@@ -27,6 +27,22 @@ namespace Game
 			AudioKit.PlaySound(Folder + clipName, false, null, volume);
 		}
 
+		/// <summary>读取音效资源时长（秒），用于让演出等待音效播完；资源缺失时报错并返回 0。</summary>
+		public static float ClipLength(string clipName)
+		{
+			var loader = ResLoader.Allocate();
+			var clip = loader.LoadSync<AudioClip>(Folder + clipName);
+			var duration = clip != null ? clip.length : 0f;
+			loader.Recycle2Cache();
+
+			if (clip == null)
+			{
+				Debug.LogError($"找不到音效资源：{Folder + clipName}");
+			}
+
+			return duration;
+		}
+
 		/// <summary>循环播放音效；返回的播放器用来停止播放。</summary>
 		public static AudioPlayer PlayLoop(string clipName, float volume = 1f)
 		{

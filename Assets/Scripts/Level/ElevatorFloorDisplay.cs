@@ -25,9 +25,9 @@ namespace Game.Level
         [LabelText("到站用时"), SerializeField] float arrivalSeconds = 2.4f;
         [LabelText("到站停留"), SerializeField] float arrivalHoldSeconds = 0.45f;
         [LabelText("到站楼层显示"), SerializeField] string arrivalFloorLabel = "NaN";
+        [LabelText("到站楼层颜色"), SerializeField] Color arrivalFloorColor = new Color(1f, 0.3f, 0.25f, 1f);
 
         static readonly Color DigitColor = new Color(1f, 0.68f, 0.22f, 1f);
-        static readonly Color ArrowColor = new Color(1f, 0.55f, 0.12f, 1f);
         const float RollTravel = 0.06f;
         const float ArrowCycleSeconds = 1.1f;
         const float ArrowFadeSeconds = 0.12f;
@@ -35,6 +35,7 @@ namespace Game.Level
 
         static ElevatorFloorDisplay _instance;
 
+        Color[] _arrowColors;
         Coroutine _idleRoutine;
         Coroutine _arrivalRoutine;
         Sequence _rollSequence;
@@ -81,6 +82,7 @@ namespace Game.Level
             _instance = this;
             _floorHome = floorText.rectTransform.localPosition;
             _nextHome = nextFloorText.rectTransform.localPosition;
+            CacheArrowColors();
             SetFloor(idleTopFloor);
             SetArrowAlpha(0f);
         }
@@ -186,7 +188,7 @@ namespace Game.Level
             _arrowsRunning = false;
             _arrived = true;
             yield return SettleFloorToArrived();
-            FlashDigit();
+            FlashDigit(string.IsNullOrEmpty(arrivalFloorLabel) ? DigitColor : arrivalFloorColor);
             yield return new WaitForSeconds(arrivalHoldSeconds);
 
             IsArriving = false;
@@ -278,22 +280,35 @@ namespace Game.Level
                 rect.localPosition = position;
 
                 var fade = Mathf.SmoothStep(0f, 1f, Mathf.Min(t / 0.15f, (1f - t) / 0.25f));
-                var alpha = fade * _arrowFade;
-                var color = ArrowColor;
-                color.a = alpha;
-                arrow.color = color;
+                ApplyArrowAlpha(i, fade * _arrowFade);
             }
         }
 
+        /// <summary>仅改箭头透明度，保留场景里给箭头设的原色。</summary>
         void SetArrowAlpha(float alpha)
         {
             _arrowFade = alpha;
             for (var i = 0; i < arrows.Length; i++)
             {
-                var color = ArrowColor;
-                color.a = alpha;
-                arrows[i].color = color;
+                ApplyArrowAlpha(i, alpha);
             }
+        }
+
+        /// <summary>记录每个箭头在场景中的原色，之后只覆盖 alpha。</summary>
+        void CacheArrowColors()
+        {
+            _arrowColors = new Color[arrows.Length];
+            for (var i = 0; i < arrows.Length; i++)
+            {
+                _arrowColors[i] = arrows[i].color;
+            }
+        }
+
+        void ApplyArrowAlpha(int index, float alpha)
+        {
+            var color = _arrowColors[index];
+            color.a = alpha;
+            arrows[index].color = color;
         }
 
         void SetFloor(int value, string displayLabel = null)
@@ -316,12 +331,13 @@ namespace Game.Level
             _scaleTween = floorText.rectTransform.DOScale(Vector3.one, 0.1f).SetEase(Ease.OutQuad);
         }
 
-        void FlashDigit()
+        /// <summary>到站数字先闪白再补到目标色；正常楼层用 DigitColor，到站标签用 arrivalFloorColor。</summary>
+        void FlashDigit(Color target)
         {
             _colorTween?.Kill();
             floorText.color = Color.white;
             _colorTween = DOTween.To(
-                () => floorText.color, value => floorText.color = value, DigitColor, 0.45f);
+                () => floorText.color, value => floorText.color = value, target, 0.45f);
         }
 
         static string Format(int value)

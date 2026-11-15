@@ -59,6 +59,18 @@ namespace Game.UI
 		[SerializeField, LabelText("选中强调色")]
 		Color accentFocus = new Color(0.949f, 0.757f, 0.306f, 1f);
 
+		[SerializeField, LabelText("禁用底色")]
+		Color plateDisabled = new Color(0.169f, 0.176f, 0.192f, 0.92f);
+
+		[SerializeField, LabelText("禁用描边")]
+		Color borderDisabled = new Color(0.5f, 0.51f, 0.53f, 0.18f);
+
+		[SerializeField, LabelText("禁用文字")]
+		Color labelDisabled = new Color(0.451f, 0.463f, 0.486f, 1f);
+
+		[SerializeField, LabelText("禁用强调色")]
+		Color accentDisabled = new Color(0.451f, 0.463f, 0.486f, 1f);
+
 		[Title("动效")]
 		[SerializeField, LabelText("选中放大"), Min(0f)]
 		float focusScale = 1.04f;
@@ -66,13 +78,22 @@ namespace Game.UI
 		[SerializeField, LabelText("过渡时长（秒）"), Min(0f)]
 		float transitionSeconds = 0.1f;
 
+		static SelectableHighlight _pointerTarget;
+
 		Selectable _selectable;
 		Vector3 _baseScale;
 		float _blend;
+		bool _interactable;
 		bool _selected;
 		bool _pointerInside;
 		bool _pressed;
 		bool _indicatorVisible;
+
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+		static void ResetStatics()
+		{
+			_pointerTarget = null;
+		}
 
 		void Awake()
 		{
@@ -105,16 +126,18 @@ namespace Game.UI
 			}
 
 			_baseScale = transform.localScale;
+			_interactable = _selectable.IsInteractable();
 			Apply(0f);
 		}
 
 		void OnEnable()
 		{
 			var eventSystem = EventSystem.current;
+			_interactable = _selectable != null && _selectable.IsInteractable();
 			_selected = eventSystem != null && eventSystem.currentSelectedGameObject == gameObject;
 			_pointerInside = false;
 			_pressed = false;
-			_blend = _selected ? 1f : 0f;
+			_blend = IsHighlighted ? 1f : 0f;
 			Apply(_blend);
 		}
 
@@ -126,11 +149,23 @@ namespace Game.UI
 			_blend = 0f;
 			_indicatorVisible = false;
 			transform.localScale = _baseScale;
+
+			if (_pointerTarget == this)
+			{
+				_pointerTarget = null;
+			}
 		}
 
 		void Update()
 		{
-			var target = _selected || _pointerInside ? 1f : 0f;
+			var interactable = _selectable.IsInteractable();
+			if (interactable != _interactable)
+			{
+				_interactable = interactable;
+				Apply(_blend);
+			}
+
+			var target = IsHighlighted ? 1f : 0f;
 			if (Mathf.Approximately(_blend, target))
 			{
 				return;
@@ -141,8 +176,73 @@ namespace Game.UI
 			Apply(_blend);
 		}
 
+		/// <summary>
+		/// 是否应显示高亮：键鼠模式下指针悬停优先，只点亮指针所在的那个控件，
+		/// 避免手柄留下的导航选中与鼠标悬停同时亮；指针不在任何控件上时由导航选中决定。
+		/// </summary>
+		bool IsHighlighted
+		{
+			get
+			{
+				var pointerPriority = IsKeyboardMouseDevice;
+				if (_pointerInside && pointerPriority)
+				{
+					return true;
+				}
+
+				if (!_selected)
+				{
+					return false;
+				}
+
+				return !(pointerPriority && _pointerTarget != null && _pointerTarget != this);
+			}
+		}
+
+		static bool IsKeyboardMouseDevice
+		{
+			get
+			{
+				var router = PlayerInputRouter.Instance;
+				return router == null || router.CurrentDevice == InputDeviceKind.KeyboardMouse;
+			}
+		}
+
+		/// <summary>
+		/// 按控件当前的可交互状态立刻重绘一次配色，用于刚切换了 interactable、等不到下一帧的场合。
+		/// </summary>
+		public void Refresh()
+		{
+			_interactable = _selectable != null && _selectable.IsInteractable();
+			Apply(_blend);
+		}
+
 		void Apply(float blend)
 		{
+			if (!_interactable)
+			{
+				plate.color = plateDisabled;
+
+				if (border != null)
+				{
+					border.effectColor = borderDisabled;
+				}
+
+				if (label != null)
+				{
+					label.color = labelDisabled;
+				}
+
+				if (accent != null)
+				{
+					accent.color = accentDisabled;
+				}
+
+				SetIndicatorVisible(false);
+				transform.localScale = _baseScale;
+				return;
+			}
+
 			plate.color = _pressed ? platePressed : Color.Lerp(plateNormal, plateFocus, blend);
 
 			if (border != null)
@@ -160,20 +260,23 @@ namespace Game.UI
 				accent.color = Color.Lerp(accentNormal, accentFocus, blend);
 			}
 
-			if (indicator != null)
-			{
-				var visible = blend > 0.5f;
-				if (visible != _indicatorVisible)
-				{
-					_indicatorVisible = visible;
-					indicator.gameObject.SetActive(visible);
-				}
-			}
+			SetIndicatorVisible(blend > 0.5f);
 
 			if (!Mathf.Approximately(focusScale, 1f))
 			{
 				transform.localScale = Vector3.LerpUnclamped(_baseScale, _baseScale * focusScale, blend);
 			}
+		}
+
+		void SetIndicatorVisible(bool visible)
+		{
+			if (indicator == null || visible == _indicatorVisible)
+			{
+				return;
+			}
+
+			_indicatorVisible = visible;
+			indicator.gameObject.SetActive(visible);
 		}
 
 		public void OnSelect(BaseEventData eventData)
@@ -188,17 +291,33 @@ namespace Game.UI
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
+			if (!_interactable)
+			{
+				return;
+			}
+
 			_pointerInside = true;
+			_pointerTarget = this;
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			_pointerInside = false;
 			_pressed = false;
+
+			if (_pointerTarget == this)
+			{
+				_pointerTarget = null;
+			}
 		}
 
 		public void OnPointerDown(PointerEventData eventData)
 		{
+			if (!_interactable)
+			{
+				return;
+			}
+
 			_pressed = true;
 			Apply(_blend);
 		}

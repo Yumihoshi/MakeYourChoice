@@ -46,12 +46,16 @@ namespace Game
 			{
 				Debug.LogError("GameBootstrap 缺少楼层显示或电梯晃动引用，开始菜单将跳过电梯到站演出", this);
 				UIKit.OpenPanel<StartPanel>(new StartPanelData(() => UIKit.ClosePanel<StartPanel>()));
-				return;
+			}
+			else
+			{
+				floorDisplay.BeginIdleDescent();
+				rideMotion.Ride();
+				UIKit.OpenPanel<StartPanel>(new StartPanelData(OnStartRequested));
 			}
 
-			floorDisplay.BeginIdleDescent();
-			rideMotion.Ride();
-			UIKit.OpenPanel<StartPanel>(new StartPanelData(OnStartRequested));
+			// UIRoot 要等第一次打开面板时才创建，它自带的旧版事件系统只能在这之后清理。
+			UiNavigation.EnsureSingleEventSystem();
 		}
 
 		void Update()

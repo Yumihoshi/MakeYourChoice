@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using QFramework;
 
@@ -19,6 +20,7 @@ namespace Game.UI
 	public partial class StartPanel : UIPanel
 	{
 		StartPanelData _data;
+		bool _startRequested;
 
 		protected override void OnInit(IUIData uiData = null)
 		{
@@ -27,6 +29,8 @@ namespace Game.UI
 
 			Btn_Start.onClick.AddListener(OnStartButtonClick);
 			Btn_Exit.onClick.AddListener(OnExitButtonClick);
+
+			UiNavigation.ChainVertical(Btn_Start, Btn_Exit);
 		}
 
 		protected override void OnOpen(IUIData uiData = null)
@@ -35,6 +39,21 @@ namespace Game.UI
 		
 		protected override void OnShow()
 		{
+			_startRequested = false;
+
+			var eventSystem = EventSystem.current;
+			if (eventSystem == null)
+			{
+				Debug.LogError("StartPanel 找不到 EventSystem，手柄无法在菜单里移动焦点", this);
+				return;
+			}
+
+			eventSystem.SetSelectedGameObject(Btn_Start.gameObject);
+		}
+
+		void Update()
+		{
+			UiNavigation.RecoverFocusIfLost(Btn_Start);
 		}
 		
 		protected override void OnHide()
@@ -45,6 +64,8 @@ namespace Game.UI
 		{
 			Btn_Start.onClick.RemoveListener(OnStartButtonClick);
 			Btn_Exit.onClick.RemoveListener(OnExitButtonClick);
+
+			UiNavigation.ClearFocus(transform);
 		}
 
 		void OnStartButtonClick()
@@ -55,8 +76,14 @@ namespace Game.UI
 				return;
 			}
 
-			Btn_Start.interactable = false;
-			Btn_Exit.interactable = false;
+			// 电梯到站前面板要一直开着：按钮禁用会让焦点失效、十字键动不了，
+			// 所以只挡住重复触发，按钮本身保持可用。
+			if (_startRequested)
+			{
+				return;
+			}
+
+			_startRequested = true;
 			_data.StartRequested.Invoke();
 		}
 

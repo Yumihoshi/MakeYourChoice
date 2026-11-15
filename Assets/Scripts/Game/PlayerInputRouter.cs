@@ -38,6 +38,9 @@ namespace Game
         /// <summary>菜单，Esc 或手柄 Start。</summary>
         public InputAction Menu { get; private set; }
 
+        /// <summary>返回 / 取消，手柄 B（西键）；暂停面板用它关闭。</summary>
+        public InputAction Back { get; private set; }
+
         /// <summary>最近一次产生输入的设备类型。</summary>
         public InputDeviceKind CurrentDevice { get; private set; } = InputDeviceKind.KeyboardMouse;
 
@@ -111,6 +114,9 @@ namespace Game
             Menu = _map.AddAction("Menu", InputActionType.Button);
             Menu.AddBinding("<Keyboard>/escape");
             Menu.AddBinding("<Gamepad>/start");
+
+            Back = _map.AddAction("Back", InputActionType.Button);
+            Back.AddBinding("<Gamepad>/buttonEast");
 
             _map.Enable();
         }

@@ -1,6 +1,6 @@
 # AGENTS.md — MakeYourChoice
 
-48 小时 Game Jam 项目（游趣无限2026 × 紫与灰gj）。Unity 2022.3.62f3c1，URP 14.0.12（3D Universal Renderer；2026-11-14 由 2D 渲染转 3D）。
+游趣无限2026 × 紫与灰gj 48 小时 Game Jam 之后的迭代项目，已有可玩原型，11 月 22 日截止。Unity 2022.3.62f3c1，URP 14.0.12（3D Universal Renderer；2026-11-14 由 2D 渲染转 3D）。
 项目自有场景只有 `Assets/Scenes/Game.unity`（其余 `.unity` 都在插件示例与场景模板目录里）。
 
 ## 策划案（需求与玩法的唯一来源）
@@ -10,10 +10,9 @@
 
 ## 本项目硬约束
 
-- **48h 优先出可玩版本**：能跑 > 优雅。不要引入复杂抽象层——不自研框架、DI 容器、ECS、事件总线或额外分层；需要架构时用 QFramework 现有的 MVC。
+- **不要引入复杂抽象层**：不自研框架、DI 容器、ECS、事件总线或额外分层；需要架构时用 QFramework 现有的 MVC。
 - **先查再用，不重复造轮子**：动手实现前，先确认下表中的插件/框架是否已经提供了这个能力。
 - **第三方与框架目录只读**：`Assets/Plugins`（DOTween Pro、Easy Save 3、Odin Inspector、vFolders）与 `Assets/QFramework` 不在本项目维护范围内，不要修改；需要扩展时在 `Assets/Scripts` 下写自己的代码。
-- **不用 superpowers 的 `brainstorming` skill**：需求有疑问就直接问用户确认，不要走该 skill 的问答流程。
 
 ## 已有能力（实现前先看这里）
 
@@ -50,7 +49,7 @@
 
 ## 文档
 
-- 改了功能后**不需要**同步 `docs/superpowers` 下的 spec/plan 文档（它们只是当时的过程产物）；只需同步本文件的「已有能力」表。
+- 改了功能后**需要**同步 `docs/superpowers` 下的 spec/plan 文档（`specs/` 记设计与设计决定，`plans/` 记分步实施），再同步本文件的「已有能力」表。
 
 ## 验证
 

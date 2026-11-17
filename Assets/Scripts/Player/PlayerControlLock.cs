@@ -7,16 +7,22 @@ namespace Game.Level
 {
     /// <summary>
     /// 在指定剧情播放期间收回玩家控制权：进入场景先禁用控制器，等该剧情播完再交还。
-    /// 用于开场独白，避免玩家在台词还没播完时就走动或回头。
+    /// 仅用于开场独白；其他剧情播放时玩家仍应能移动和交互，所以不要把这个组件挂到别的剧情上。
     /// </summary>
     public sealed class PlayerControlLock : MonoBehaviour
     {
+        /// <summary>开场剧情锁定期间为 true；其他剧情播放不影响这个状态。</summary>
+        public static bool IsLocked { get; private set; }
+
         [LabelText("玩家控制器"), SerializeField] FirstPersonController controller;
         [LabelText("需要播完才能动的剧情"), SerializeField] DialogueTrigger gate;
         [LabelText("等待剧情开始的最长秒数"), SerializeField] float waitTimeout = 8f;
 
         bool _locked;
         float _elapsed;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics() => IsLocked = false;
 
         void Awake()
         {
@@ -28,6 +34,7 @@ namespace Game.Level
             }
 
             controller.enabled = false;
+            IsLocked = true;
         }
 
         void OnEnable()
@@ -98,7 +105,17 @@ namespace Game.Level
             _locked = false;
             _elapsed = 0f;
             controller.enabled = true;
+            IsLocked = false;
             enabled = false;
+        }
+
+        void OnDisable()
+        {
+            // 组件在锁定期间被禁用或销毁时，别把「不可交互」留在静态状态里。
+            if (_locked)
+            {
+                IsLocked = false;
+            }
         }
     }
 }

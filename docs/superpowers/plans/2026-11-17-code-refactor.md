@@ -1531,7 +1531,9 @@ namespace Game
 | `Assets/Scripts/Level/Hall/ElevatorCountdown.cs` | 38 | 同上 | 同上 |
 | `Assets/Scripts/Level/Hall/HallEntryTrigger.cs` | 37 | 同上 | 同上 |
 | `Assets/Scripts/Level/BackRooms/RoomEntryTrigger.cs` | 47 | 同上 | 同上 |
-| `Assets/Scripts/UI/InteractPromptView.cs` | 40 | `Cursor.lockState == CursorLockMode.Locked` | `GameCursorState.IsPlaying` |
+| `Assets/Scripts/UI/InteractPromptView.cs` | 40 | `Cursor.lockState == CursorLockMode.Locked` | `GameCursorState.IsPlaying`（后续再改为 `GameCursorState.IsPlaying && !PlayerControlLock.IsLocked`，见步骤 3 末尾注记） |
+
+> **2026-11-18 更新（剧情播放中允许交互）**：`InteractPromptView` 已整体重写，不再保留 `IsDialoguePlaying()`。该类现在只为“光标是否锁定 / 是否处于开场锁定”而显示准心与交互键提示，条件为 `GameCursorState.IsPlaying && !PlayerControlLock.IsLocked`，并删掉了 `presenter` 字段、`Awake`、`IsDialoguePlaying()`。执行本步骤时，`InteractPromptView.cs` 的目标形态即此后一个条件，而**不是**单纯的 `GameCursorState.IsPlaying`。
 
 替换脚本（先跑核对，再跑替换）：
 

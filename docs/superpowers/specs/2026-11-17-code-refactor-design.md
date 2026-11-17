@@ -937,9 +937,11 @@ public class GameBootstrap : MonoBehaviour
 | `ElevatorCountdown.cs:38` | 同上 | 同上 |
 | `HallEntryTrigger.cs:37` | 同上 | 同上 |
 | `RoomEntryTrigger.cs:47` | 同上 | 同上 |
-| `InteractPromptView.cs:40` | `Cursor.lockState == Locked && !IsDialoguePlaying()` | `GameCursorState.IsPlaying && !IsDialoguePlaying()` |
+| `InteractPromptView.cs:40` | `Cursor.lockState == Locked && !IsDialoguePlaying()` | `GameCursorState.IsPlaying && !PlayerControlLock.IsLocked` |
 
-`InteractPromptView` 只改这一行，文件位置与其余代码不动（UI 目录硬约束）。
+`InteractPromptView` 的文件位置与其余代码不动（UI 目录硬约束）。
+
+> **2026-11-18 更新（剧情播放中允许交互）**：原先的 `!IsDialoguePlaying()` 会在**任何**剧情播放时隐藏准心与交互键提示，导致玩家在剧情中看不到交互入口。改成 `!PlayerControlLock.IsLocked`：只有开场剧情（唯一的控制锁）期间隐藏，其他剧情播放中照常显示。同时删掉了本类对 `FloatingDialoguePresenter` 的依赖（`presenter` 字段、`Awake`、`IsDialoguePlaying()`），改为 `using Game.Level;` 读 `PlayerControlLock.IsLocked`。
 
 ### 10.3 `Core/GameProgress.cs`
 

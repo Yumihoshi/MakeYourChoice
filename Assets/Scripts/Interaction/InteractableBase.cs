@@ -5,7 +5,8 @@ namespace Game.Level
 {
     /// <summary>
     /// 可交互物的公共部分：玩家视线正对物体时登记准心提示，按交互键触发 <see cref="OnInteract"/>。
-    /// 光标未锁定（菜单 / 到站演出中）时一律不响应交互，也不显示提示。
+    /// 光标未锁定（菜单 / 到站演出中）或开场剧情还没播完时一律不响应交互，也不显示提示；
+    /// 其他剧情播放期间仍允许交互。
     /// </summary>
     public abstract class InteractableBase : MonoBehaviour
     {
@@ -43,7 +44,7 @@ namespace Game.Level
         /// <summary>光标锁定、视线对准自己的子物体且没有被遮挡。</summary>
         bool IsAimed()
         {
-            if (eye == null || !GameCursorState.IsPlaying || !CanInteract())
+            if (eye == null || !GameCursorState.IsPlaying || PlayerControlLock.IsLocked || !CanInteract())
             {
                 return false;
             }

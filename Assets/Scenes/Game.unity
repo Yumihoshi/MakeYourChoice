@@ -251,11 +251,11 @@ Transform:
   m_GameObject: {fileID: 61683836}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.01999998, y: 1.22, z: 0.17199993}
+  m_LocalPosition: {x: 0.77, y: 0, z: 0}
   m_LocalScale: {x: 1.54, y: 2.44, z: 0.08}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1674907332}
+  m_Father: {fileID: 1688589250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &61683838
 BoxCollider:
@@ -1470,7 +1470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 196200961}
   m_Layer: 0
-  m_Name: "\u76F8\u673A"
+  m_Name: "= \u76F8\u673A"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2203,7 +2203,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1373763326}
-  - {fileID: 1817609103}
   m_Father: {fileID: 782330312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &371084768
@@ -6749,7 +6748,7 @@ GameObject:
   - component: {fileID: 1078034788}
   - component: {fileID: 1078034791}
   m_Layer: 8
-  m_Name: "\u73A9\u5BB6"
+  m_Name: "= \u73A9\u5BB6"
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7599,7 +7598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1284364503}
   m_Layer: 0
-  m_Name: "\u5BF9\u8BDD"
+  m_Name: "= \u5BF9\u8BDD"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8017,7 +8016,8 @@ Transform:
   m_LocalPosition: {x: -0.75, y: 1.22, z: 0.172}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1817609103}
   m_Father: {fileID: 371084767}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1387991586
@@ -8119,7 +8119,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crosshair: {fileID: 1846059189}
   keyIcon: {fileID: 683313683}
-  presenter: {fileID: 313994054}
   keyboardIcon: {fileID: 21300000, guid: a18ff999c86a3c64f98ae390490b2fbd, type: 3}
   gamepadIcon: {fileID: 21300000, guid: 1e36d32dd29211b4c879a3f490dded9d, type: 3}
 --- !u!114 &1401977713
@@ -10047,7 +10046,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1688589250}
-  - {fileID: 61683837}
   m_Father: {fileID: 782330312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1674907333
@@ -10122,7 +10120,8 @@ Transform:
   m_LocalPosition: {x: -0.75, y: 1.22, z: 0.172}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 61683837}
   m_Father: {fileID: 1674907332}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!59 &1688589251
@@ -10763,11 +10762,11 @@ Transform:
   m_GameObject: {fileID: 1817609102}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.01999998, y: 1.22, z: 0.17199993}
+  m_LocalPosition: {x: 0.77, y: 0, z: 0}
   m_LocalScale: {x: 1.54, y: 2.44, z: 0.08}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 371084767}
+  m_Father: {fileID: 1373763326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1817609104
 BoxCollider:
@@ -10955,7 +10954,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1825372739}
   m_Layer: 0
-  m_Name: "\u5173\u5361"
+  m_Name: "= \u5173\u5361"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11917,7 +11916,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2030106457}
   m_Layer: 0
-  m_Name: "\u754C\u9762"
+  m_Name: "+ \u754C\u9762"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

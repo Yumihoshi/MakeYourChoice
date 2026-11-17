@@ -46,6 +46,16 @@ namespace Game.Level
 
         void Awake()
         {
+            // 铰链电机转的是铰链节点，门扇必须挂在它下面，否则只会空转、门板纹丝不动。
+            if (mode == AutoDoorMode.Hinge && hinge != null
+                && (hinge.transform.childCount == 0
+                    || (doorPanel != null && !doorPanel.IsChildOf(hinge.transform))))
+            {
+                Debug.LogError("旋转门的门扇没有挂在铰链节点下，开门时门板不会跟着转动", this);
+                enabled = false;
+                return;
+            }
+
             _motion = mode switch
             {
                 AutoDoorMode.Rise => new RiseDoorMotion(

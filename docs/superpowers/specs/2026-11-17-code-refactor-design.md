@@ -619,6 +619,8 @@ namespace Game.Level
 
 错误文案逐字保留（`AutoDoor 未指定门扇`、`AutoDoor 未指定左右门扇`、`AutoDoor 未指定铰链关节`、`AutoDoor 的铰链关节缺少刚体`），`Debug.LogError(msg, context)` 的 context 仍传 `AutoDoor` 实例，保证 Console 里点一下还是定位到那扇门。
 
+`AutoDoor.Awake` 在建 motion 前多一条配置检查：`mode == Hinge` 且铰链下没有门扇（或 `doorPanel` 不是铰链的子物体）时打印「旋转门的门扇没有挂在铰链节点下，开门时门板不会跟着转动」并 `enabled = false`。铰链电机转的是铰链节点，门板必须挂在它下面；缺了这一步交互与音效都正常，只是门板纹丝不动，属于最难查的静默失败。
+
 ### 9.2 `Level/Door/AutoDoor.cs`（233 行 → 约 95 行）
 
 ```csharp

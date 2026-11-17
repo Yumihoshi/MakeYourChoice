@@ -667,10 +667,10 @@ var map = new (string oldPath, string newPath)[] {
     // 大厅 / 门
     ("关卡/大厅/Door_North_Red", "关卡/大厅/门/红门"),
     ("关卡/大厅/Door_North_Red/Hinge", "关卡/大厅/门/红门/铰链"),
-    ("关卡/大厅/Door_North_Red/Hinge/Slab", "关卡/大厅/门/红门/门板"),
+    ("关卡/大厅/Door_North_Red/Hinge/Slab", "关卡/大厅/门/红门/铰链/门板"),
     ("关卡/大厅/Door_North_Blue", "关卡/大厅/门/蓝门"),
     ("关卡/大厅/Door_North_Blue/Hinge", "关卡/大厅/门/蓝门/铰链"),
-    ("关卡/大厅/Door_North_Blue/Hinge/Slab", "关卡/大厅/门/蓝门/门板"),
+    ("关卡/大厅/Door_North_Blue/Hinge/Slab", "关卡/大厅/门/蓝门/铰链/门板"),
     ("关卡/大厅/Door_Mid_Safe", "关卡/大厅/门/安全门"),
     ("关卡/大厅/Door_Mid_Safe/Slab", "关卡/大厅/门/安全门/门板"),
     // 大厅 / 招牌
@@ -706,6 +706,8 @@ var map = new (string oldPath, string newPath)[] {
 ```
 
 宿主代码与任务 3 步骤 1 相同。
+
+> 两扇北门的门板（原 `Hinge/Slab`）必须保留在铰链节点下，新路径是 `关卡/大厅/门/红门/铰链/门板` 与 `关卡/大厅/门/蓝门/铰链/门板`。`AutoDoor(mode=Hinge)` 转的是带 `Rigidbody` + `HingeJoint` 的铰链节点，门板必须跟着它转；若把门板提到门的根节点下，交互与开门音效都正常，但门板纹丝不动（2026-11-17 已修，见 `AutoDoor.Awake` 的配置检查）。
 
 预期返回：`"已应用 71 条"`。
 

@@ -37,7 +37,7 @@ namespace Game.UI
 
         void LateUpdate()
         {
-            bool inGame = Cursor.lockState == CursorLockMode.Locked && !IsDialoguePlaying();
+            bool inGame = GameCursorState.IsPlaying && !IsDialoguePlaying();
             SetGraphicEnabled(crosshair, inGame);
 
             bool showKey = inGame && InteractFocus.Current != null;

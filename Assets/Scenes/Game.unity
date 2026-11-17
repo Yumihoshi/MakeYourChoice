@@ -1257,6 +1257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 163465894}
   - component: {fileID: 163465893}
+  - component: {fileID: 163465895}
   m_Layer: 0
   m_Name: "\u6E38\u620F\u5165\u53E3"
   m_TagString: Untagged
@@ -1295,6 +1296,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &163465895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163465892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 700f3b756e484de40afb931c2ed58f5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &168759710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,6 +1544,7 @@ MonoBehaviour:
   player: {fileID: 1078034790}
   area: {fileID: 206109409}
   room: 1
+  redDoorLock: {fileID: 371084770}
 --- !u!114 &206109408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1760,8 +1774,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbf243536c2a3b54d9d8fcb90029d498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redDoor: {fileID: 371084768}
-  redDoorLockSeconds: 60
 --- !u!1 &236681606
 GameObject:
   m_ObjectHideFlags: 0
@@ -2169,6 +2181,7 @@ GameObject:
   - component: {fileID: 371084767}
   - component: {fileID: 371084768}
   - component: {fileID: 371084769}
+  - component: {fileID: 371084770}
   m_Layer: 0
   m_Name: "\u7EA2\u95E8"
   m_TagString: Untagged
@@ -2234,6 +2247,21 @@ MonoBehaviour:
   eye: {fileID: 589012435}
   maxDistance: 3
   door: {fileID: 371084768}
+  openDialogue: {fileID: 0}
+--- !u!114 &371084770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371084766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84004c9da4833647a302d6f7e1f190e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: {fileID: 371084768}
+  lockSeconds: 60
 --- !u!1 &379227555
 GameObject:
   m_ObjectHideFlags: 0
@@ -2925,7 +2953,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 419963350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.062}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2933,7 +2961,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.2}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.42, y: 0.34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &450323283
@@ -4243,6 +4271,7 @@ MonoBehaviour:
   player: {fileID: 1078034790}
   area: {fileID: 720952117}
   room: 0
+  redDoorLock: {fileID: 0}
 --- !u!114 &720952116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5138,7 +5167,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 319
 --- !u!114 &885565193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5600,10 +5629,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9769b86435805bb4b9e9d40a1d69a63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: {fileID: 1364879549}
   eye: {fileID: 589012435}
-  openDialogue: {fileID: 984429058}
   maxDistance: 2.6
+  door: {fileID: 984429055}
+  openDialogue: {fileID: 984429058}
+  state: {fileID: 1364879549}
 --- !u!114 &984429058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5810,7 +5840,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eye: {fileID: 589012435}
   maxDistance: 3
-  level1State: {fileID: 1364879549}
   state: {fileID: 229100188}
   dialogue: {fileID: 1007804870}
 --- !u!114 &1007804870
@@ -6838,7 +6867,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 32
+  m_text: NaN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f7d2f1a729e9eb14991e13be0900b93c, type: 2}
   m_sharedMaterial: {fileID: 442890671559544414, guid: f7d2f1a729e9eb14991e13be0900b93c, type: 2}
@@ -6960,7 +6989,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104691784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.062}
+  m_LocalPosition: {x: 0, y: 0, z: -0.068}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6968,7 +6997,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.2}
+  m_AnchoredPosition: {x: 0, y: 0.228}
   m_SizeDelta: {x: 0.42, y: 0.34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1127638917
@@ -10062,6 +10091,7 @@ MonoBehaviour:
   eye: {fileID: 589012435}
   maxDistance: 3
   door: {fileID: 1674907333}
+  openDialogue: {fileID: 0}
 --- !u!1 &1688589249
 GameObject:
   m_ObjectHideFlags: 0
@@ -12412,7 +12442,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eye: {fileID: 589012435}
   maxDistance: 3
-  level1State: {fileID: 1364879549}
   state: {fileID: 229100188}
   dialogue: {fileID: 2104287558}
 --- !u!114 &2104287558
@@ -12954,7 +12983,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eye: {fileID: 589012435}
   maxDistance: 3
-  level1State: {fileID: 1364879549}
   state: {fileID: 229100188}
   door: {fileID: 2139900594}
   dialogue: {fileID: 2139900592}

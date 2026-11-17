@@ -1,0 +1,119 @@
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+namespace Game.Level
+{
+    /// <summary>门的打开方式。</summary>
+    public enum AutoDoorMode
+    {
+        [LabelText("整体向上")] Rise,
+        [LabelText("两扇向两侧滑开")] SlideApart,
+        [LabelText("绕铰链旋转")] Hinge,
+    }
+
+    /// <summary>
+    /// 玩家靠近时打开的门；触发区挂在根节点，门扇作为子物体按 <see cref="mode"/> 开合。
+    /// 开合动作本身交给 <see cref="IDoorMotion"/>，这里只负责锁定、开关状态、玩家触发与开门音效。
+    /// </summary>
+    public sealed class AutoDoor : MonoBehaviour
+    {
+        [LabelText("开门方式"), SerializeField] AutoDoorMode mode = AutoDoorMode.Rise;
+
+        [LabelText("门扇（整体向上时使用）"), SerializeField] Transform doorPanel;
+        [LabelText("升起高度"), SerializeField] float openHeight = 2.5f;
+        [LabelText("单侧滑动距离（两扇向两侧时使用）"), SerializeField] float slideDistance = 1.5f;
+
+        [LabelText("左门扇"), SerializeField] Transform leftLeaf;
+        [LabelText("右门扇"), SerializeField] Transform rightLeaf;
+
+        [LabelText("铰链关节（旋转门使用）"), SerializeField] HingeJoint hinge;
+        [LabelText("开门角度（旋转门使用，负值反向转）"), SerializeField] float hingeOpenAngle = -95f;
+        [LabelText("最大角速度（旋转门使用，度/秒）"), SerializeField] float hingeSpeed = 150f;
+        [LabelText("角度跟随刚度（旋转门使用）"), SerializeField] float hingeGain = 4f;
+        [LabelText("电机力矩上限（旋转门使用）"), SerializeField] float hingeMotorForce = 600f;
+
+        [LabelText("开关门时长"), SerializeField] float duration = 0.6f;
+        [LabelText("自动关门"), SerializeField] bool autoClose;
+        [LabelText("关门延迟"), SerializeField] float closeDelay = 2f;
+
+        IDoorMotion _motion;
+
+        /// <summary>锁住时玩家靠近也不开门、调用 <see cref="Open"/> 也无效；由剧情脚本控制。</summary>
+        public bool Locked { get; set; }
+
+        /// <summary>门当前是否已经打开（升到顶 / 滑到两侧 / 转到开门角度）；用于交互提示与防重复开门。</summary>
+        public bool IsOpen { get; private set; }
+
+        void Awake()
+        {
+            _motion = mode switch
+            {
+                AutoDoorMode.Rise => new RiseDoorMotion(
+                    this, doorPanel, openHeight, duration, autoClose, closeDelay),
+                AutoDoorMode.SlideApart => new SlideApartDoorMotion(
+                    this, leftLeaf, rightLeaf, slideDistance, duration, autoClose, closeDelay),
+                _ => new HingeDoorMotion(
+                    this, hinge, hingeOpenAngle, hingeSpeed, hingeGain, hingeMotorForce, autoClose, closeDelay),
+            };
+
+            if (!_motion.TryConfigure())
+            {
+                enabled = false;
+            }
+        }
+
+        void FixedUpdate() => _motion?.FixedTick();
+
+        void OnDestroy() => _motion?.Dispose();
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (Locked || !other.CompareTag("Player"))
+            {
+                return;
+            }
+
+            Open(playSound: false);
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if (!other.CompareTag("Player") || !autoClose)
+            {
+                return;
+            }
+
+            Close();
+        }
+
+        /// <summary>打开门；锁住、已经打开或配置有误时不响应。</summary>
+        /// <param name="playSound">是否播开门音效：玩家交互开门要响，触发式自动开与定时锁自动重开不响。</param>
+        public void Open(bool playSound = true)
+        {
+            if (Locked || IsOpen || _motion == null)
+            {
+                return;
+            }
+
+            IsOpen = true;
+            if (playSound)
+            {
+                GameSfx.Play(GameSfx.ElevatorDoorOpen);
+            }
+
+            _motion.Open();
+        }
+
+        /// <summary>把门放回关闭位置。</summary>
+        public void Close()
+        {
+            if (!IsOpen || _motion == null)
+            {
+                return;
+            }
+
+            IsOpen = false;
+            _motion.Close();
+        }
+    }
+}

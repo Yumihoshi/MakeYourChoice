@@ -51,11 +51,7 @@ namespace Game.Dialogue
             SetVisibleCount(visibleCount);
         }
 
-        public void SetVisibleCount(int count)
-        {
-            if (bodyText == null) return;
-            bodyText.maxVisibleCharacters = Mathf.Clamp(count, 0, bodyText.textInfo.characterCount);
-        }
+        public void SetVisibleCount(int count) => TmpReveal.SetVisibleCount(bodyText, count);
 
         public void Show()
         {

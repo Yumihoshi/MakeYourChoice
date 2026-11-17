@@ -122,11 +122,7 @@ namespace Game.Dialogue
         }
 
         /// <summary>设置当前可见字数，超出范围自动夹取。</summary>
-        public void SetVisibleCount(int count)
-        {
-            if (text == null) return;
-            text.maxVisibleCharacters = Mathf.Clamp(count, 0, text.textInfo.characterCount);
-        }
+        public void SetVisibleCount(int count) => TmpReveal.SetVisibleCount(text, count);
 
         /// <summary>
         /// 开始收尾：整句先补全，再逐字像纸片一样掉落、带随机旋转地摔成平铺，全部落地后逐字缩到零。

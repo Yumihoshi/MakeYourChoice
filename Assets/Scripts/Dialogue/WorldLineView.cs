@@ -35,7 +35,7 @@ namespace Game.Dialogue
             if (worldCamera == null) return false;
             if (Vector3.Distance(worldCamera.transform.position, worldPosition) < minReadableDistance) return false;
 
-            int mask = ~LayerMask.GetMask("Player");
+            int mask = GameLayers.EverythingButPlayer;
             return ScreenVisibility.IsOnScreen(worldCamera, worldPosition, readableDistance, mask);
         }
 

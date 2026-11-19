@@ -31,6 +31,9 @@ namespace Game.UI
 		[SerializeField, LabelText("焦点指示条"), Tooltip("选中时显示在按钮左侧的竖条，可留空")]
 		RectTransform indicator;
 
+		[SerializeField, LabelText("底色随焦点换色"), Tooltip("关闭后只改描边、文字与强调图形；滑条这类整条轨道不能被点亮的控件请关闭")]
+		bool tintPlate = true;
+
 		[Title("配色")]
 		[SerializeField, LabelText("常态底色")]
 		Color plateNormal = new Color(0.102f, 0.118f, 0.149f, 0.92f);
@@ -99,16 +102,19 @@ namespace Game.UI
 		{
 			_selectable = GetComponent<Selectable>();
 
-			if (plate == null)
+			if (tintPlate)
 			{
-				plate = GetComponent<Graphic>();
-			}
+				if (plate == null)
+				{
+					plate = GetComponent<Graphic>();
+				}
 
-			if (plate == null)
-			{
-				Debug.LogError("SelectableHighlight 没有可换色的底色图形", this);
-				enabled = false;
-				return;
+				if (plate == null)
+				{
+					Debug.LogError("SelectableHighlight 没有可换色的底色图形", this);
+					enabled = false;
+					return;
+				}
 			}
 
 			if (label == null)
@@ -221,7 +227,10 @@ namespace Game.UI
 		{
 			if (!_interactable)
 			{
-				plate.color = plateDisabled;
+				if (tintPlate)
+				{
+					plate.color = plateDisabled;
+				}
 
 				if (border != null)
 				{
@@ -243,7 +252,10 @@ namespace Game.UI
 				return;
 			}
 
-			plate.color = _pressed ? platePressed : Color.Lerp(plateNormal, plateFocus, blend);
+			if (tintPlate)
+			{
+				plate.color = _pressed ? platePressed : Color.Lerp(plateNormal, plateFocus, blend);
+			}
 
 			if (border != null)
 			{

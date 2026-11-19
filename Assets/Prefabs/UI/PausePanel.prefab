@@ -173,6 +173,7 @@ MonoBehaviour:
   label: {fileID: 8303565227194208089}
   accent: {fileID: 0}
   indicator: {fileID: 1198001058383775105}
+  tintPlate: 1
   plateNormal: {r: 0.102, g: 0.118, b: 0.149, a: 0.92}
   plateFocus: {r: 0.949, g: 0.757, b: 0.306, a: 1}
   platePressed: {r: 0.839, g: 0.647, b: 0.216, a: 1}
@@ -182,6 +183,10 @@ MonoBehaviour:
   labelFocus: {r: 0.078, g: 0.086, b: 0.106, a: 1}
   accentNormal: {r: 0.929, g: 0.91, b: 0.863, a: 1}
   accentFocus: {r: 0.949, g: 0.757, b: 0.306, a: 1}
+  plateDisabled: {r: 0.169, g: 0.176, b: 0.192, a: 0.92}
+  borderDisabled: {r: 0.5, g: 0.51, b: 0.53, a: 0.18}
+  labelDisabled: {r: 0.451, g: 0.463, b: 0.486, a: 1}
+  accentDisabled: {r: 0.451, g: 0.463, b: 0.486, a: 1}
   focusScale: 1.04
   transitionSeconds: 0.1
 --- !u!1 &277429001596522641
@@ -498,6 +503,7 @@ MonoBehaviour:
   label: {fileID: 961007757925382025}
   accent: {fileID: 0}
   indicator: {fileID: 8154375089929676103}
+  tintPlate: 1
   plateNormal: {r: 0.102, g: 0.118, b: 0.149, a: 0.92}
   plateFocus: {r: 0.949, g: 0.757, b: 0.306, a: 1}
   platePressed: {r: 0.839, g: 0.647, b: 0.216, a: 1}
@@ -507,6 +513,10 @@ MonoBehaviour:
   labelFocus: {r: 0.078, g: 0.086, b: 0.106, a: 1}
   accentNormal: {r: 0.929, g: 0.91, b: 0.863, a: 1}
   accentFocus: {r: 0.949, g: 0.757, b: 0.306, a: 1}
+  plateDisabled: {r: 0.169, g: 0.176, b: 0.192, a: 0.92}
+  borderDisabled: {r: 0.5, g: 0.51, b: 0.53, a: 0.18}
+  labelDisabled: {r: 0.451, g: 0.463, b: 0.486, a: 1}
+  accentDisabled: {r: 0.451, g: 0.463, b: 0.486, a: 1}
   focusScale: 1.04
   transitionSeconds: 0.1
 --- !u!1 &1715794501100794844
@@ -658,7 +668,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4283351538
   m_fontColor: {r: 0.949, g: 0.757, b: 0.306, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -671,7 +681,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -806,8 +816,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000009536743, y: 0}
-  m_SizeDelta: {x: -24.000008, y: 12}
+  m_AnchoredPosition: {x: -6, y: 0}
+  m_SizeDelta: {x: -12, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2980144261702388593
 GameObject:
@@ -958,7 +968,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4292667629
   m_fontColor: {r: 0.929, g: 0.91, b: 0.863, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1092,7 +1102,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
+    rgba: 4292667629
   m_fontColor: {r: 0.929, g: 0.91, b: 0.863, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1227,7 +1237,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4286876300
   m_fontColor: {r: 0.549, g: 0.541, b: 0.518, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1240,7 +1250,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -1483,11 +1493,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02974c6666a95bb448aa3474e0d939bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plate: {fileID: 96243559493231810}
+  plate: {fileID: 0}
   border: {fileID: 0}
   label: {fileID: 5686914698780182365}
   accent: {fileID: 40062200673633241}
   indicator: {fileID: 0}
+  tintPlate: 0
   plateNormal: {r: 0.102, g: 0.118, b: 0.149, a: 0.92}
   plateFocus: {r: 0.949, g: 0.757, b: 0.306, a: 1}
   platePressed: {r: 0.839, g: 0.647, b: 0.216, a: 1}
@@ -1497,6 +1508,10 @@ MonoBehaviour:
   labelFocus: {r: 0.949, g: 0.757, b: 0.306, a: 1}
   accentNormal: {r: 0.929, g: 0.91, b: 0.863, a: 1}
   accentFocus: {r: 0.949, g: 0.757, b: 0.306, a: 1}
+  plateDisabled: {r: 0.169, g: 0.176, b: 0.192, a: 0.92}
+  borderDisabled: {r: 0.5, g: 0.51, b: 0.53, a: 0.18}
+  labelDisabled: {r: 0.451, g: 0.463, b: 0.486, a: 1}
+  accentDisabled: {r: 0.451, g: 0.463, b: 0.486, a: 1}
   focusScale: 1
   transitionSeconds: 0.1
 --- !u!1 &4101634097684457708
@@ -1649,7 +1664,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4283351538
   m_fontColor: {r: 0.949, g: 0.757, b: 0.306, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1758,8 +1773,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000009536743, y: 0}
-  m_SizeDelta: {x: -24.000008, y: 12}
+  m_AnchoredPosition: {x: -6, y: 0}
+  m_SizeDelta: {x: -12, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4716575485525416065
 GameObject:
@@ -1835,7 +1850,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4292667629
   m_fontColor: {r: 0.929, g: 0.91, b: 0.863, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2120,7 +2135,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4283351538
   m_fontColor: {r: 0.949, g: 0.757, b: 0.306, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2316,11 +2331,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02974c6666a95bb448aa3474e0d939bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plate: {fileID: 5151222691478149270}
+  plate: {fileID: 0}
   border: {fileID: 0}
   label: {fileID: 6018605916894760234}
   accent: {fileID: 6307403536494852065}
   indicator: {fileID: 0}
+  tintPlate: 0
   plateNormal: {r: 0.102, g: 0.118, b: 0.149, a: 0.92}
   plateFocus: {r: 0.949, g: 0.757, b: 0.306, a: 1}
   platePressed: {r: 0.839, g: 0.647, b: 0.216, a: 1}
@@ -2330,6 +2346,10 @@ MonoBehaviour:
   labelFocus: {r: 0.949, g: 0.757, b: 0.306, a: 1}
   accentNormal: {r: 0.929, g: 0.91, b: 0.863, a: 1}
   accentFocus: {r: 0.949, g: 0.757, b: 0.306, a: 1}
+  plateDisabled: {r: 0.169, g: 0.176, b: 0.192, a: 0.92}
+  borderDisabled: {r: 0.5, g: 0.51, b: 0.53, a: 0.18}
+  labelDisabled: {r: 0.451, g: 0.463, b: 0.486, a: 1}
+  accentDisabled: {r: 0.451, g: 0.463, b: 0.486, a: 1}
   focusScale: 1
   transitionSeconds: 0.1
 --- !u!1 &6640656426313566605
@@ -2481,7 +2501,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4292667629
   m_fontColor: {r: 0.929, g: 0.91, b: 0.863, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2765,7 +2785,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
+    rgba: 4292667629
   m_fontColor: {r: 0.929, g: 0.91, b: 0.863, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3

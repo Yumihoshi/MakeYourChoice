@@ -21,7 +21,7 @@
 | 决定 | 内容 |
 | --- | --- |
 | 分辨率 | 16:9，即 320×180 RenderTexture |
-| 视角 | 只允许左右转（yaw），不允许上下看（pitch 固定 0） |
+| 视角 | 允许左右转（yaw）与上下看（pitch，±85°）；2026-11-19 由「pitch 固定 0」解锁 |
 | 相机 | 用 Cinemachine（项目已装 2.10.7），不手写传统相机跟随 |
 | 旧资产 | DoomDemo 相关脚本、场景、美术资源全部删除 |
 | 范围 | 不做升降台、不做刷怪点；触发区保留，用于剧情触发或开门 |
@@ -33,7 +33,7 @@
 ```
 ProBuilder 搭几何 + URP/Unlit 材质
         ↓
-PlayerVCam（Cinemachine 虚拟相机，水平 FOV 90°，只随 yaw 旋转）
+PlayerVCam（Cinemachine 虚拟相机，水平 FOV 90°，随玩家 yaw 与眼睛 pitch 旋转）
         ↓ CinemachineBrain
 Main Camera（Perspective，渲染到 RT）
         ↓ targetTexture
@@ -111,7 +111,7 @@ QFramework UIKit 面板（StartPanel / PausePanel）
 
 | 组件 | 职责 | 关键点 |
 | --- | --- | --- |
-| `FirstPersonController` | 读取输入、移动、左右转 | CharacterController；新 Input System；鼠标锁定；pitch 固定 0；WASD + Shift 奔跑；鼠标 X 控制 yaw |
+| `FirstPersonController` | 读取输入、移动、转身与俯仰 | CharacterController；新 Input System；鼠标锁定；yaw 作用于自身、pitch 作用于序列化的 `lookPivot`（场景中为子物体「眼睛」），上限 ±85°；WASD + Shift 奔跑 |
 | `LowResDisplay` | 创建 RT、绑定相机与 RawImage | 只做绑定，不建 Canvas/RawImage（场景里摆好） |
 | `AutoDoor` | 玩家靠近时升门 | 自身 Trigger 检测 Player 层；DOTween `MoveY`；可配自动关门与延迟 |
 | `TriggerVolume` | 进入/离开时触发目标 | BoxCollider IsTrigger；Player 层过滤；一次性/可重复；向外暴露 `UnityEvent` |
@@ -206,7 +206,7 @@ LateUpdate:
 2. **低分辨率管线**：加 RT、显示 Canvas + RawImage、`LowResDisplay`，Play 确认画面是 320×180 放大后的像素画面。
 3. **材质与雾**：建 URP/Unlit 材质资产，开 `RenderSettings` 线性雾，确认雾在 Unlit 上生效。
 4. **测试房间**：用 ProBuilder 搭一个带走廊、门洞的房间，验证几何与碰撞。
-5. **玩家与相机**：`FirstPersonController` + CharacterController，鼠标锁定，只允许 yaw；创建 `PlayerVCam` 并挂到玩家 `Eye` 锚点，确认 Cinemachine 驱动画面。
+5. **玩家与相机**：`FirstPersonController` + CharacterController，鼠标锁定，yaw 作用于玩家、pitch 作用于眼睛；创建 `PlayerVCam` 并挂到玩家 `Eye` 锚点，确认 Cinemachine 驱动画面。
 6. **交互组件**：`AutoDoor`、`TriggerVolume`。
 7. **清理**：删除 `Assets/Scripts/Demo`、`Assets/Scenes/DoomDemo.unity`、`Assets/Art/Doom`（均连 `.meta`）；确认 Console 无报错。
 8. **验收**：在 `Game.unity` Play 一次，走通「开始面板 → 第一人称移动 → 靠近开门 → 进入触发区触发剧情事件」。
@@ -215,7 +215,7 @@ LateUpdate:
 
 - `Game.unity` Play 后：StartPanel 正常显示，点击开始进入第一人称。
 - 画面为 320×180 点采样放大，16:9，左右有黑边（若屏幕不是 16:9）。
-- 鼠标左右转视角，上下移动鼠标不改变俯仰角；WASD 移动，Shift 奔跑。
+- 鼠标左右移动转视角，上下移动改变俯仰（±85° 截止）；WASD 移动，Shift 奔跑。
 - 撞墙被挡住，能走过门洞并进入门外走廊。
 - 靠近门时门升起；进入触发区能触发配置好的剧情事件。
 - Console 无报错、无 MissingReference。

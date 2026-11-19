@@ -79,11 +79,11 @@ namespace Game
         void Update() => RefreshDevice();
 
         /// <summary>
-        /// 手柄视角的角速度（度/秒）：右摇杆推量 × 灵敏度。
+        /// 手柄视角的角速度（度/秒）：右摇杆推量 × 灵敏度，x 是左右、y 是上下。
         /// 鼠标视角是位移量，不需要再乘时间，所以由调用方按设备区分。
         /// </summary>
-        public float ReadGamepadLookDegreesPerSecond() =>
-            Look.ReadValue<Vector2>().x * gamepadLookDegreesPerSecond;
+        public Vector2 ReadGamepadLookDegreesPerSecond() =>
+            Look.ReadValue<Vector2>() * gamepadLookDegreesPerSecond;
 
         void BuildActions()
         {

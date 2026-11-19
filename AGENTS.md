@@ -1,7 +1,7 @@
 # AGENTS.md — MakeYourChoice
 
 游趣无限2026 × 紫与灰gj 48 小时 Game Jam 之后的迭代项目，已有可玩原型，11 月 22 日截止。Unity 2022.3.62f3c1，URP 14.0.12（3D Universal Renderer；2026-11-14 由 2D 渲染转 3D）。
-项目自有场景只有 `Assets/Scenes/Game.unity`（其余 `.unity` 都在插件示例与场景模板目录里）。
+项目自有场景为 `Assets/Scenes/Level1.unity` 与 `Assets/Scenes/Level2.unity`（旧的 `Game.unity` 已删除；其余 `.unity` 都在插件示例与场景模板目录里）。
 
 ## 策划案（需求与玩法的唯一来源）
 
@@ -25,7 +25,7 @@
 | 中文文本渲染 | `Assets/Fonts/SourceHanSansCN-Medium SDF.asset`（思源黑体 Medium，OFL 可随游戏分发；Dynamic + 4096 图集，已预烘 `Assets/Fonts/常用字.txt` 的 3654 字，生僻字运行时会自动补字形）。UI 中文一律用它，不要运行时自建字体资产。世界空间 TMP 文字的朝向：正面法线 = `(sinθ, 0, cosθ)`（θ=eulerAngles.y），θ=0 时正面朝 -Z、相机在 -Z 侧才看得到正面；字形「→」指向 `(cosθ, 0, -sinθ)`。想同时"字朝玩家"又"箭头指向某方向"要先算这个组合，不要靠补 180° 兜底（会看到背面镜像） |
 | 补间动画 | DOTween Pro |
 | 存档、读档 | Easy Save 3 |
-| 关卡几何、第一人称视角 | ProBuilder（5.2.4）搭 3D 几何 + Cinemachine 第一人称；运行时组件在 `Assets/Scripts/Level`（`LowResDisplay` 低分辨率显示、`FirstPersonController`、`AutoDoor`、`TriggerVolume`）。`AutoDoor` 有三种开门方式：`Rise`（整扇向上，旧的卷帘门）、`SlideApart`（左右门扇 `Leaf_Left`/`Leaf_Right` 各向两侧滑 `slideDistance`，电梯门用这个）与 `Hinge`（门扇挂在一个带 `Rigidbody` + `HingeJoint` 的枢轴节点下，电机按剩余角度限速绕竖直轴转到开门角，关卡二两扇北门用这个；`hingeOpenAngle` 负值反向。门板要整块贴在墙体朝房间的那一面之外（只留 2 mm 防止与墙面共面闪），门扇才会始终在墙面以外扫掠、铰链轴可以直接压在门洞边角上把门洞盖严；若门板插在门洞厚度里，铰链必须离侧壁留出门厚一半的余量，关门时就会留下一条竖缝）；滑动门的两扇要略宽于门洞并在中缝重叠，滑到底还要多滑几厘米藏进门洞侧壁后面，否则会露出薄片或与侧壁共面闪。几何用 `Assets/Materials/Level` 下的材质（`Floor_Office` / `Floor_OfficeElevator` / `Door_Office` / `Door_Elevator` / `Wall_ElevatorSide` / `Wall_ElevatorBack` / `YellowBox`；中间墙仍是整块 `关卡/大厅/建筑/中间墙`（12.8×3×0.3，材质 `Wall_Mid`，实心无洞）；关卡二两间房之间的隔墙 `关卡/储藏室/建筑/隔墙` 用 `Wall_Divider`（从 `Wall_Storage` 另存，只把 `_BaseMap` 平铺改成 1.37×1.5 让 4.9 m 隔墙和 9.3 m 长墙上的点一样大），贴图来自 `Assets/Art/素材`，导入用 Point + 不压缩）。**平铺必须写进材质资产的 `_BaseMap_ST`**：`MaterialPropertyBlock` 不随场景序列化，Play 里正常、退出 Play 就丢了；同一种贴图尺寸不同要做成两份材质 |
+| 关卡几何、第一人称视角 | ProBuilder（5.2.4）搭 3D 几何 + Cinemachine 第一人称；运行时组件在 `Assets/Scripts/Level` 与 `Assets/Scripts/Player`（`LowResDisplay` 低分辨率显示、`FirstPersonController`、`AutoDoor`、`TriggerVolume`；`FirstPersonController` 的 yaw 写在玩家根节点，pitch 写在序列化的 `lookPivot`（场景与预制体中指向子物体「眼睛」），上限 ±85°——**不要把 pitch 写进 `玩家相机` 这个 VCam 的局部旋转**，`ElevatorRideMotion` 正用它做电梯晃动与到站回弹，两边会互相覆盖）。`AutoDoor` 有三种开门方式：`Rise`（整扇向上，旧的卷帘门）、`SlideApart`（左右门扇 `Leaf_Left`/`Leaf_Right` 各向两侧滑 `slideDistance`，电梯门用这个）与 `Hinge`（门扇挂在一个带 `Rigidbody` + `HingeJoint` 的枢轴节点下，电机按剩余角度限速绕竖直轴转到开门角，关卡二两扇北门用这个；`hingeOpenAngle` 负值反向。门板要整块贴在墙体朝房间的那一面之外（只留 2 mm 防止与墙面共面闪），门扇才会始终在墙面以外扫掠、铰链轴可以直接压在门洞边角上把门洞盖严；若门板插在门洞厚度里，铰链必须离侧壁留出门厚一半的余量，关门时就会留下一条竖缝）；滑动门的两扇要略宽于门洞并在中缝重叠，滑到底还要多滑几厘米藏进门洞侧壁后面，否则会露出薄片或与侧壁共面闪。几何用 `Assets/Materials/Level` 下的材质（`Floor_Office` / `Floor_OfficeElevator` / `Door_Office` / `Door_Elevator` / `Wall_ElevatorSide` / `Wall_ElevatorBack` / `YellowBox`；中间墙仍是整块 `关卡/大厅/建筑/中间墙`（12.8×3×0.3，材质 `Wall_Mid`，实心无洞）；关卡二两间房之间的隔墙 `关卡/储藏室/建筑/隔墙` 用 `Wall_Divider`（从 `Wall_Storage` 另存，只把 `_BaseMap` 平铺改成 1.37×1.5 让 4.9 m 隔墙和 9.3 m 长墙上的点一样大），贴图来自 `Assets/Art/素材`，导入用 Point + 不压缩）。**平铺必须写进材质资产的 `_BaseMap_ST`**：`MaterialPropertyBlock` 不随场景序列化，Play 里正常、退出 Play 就丢了；同一种贴图尺寸不同要做成两份材质 |
 | 关卡贴图与招牌 | `Assets/Art/素材` 的原图带透明边距，直接用 URP/Unlit 不透明画会出现黑边——要先用 Pillow 裁成 `*_trim.png`（`办公室门_trim`、`黄箱子立方_trim`），黄箱子这种还留透明角的材质要开 Alpha Clipping（`_AlphaClip=1`、`_Cutoff=0.5`、`renderQueue=2450`）。黄箱子不是立方体而是 **Quad + `YBillboard`**（`Assets/Scripts/Level/Visual/YBillboard.cs`，始终面向相机；注意 Unity Quad 正面法线是 `(0,0,-1)`）。门板要和墙同厚（0.3）藏住侧脸，且别和墙内表面共面（门放 z=4.63，墙内表面 4.5），否则 z-fighting。**门板网格用 `Assets/Art/Meshes/DoorBox.asset`，不要用 Unity 内置 Cube**：内置 Cube 的 −Z 面 UV 相对 +Z 面是 180° 旋转的（上下左右全反），而玩家正好看门板这一面，直接贴图会看到倒置+镜像的门；`DoorBox` 按面重算了 UV，六个面从外侧看都是正字。TMP 招牌不要当带非均匀缩放的物体的子级（父级 scale 会拉扯字形、还会让 TMP 缓存包围盒失效被视锥剔除），红字这类低对比文字用 `Assets/Materials/Level/Sign_Red.mat`（描边 `_OutlineWidth` + `_FaceDilate`）；材质要在编辑期 `AssetDatabase.CreateAsset` 存成资产，运行时 `new Material` 保存场景后会丢 |
 | 剧情对话、3D 飘字 | Yarn Spinner 3.2.8 + `Assets/Scripts/Dialogue`（`FloatingDialoguePresenter` 决定显示 3D 字还是对话框、`DialogueTrigger`、`WorldLineView`、`FloatingLine`、`DialogueBoxView`、`Dialogue3DOverlay`）；对话文本改 `Assets/Yarn/*.yarn`，不要自己写解析器；3D 字必须在 `Dialogue3D` 层（由 `Dialogue3DCamera` 全分辨率叠加，主相机 `cullingMask` 排除该层）。"走进去就播一段剧情"用 `DialogueZoneTrigger`（放在触发区上，配 `DialogueTrigger` + `BoxCollider`）；`Assets/Prefabs/Dialogue/FloatingLine.prefab` 的 root 缩放必须是 0.02，改成 0.08 会让一句字宽到 100 m。`WorldLineView.minReadableDistance`（默认 1.2 m）决定"太近就不用 3D 字改用对话框"——锚点贴脸时字会糊满屏幕。`DialogueTrigger` 用静态标记让全局同一时刻只跑一段 Yarn 剧情：剧情播放中再触发另一段不会被打断，新请求排队等当前这段播完再开始（同一对象重复请求会被去重） |
 | 关卡一的流程触发 | `Assets/Scripts/Level/Hall`（`HallFlowState` 关卡开关状态、`ElevatorDoorInteract` 瞄准电梯门按交互键开门、`RedTextSightTrigger` 红字要在可视距离内、视线对准且真的出现在画面里、`DoorListenTrigger` 门前听 3 s、`ElevatorCountdown` 电梯内倒计时结局、`HallEntryTrigger` 第一次进入大厅），触发区在 `关卡/电梯/触发` 与 `关卡/大厅/触发`。大厅被一整块 `关卡/大厅/建筑/中间墙`（12.8×3×0.3，z=1.5，实心无洞）隔开，两边各留 2.6 m 缝隙；`安全门`（原 `Door_Mid_Safe`，场景路径 `关卡/大厅/门/安全门`）只是贴在墙南面的门板（`AutoDoor` Rise，子物体 `门板` 1.44×2.40×0.3 在 z=1.48，2/3 厚度埋进墙里、只比墙面凸 2 cm），所以**站在墙北侧既看不到门也交互不到**——射线先打到 `Wall_Mid`。门默认锁着（`SafeDoorInteract.Awake` 里 `AutoDoor.Locked = true`），而且**要开过电梯门（`HallFlowState.DoorOpened`，触发 2）才可交互**——否则游戏一开始就能按出「打不开」；拿到真门禁卡才升起（`openHeight` 3.0，整扇落进天花板后面、原处露出实心墙面），同时把 `exitOpened`（UnityEvent）抛给下一节点当切场景接口。缝隙里响应「第一次位于 B」的两个触发区 `缝隙西侧`/`缝隙东侧`（原 `Trigger_B_West`/`Trigger_B_East`，在 `关卡/大厅/触发`）（缝隙中央 x=±7.7，触发盒 2.4×2.4×1.5，比缝隙略窄所以贴边也绕不过去）共用 `HallFlowState.EnteredRoom`，从任一侧进来只播一次（所以没复用 `DialogueZoneTrigger`，它每个实例各播一次）。**看过红字后电梯门上锁**：`HallFlowState.CanOpenDoor` 在风声剧情（`LV1_Listen`）播完前为 false，门既不显示交互提示也开不了，`DoorListenTrigger` 在剧情播完后才 `MarkListenFinished()` 解锁。玩家侧还有 `PlayerControlLock`（挂在 Player 上，只锁**开场剧情**：播完前禁用 `FirstPersonController`，即开场不能走动/回头；`IsLocked` 是静态状态，开场锁定期间准心与交互也一并关闭，其他剧情播放中玩家照常移动、照常交互） |
@@ -54,6 +54,11 @@
 
 - 改了功能后**需要**同步 `docs/superpowers` 下的 spec/plan 文档（`specs/` 记设计与设计决定，`plans/` 记分步实施），再同步本文件的「已有能力」表。
 
+## 协作方式
+
+- **涉及视觉效果的测试交给用户手测。** 画面观感、动态场景（相机运动、动画、光照、粒子、UI 布局等）不要自己 Play 截图后下结论——思考与工具调用的延迟会错过动态画面，容易误判。完成代码与静态检查后，把「在 Unity 里点哪里、按什么、预期看到什么」写清楚，由用户手测并反馈；确实需要截图证据时，先说明要测什么，请用户截图或确认后再进行。
+- **有困惑或需要决策时先提问，不要默认直接动手。** 设计或落地细节不明确（交互方式、数值、层级归属、与现有系统的边界等）时，向用户提问并给出可选方案与推荐，确认后再实现；必要时参考 `grilling`（grill-me）技能，先把方案问清楚再落代码。
+
 ## 验证
 
 - **不要操控电脑替你手测**：不要用鼠标/键盘模拟（按住 W 走动、点游戏按钮、点对话推进等）去跑 Play 流程。编译通过、代码自查完成后，把「需要在 Unity 里点哪里、按什么、预期看到什么」写清楚告诉用户，由用户自己手测并反馈结果。MCP 只用于刷新资源、读 Console、必要时读取运行时状态，不要代替用户操作游戏。
@@ -61,4 +66,4 @@
 - 改完脚本在 Unity 编辑器里等编译结束，确认 Console 无报错。
 - 本项目已安装 `com.coplaydev.unity-mcp`：可用 Unity MCP 刷新资源、读 Console、进入 Play 模式检查；MCP 不可用时改用手动检查。**Play 检查时保持 Unity 是前台窗口**：`ProjectSettings.asset` 的 `runInBackground: 0`，编辑器一失焦 Play 就暂停（`Time.time`、楼号、动画都不推进，`ScreenCapture` 也可能不落盘），切回窗口才继续；不要误判成脚本卡死。
 - 用 MCP 联调时，`pwsh Start-Sleep` 单次不要超过 10 秒（长等待拆成多次，便于及时观测）；不要在 `execute_code` 里 `Thread.Sleep` 等动画/对话——会冻结编辑器主线程，用协程采样代替。
-- 交付前至少在 `Game.unity` 里 Play 一次，确认核心玩法流程能走通；打包前确认 Build Settings 的场景列表包含 `Game.unity`。
+- 交付前至少在涉及的自有场景（`Assets/Scenes/Level1.unity` / `Level2.unity`）里 Play 一次，确认核心玩法流程能走通；打包前确认 Build Settings 的场景列表包含这些场景。

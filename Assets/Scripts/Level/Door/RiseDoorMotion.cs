@@ -58,6 +58,20 @@ namespace Game.Level
         {
         }
 
+        public float Progress
+        {
+            get
+            {
+                if (_doorPanel == null || _openHeight <= 0f)
+                {
+                    return 0f;
+                }
+
+                return Mathf.Clamp01(
+                    (_doorPanel.localPosition.y - _closedPosition.y) / _openHeight);
+            }
+        }
+
         public void Dispose() => _tween?.Kill();
     }
 }

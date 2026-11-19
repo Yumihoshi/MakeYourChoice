@@ -69,6 +69,21 @@ namespace Game.Level
         {
         }
 
+        public float Progress
+        {
+            get
+            {
+                if (_leftLeaf == null || _rightLeaf == null || _slideDistance <= 0f)
+                {
+                    return 0f;
+                }
+
+                float left = (_closedLeftPosition.x - _leftLeaf.localPosition.x) / _slideDistance;
+                float right = (_rightLeaf.localPosition.x - _closedRightPosition.x) / _slideDistance;
+                return Mathf.Clamp01((left + right) * 0.5f);
+            }
+        }
+
         public void Dispose() => KillTweens();
 
         void KillTweens()

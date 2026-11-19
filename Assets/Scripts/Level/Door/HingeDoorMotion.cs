@@ -103,6 +103,19 @@ namespace Game.Level
             _hinge.motor = motor;
         }
 
+        public float Progress
+        {
+            get
+            {
+                if (_hinge == null || Mathf.Approximately(_openAngle, _closedAngle))
+                {
+                    return 0f;
+                }
+
+                return Mathf.Clamp01(Mathf.InverseLerp(_closedAngle, _openAngle, _hinge.angle));
+            }
+        }
+
         public void Dispose()
         {
         }

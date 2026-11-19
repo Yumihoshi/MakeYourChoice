@@ -41,8 +41,15 @@ namespace Game.Level
         /// <summary>锁住时玩家靠近也不开门、调用 <see cref="Open"/> 也无效；由剧情脚本控制。</summary>
         public bool Locked { get; set; }
 
-        /// <summary>门当前是否已经打开（升到顶 / 滑到两侧 / 转到开门角度）；用于交互提示与防重复开门。</summary>
+        /// <summary>开门指令是否已下达（开始打开即置 true，不等门到位）；门扇是否到位用 <see cref="OpenProgress"/> / <see cref="IsFullyOpen"/>。</summary>
         public bool IsOpen { get; private set; }
+
+        /// <summary>门扇开合进度：0 完全关闭，接近 1 完全打开；旋转门受电机死区影响可能略小于 1，判断完全打开请用 <see cref="IsFullyOpen"/>。</summary>
+        public float OpenProgress => _motion != null ? _motion.Progress : 0f;
+
+        /// <summary>门扇是否已基本到位。旋转门的电机会在剩余角度小于 0.5° 时停转，<see cref="OpenProgress"/> 可能停在略小于 1 的值，因此带容差判断。</summary>
+        /// <param name="epsilon">进度阈值（0..1），默认 0.99 以覆盖旋转门电机死区。</param>
+        public bool IsFullyOpen(float epsilon = 0.99f) => OpenProgress >= epsilon;
 
         void Awake()
         {

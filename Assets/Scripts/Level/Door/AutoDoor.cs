@@ -19,7 +19,7 @@ namespace Game.Level
     {
         [LabelText("开门方式"), SerializeField] AutoDoorMode mode = AutoDoorMode.Rise;
 
-        [LabelText("门扇（整体向上时使用）"), SerializeField] Transform doorPanel;
+        [LabelText("门扇（整体向上时使用；旋转门用于校验）"), SerializeField] Transform doorPanel;
         [LabelText("升起高度"), SerializeField] float openHeight = 2.5f;
         [LabelText("单侧滑动距离（两扇向两侧时使用）"), SerializeField] float slideDistance = 1.5f;
 

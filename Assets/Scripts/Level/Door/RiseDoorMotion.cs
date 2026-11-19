@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Level
 {
-    /// <summary>整扇门向上抬起的开合方式（电梯门、安全门都是这个）。</summary>
+    /// <summary>整扇门向上抬起的开合方式。</summary>
     public sealed class RiseDoorMotion : IDoorMotion
     {
         readonly AutoDoor _owner;

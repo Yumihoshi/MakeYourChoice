@@ -2493,6 +2493,106 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 371084768}
   lockSeconds: 60
+--- !u!1 &375216554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 375216555}
+  - component: {fileID: 375216557}
+  - component: {fileID: 375216556}
+  m_Layer: 0
+  m_Name: "\u94F0\u94FE"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &375216555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375216554}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.77, y: 1.22, z: 0.66}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 379227556}
+  m_Father: {fileID: 2139900590}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!59 &375216556
+HingeJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375216554}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Axis: {x: 0, y: 1, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_UseSpring: 0
+  m_Spring:
+    spring: 0
+    damper: 0
+    targetPosition: 0
+  m_UseMotor: 1
+  m_Motor:
+    targetVelocity: 0
+    force: 600
+    freeSpin: 0
+  m_UseLimits: 1
+  m_ExtendedLimits: 0
+  m_UseAcceleration: 0
+  m_Limits:
+    min: 0
+    max: 95
+    bounciness: 0
+    bounceMinVelocity: 0.2
+    contactDistance: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!54 &375216557
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375216554}
+  serializedVersion: 4
+  m_Mass: 25
+  m_Drag: 0
+  m_AngularDrag: 4
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 3
 --- !u!1 &379227555
 GameObject:
   m_ObjectHideFlags: 0
@@ -2521,11 +2621,11 @@ Transform:
   m_GameObject: {fileID: 379227555}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2, z: 0.949}
-  m_LocalScale: {x: 1.44, y: 2.4, z: 0.3}
+  m_LocalPosition: {x: 0.77, y: 0, z: 0}
+  m_LocalScale: {x: 1.54, y: 2.44, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2139900590}
+  m_Father: {fileID: 375216555}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &379227557
 BoxCollider:
@@ -10179,7 +10279,7 @@ Transform:
   m_GameObject: {fileID: 1581736641}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000030908623, y: 0.7071068, z: -0.7071068, w: -0.000000030908623}
-  m_LocalPosition: {x: 0.00000020650928, y: 0.52499986, z: 0.36499977}
+  m_LocalPosition: {x: 0.00000020650928, y: 0.543, z: 0.36499977}
   m_LocalScale: {x: 0.14, y: 0.14, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10201,7 +10301,8 @@ MonoBehaviour:
   maxDistance: 3
   drawer: {fileID: 1536300638}
   drawerMount: {fileID: 1536300634}
-  localPositionInDrawer: {x: 0, y: -0.155, z: 0.3}
+  hiddenLocalPositionInDrawer: {x: 0, y: -0.155, z: 0.3}
+  revealedLocalPositionInDrawer: {x: 0, y: 0, z: 0.3}
   localEulerAnglesInDrawer: {x: 90, y: 180, z: 0}
   cabinet: {fileID: 2118454037}
   state: {fileID: 229100188}
@@ -11357,7 +11458,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 3.15, z: -6.75}
-  m_LocalScale: {x: 5.1, y: 0.3, z: 4.8}
+  m_LocalScale: {x: 5.1, y: 0.3, z: 5.65776}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 871546309}
@@ -13182,7 +13283,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.15, z: -6.75}
-  m_LocalScale: {x: 5.1, y: 0.3, z: 4.8}
+  m_LocalScale: {x: 5.1, y: 0.3, z: 5.4312}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 871546309}
@@ -14196,7 +14297,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 379227556}
+  - {fileID: 375216555}
   m_Father: {fileID: 782330312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2139900592
@@ -14262,14 +14363,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a75710c67e07ab147a2adcd39b85d44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
+  mode: 2
   doorPanel: {fileID: 379227556}
   openHeight: 3
   slideDistance: 1.5
   leftLeaf: {fileID: 0}
   rightLeaf: {fileID: 0}
-  hinge: {fileID: 0}
-  hingeOpenAngle: -95
+  hinge: {fileID: 375216556}
+  hingeOpenAngle: 95
   hingeSpeed: 150
   hingeGain: 4
   hingeMotorForce: 600

@@ -2,7 +2,7 @@
 
 ## 状态
 
-设计已由用户确认（2026-11-19），规格待用户审阅；尚未实现。实现计划将在规格通过后写入 `docs/superpowers/plans/`。
+设计已由用户确认（2026-11-19），已实现；安全门的开门方式于 2026-11-19 由「整扇升起」改为「绕铰链旋转」，本文档同步更新。
 
 ## 目标
 
@@ -19,8 +19,8 @@
 
 ## 现状
 
-- `Assets/Scenes/Level1.unity`：大厅被 `= 关卡/大厅/建筑/中间墙`（12.8×3×0.3，中心 z=1.5，z 1.35..1.65，实心 BoxCollider）隔开；`= 关卡/大厅/门/安全门`（instanceID 57706）是贴在中间墙南面的门板，`AutoDoor(mode=Rise, openHeight=3.0, duration=0.8, autoClose=false)`，`SafeDoorInteract` 在拿到真门禁卡后 `door.Open()` 并 `exitOpened.Invoke()`。`exitOpened` 目前没有持久监听。
-- 门板 `门板`（instanceID 56828）世界 z 1.288..1.588、y 0..2.4、x 1.44 宽；中间墙南面 z=1.35。
+- `Assets/Scenes/Level1.unity`：大厅被 `= 关卡/大厅/建筑/中间墙`（12.8×3×0.3，中心 z=1.5，z 1.35..1.65，已按 1.44×2.4 门洞挖空、北侧由 `安全门背板` 补面）隔开；`= 关卡/大厅/门/安全门` 是贴在中间墙南面之外的平开门（2026-11-19 由 `Rise` 改为 `AutoDoor(mode=Hinge, hingeOpenAngle=95°, autoClose=false)`，门板挂在门洞西侧 `铰链` 下向大厅内转开），`SafeDoorInteract` 在拿到真门禁卡后 `door.Open()` 并 `exitOpened.Invoke()`（已持久监听 `PortalPair.Activate()`）。
+- 门板 `门板` 世界 z 1.048..1.348（北面与墙面 z=1.35 留 2 mm）、y 0..2.44、x 1.54 宽；中间墙南面 z=1.35。`铰链` 世界坐标 `(-0.77, 1.22, 1.198)`，带 `Rigidbody`（mass 25、冻结 X/Z 旋转）+ `HingeJoint`（axis `(0,1,0)`）。
 - 玩家 `= 玩家`：CharacterController（radius 0.3、height 1.8、skinWidth 0.08、center (0,0.9,0)），`FirstPersonController`，眼睛在 local (0,1.6,0)；主相机 `= 相机/主相机`（CinemachineBrain，VCam `玩家相机`，fov 58.7、near 0.1、far 100、cullingMask -9）。
 - `+ 界面/低分辨率画面` 的 `LowResDisplay` 把主相机渲染到 **320×180** 的 Point 过滤 RenderTexture，再由 RawImage 显示。
 - `Assets/Scenes/Level2.unity` 目前只有 TestRoom 测试走廊（沿 X 的 13.3×1.03×1.73 走廊，默认 Cube 材质，无天花板/端墙）和一个 Main Camera、一个 Directional Light。
@@ -47,8 +47,9 @@
 
 ### 安全门与 P1
 
-- 安全门、门板、门框、`SafeDoorInteract`、对话、开门动画全部不动。门板仍在 z 1.288..1.588，升起 3.0 m 后藏进墙/天花板。
-- **P1 传送 quad**：1.44×2.4，位置 (0,1.2,1.40)，rotation y=0（可见面法线 -z，朝南）。它在门板体积内：关门时被门板挡住，门升起后逐渐露出。
+- 安全门、门框、`SafeDoorInteract`、对话、开门时机全部不动。2026-11-19 起安全门改为绕铰链旋转：门板 1.54×2.44×0.30 贴在中间墙南面之外（北面 z=1.348，与墙面留 2 mm），门洞西侧 `铰链` 带 `Rigidbody` + `HingeJoint`，`AutoDoor(mode=Hinge, autoClose=false, hingeOpenAngle=95°)` 把门板向大厅内转开、让出门洞；`IsFullyOpen()` 由 `HingeDoorMotion.Progress`（0°→95°）提供，传送触发条件不变。
+- **门扇转动时临时放行玩家**：`HingeDoorMotion` 在开门/关门动作期间关掉门扇碰撞体，门扇到位且不再与玩家重叠后恢复。玩家是 `CharacterController`，铰链电机的力推不动它，玩家站在门前时门扇会顶在玩家身上只转一小段（实测门停在 22.9°），`IsFullyOpen()` 永远为假、传送也就不会触发；放行期间门板可穿过玩家，等玩家走开再恢复碰撞，避免刚转到位就把站在门边的玩家卡住。
+- **P1 传送 quad**：1.44×2.4，位置 (0,1.2,1.40)，rotation y=0（可见面法线 -z，朝南）。它在门洞内：关门时被门板挡住，门板绕铰链转开后逐渐露出。
 - 玩家胶囊半径 0.3 + skin 0.08，从南侧最近被补面挡在 z≈1.27（补面 z=1.65 减 0.38）。传送触发距离 **0.18 m**（玩家中心到 P1 平面），即 z≈1.22 触发；0.18 > 主相机 near clip 0.1，传送面不会被裁掉。
 - 触发时玩家偏到门洞一侧（x 最大 ±0.42），门洞边缘到传送面的夹角 atan(0.30/0.18)≈59° > 水平半 FOV 44°，门洞能铺满屏幕，瞬移不露出墙。
 
@@ -244,7 +245,7 @@ target = other.quad.position + rot * lateral + landingOffset * other.FrontNormal
 ## 验收
 
 1. **开门前**：安全门关着；从大厅北侧看中间墙只有墙，走不过去；看不到走廊。
-2. **拿真卡开门**：门升起，走廊透过门洞逐渐露出；左右移动时有正确视差；中间墙前表面贴图连续，没有三块拼接的接缝。
+2. **拿真卡开门**：门板绕门洞西侧铰链向大厅内转开，走廊透过门洞逐渐露出；左右移动时有正确视差；中间墙前表面贴图连续，没有三块拼接的接缝。
 3. **走进门**：在离传送面约 0.18 m 处无缝进入走廊；相机不飞、无黑帧；走廊 1.44×2.4、有尽头封墙与局部照明。
 4. **在走廊里转身**：入口显示的是大厅南侧（不是墙）；走回去落在大厅安全门南侧约 0.25 m，面朝南，门在背后；不会立刻被弹回去。
 5. **调参辅助**：选中 `空间叠加`，Scene 视图里能看到白色传送面、橙色触发面与绿色落点面；调整 `triggerDistance` / `landingOffset` 时三张面实时移动，数值标签同步更新。

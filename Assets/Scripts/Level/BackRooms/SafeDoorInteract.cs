@@ -15,7 +15,7 @@ namespace Game.Level
         [SerializeField, Required, LabelText("关卡二状态")]
         BackRoomFlowState state;
 
-        [SerializeField, Required, LabelText("安全门（整体向上）")]
+        [SerializeField, Required, LabelText("安全门（绕铰链旋转）")]
         AutoDoor door;
 
         [SerializeField, Required, LabelText("台词播放器")]

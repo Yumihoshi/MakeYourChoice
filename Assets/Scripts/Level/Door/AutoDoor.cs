@@ -30,6 +30,8 @@ namespace Game.Level
         [LabelText("开门角度（旋转门使用，负值反向转）"), SerializeField] float hingeOpenAngle = -95f;
         [LabelText("最大角速度（旋转门使用，度/秒）"), SerializeField] float hingeSpeed = 150f;
         [LabelText("角度跟随刚度（旋转门使用）"), SerializeField] float hingeGain = 4f;
+        [LabelText("关门最大角速度（旋转门使用，0 表示与开门相同）"), SerializeField] float hingeCloseSpeed;
+        [LabelText("关门角度跟随刚度（旋转门使用，0 表示与开门相同）"), SerializeField] float hingeCloseGain;
         [LabelText("电机力矩上限（旋转门使用）"), SerializeField] float hingeMotorForce = 600f;
 
         [LabelText("开关门时长"), SerializeField] float duration = 0.6f;
@@ -70,7 +72,8 @@ namespace Game.Level
                 AutoDoorMode.SlideApart => new SlideApartDoorMotion(
                     this, leftLeaf, rightLeaf, slideDistance, duration, autoClose, closeDelay),
                 _ => new HingeDoorMotion(
-                    this, hinge, hingeOpenAngle, hingeSpeed, hingeGain, hingeMotorForce, autoClose, closeDelay),
+                    this, hinge, hingeOpenAngle, hingeSpeed, hingeGain, hingeCloseSpeed, hingeCloseGain,
+                    hingeMotorForce, autoClose, closeDelay),
             };
 
             if (!_motion.TryConfigure())

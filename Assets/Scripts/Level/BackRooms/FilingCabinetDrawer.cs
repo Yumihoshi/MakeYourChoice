@@ -16,6 +16,9 @@ namespace Game.Level
         [SerializeField, Required, LabelText("关卡状态")]
         BackRoomFlowState state;
 
+        [SerializeField, LabelText("允许交互")]
+        bool interactable = true;
+
         [SerializeField, LabelText("拉出行程（米）")]
         float openDistance = 0.4f;
 
@@ -36,7 +39,7 @@ namespace Game.Level
         /// <summary>进过打印室、柜子剧情没在播；锁柜期间只能把已经打开的抽屉关回去。</summary>
         protected override bool CanInteract()
         {
-            if (cabinet == null || state == null)
+            if (!interactable || cabinet == null || state == null)
             {
                 return false;
             }

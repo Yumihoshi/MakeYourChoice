@@ -16,6 +16,9 @@ namespace Game.Level
         [SerializeField, Required, LabelText("抽屉剧情计数")]
         StorageDrawerQuest quest;
 
+        [SerializeField, LabelText("允许交互")]
+        bool interactable = true;
+
         [SerializeField, LabelText("拉出行程（米）")]
         float openDistance = 0.35f;
 
@@ -34,7 +37,7 @@ namespace Game.Level
         /// <summary>柜子被锁住时只能把已经打开的抽屉关回去。</summary>
         protected override bool CanInteract()
         {
-            return _open || state == null || !state.CabinetsLocked;
+            return interactable && (_open || state == null || !state.CabinetsLocked);
         }
 
         protected override void OnInteract()

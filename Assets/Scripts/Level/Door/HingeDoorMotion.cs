@@ -4,7 +4,7 @@ namespace Game.Level
 {
     /// <summary>
     /// 绕竖直铰链旋转的开合方式（关卡二两扇北门、安全门）：门扇挂在一个带 Rigidbody + HingeJoint 的枢轴上，
-    /// 枢轴刚体设为运动学，每帧按固定角速度把门扇转到开门角 / 关门角。
+    /// 枢轴刚体设为运动学，每帧按固定角速度把门扇转到开门角 / 关门角，关门可单独配置更快的角速度与刚度。
     /// 不用 HingeJoint 的电机：铰链电机的力推不动玩家的 CharacterController，门会被玩家顶住停转；
     /// 运动学刚体不受玩家推挤，转动期间再把玩家层排除在门扇碰撞之外，玩家就不会被门板卡住。
     /// </summary>
@@ -15,8 +15,10 @@ namespace Game.Level
         readonly AutoDoor _owner;
         readonly HingeJoint _hinge;
         readonly float _openAngleOffset;
-        readonly float _speed;
-        readonly float _gain;
+        readonly float _openSpeed;
+        readonly float _openGain;
+        readonly float _closeSpeed;
+        readonly float _closeGain;
         readonly float _motorForce;
         readonly bool _autoClose;
         readonly float _closeDelay;
@@ -31,19 +33,23 @@ namespace Game.Level
         float _targetAngle;
         float _closeAt;
         bool _pendingClose;
+        bool _closing;
         bool _panelSolid = true;
         Quaternion _restRotation;
         Vector3 _axis;
         float _angle;
 
         public HingeDoorMotion(AutoDoor owner, HingeJoint hinge, float openAngleOffset,
-            float speed, float gain, float motorForce, bool autoClose, float closeDelay)
+            float openSpeed, float openGain, float closeSpeed, float closeGain,
+            float motorForce, bool autoClose, float closeDelay)
         {
             _owner = owner;
             _hinge = hinge;
             _openAngleOffset = openAngleOffset;
-            _speed = speed;
-            _gain = gain;
+            _openSpeed = openSpeed;
+            _openGain = openGain;
+            _closeSpeed = closeSpeed > 0f ? closeSpeed : openSpeed;
+            _closeGain = closeGain > 0f ? closeGain : openGain;
             _motorForce = motorForce;
             _autoClose = autoClose;
             _closeDelay = closeDelay;
@@ -88,6 +94,7 @@ namespace Game.Level
         public void Open()
         {
             _pendingClose = false;
+            _closing = false;
             _targetAngle = _openAngle;
             BeginMove();
         }
@@ -95,6 +102,7 @@ namespace Game.Level
         public void Close()
         {
             _pendingClose = true;
+            _closing = true;
             _closeAt = Time.time + (_autoClose ? _closeDelay : 0f);
             _targetAngle = _closedAngle;
             BeginMove();
@@ -110,10 +118,13 @@ namespace Game.Level
             }
 
             // 按剩余角度限速：起步快、接近目标时逐渐减速，停在开门角 / 关门角上。
+            // 关门的角速度与刚度可单独配置（例如定时锁要赶在玩家退出去之前把门关严）。
             float diff = _targetAngle - _angle;
+            float maxSpeed = _closing ? _closeSpeed : _openSpeed;
+            float gain = _closing ? _closeGain : _openGain;
             float speed = Mathf.Abs(diff) < SettleEpsilon
                 ? 0f
-                : Mathf.Clamp(Mathf.Abs(diff) * _gain, 0f, _speed);
+                : Mathf.Clamp(Mathf.Abs(diff) * gain, 0f, maxSpeed);
             _angle = Mathf.MoveTowards(_angle, _targetAngle, speed * Time.fixedDeltaTime);
             _body.MoveRotation(Quaternion.AngleAxis(_angle, _axis) * _restRotation);
 

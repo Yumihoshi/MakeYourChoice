@@ -110,7 +110,7 @@
     <tbody>
       <tr><td>红门</td><td>大厅北墙 x -3.95..-2.45</td><td>东移 0.55 m、居中于前室通头腿（<code>AutoDoor</code> Hinge，autoClose=false，不锁）</td></tr>
       <tr><td>蓝门</td><td>大厅北墙 x 3.0..4.5</td><td>不动</td></tr>
-      <tr><td>储藏室门（新）</td><td>隔墙 A，z 10.93..12.43</td><td><code>AutoDoor</code> Hinge，autoClose=false，不锁；铰链在门洞<b>南侧</b>（z 10.93），门板向北伸、比门洞多压北侧 4 cm，向储藏室内（西）开，<code>hingeOpenAngle</code> 取 <b>-95°</b>；门板 1.5×2.44×0.08，用 <code>DoorBox</code> 网格、<code>Door_Office</code> 材质</td></tr>
+      <tr><td>储藏室门（新）</td><td>隔墙 A，z 10.93..12.43</td><td><code>AutoDoor</code> Hinge，autoClose=false；铰链在门洞<b>南侧</b>（z 10.93），门板向北伸、比门洞多压北侧 4 cm，向储藏室内（西）开，<code>hingeOpenAngle</code> 取 <b>-95°</b>；门板 1.5×2.44×0.08，用 <code>DoorBox</code> 网格、<code>Door_Office</code> 材质。玩家进储藏室时由 <code>TimedDoorLock</code> 关门并锁 60 s；为防玩家探头后抢在门关严前退出去，<b>关门单独调快</b>：<code>hingeCloseSpeed = 720</code>、<code>hingeCloseGain = 24</code>（约 0.22 s），开门仍用 150°/s / 刚度 4</td></tr>
       <tr><td>假门（新）</td><td>储藏室西墙内表面 x=-21，z 10.93..12.43</td><td>只有门板（1.5×2.44×0.08，<code>DoorBox</code>），无碰撞、无脚本</td></tr>
       <tr><td>安全门</td><td>大厅中间墙</td><td>不动</td></tr>
     </tbody>
@@ -119,13 +119,14 @@
 
   <h2>7. 柜子</h2>
   <ul>
-    <li><b>统一用抽屉柜模型</b>（<code>FilingCabinet_Separated</code>，Body + Drawer1..4），不再用贴图 Quad + <code>YBillboard</code>；<b>储藏室 16 个柜子的每格抽屉都可交互</b>（<code>EmptyCabinetDrawer</code>，只开关、不播台词），剧情改由「累计拉开多少格」推进（见 §9）。</li>
+    <li><b>统一用抽屉柜模型</b>（<code>FilingCabinet_Separated</code>，Body + Drawer1..4），不再用贴图 Quad + <code>YBillboard</code>；<b>储藏室 16 个柜子的抽屉都可交互（最上层 Drawer1 除外）</b>（<code>EmptyCabinetDrawer</code>，只开关、不播台词），剧情改由「累计拉开多少格」推进（见 §9）。</li>
     <li><b>北排</b>：6 个，z 15.2..15.8，中心 x = -19.9、-18.1、-16.3、-14.5、-12.7、-10.9；<b>柜子B 不再是特殊柜子</b>，和其它柜子一样只挂抽屉。</li>
     <li><b>南排</b>：6 个，z 4.8..5.4，中心同上；每格抽屉同样挂 <code>EmptyCabinetDrawer</code>。</li>
     <li>内门两侧：2 个抽屉柜模型（抽屉可开），x -10.6..-10.0，z 9.83..10.93 与 12.43..13.53。</li>
     <li>假门两侧：2 个抽屉柜模型（抽屉可开），x -21.0..-20.4，同样两段 z。</li>
     <li><b>抽屉剧情</b>：<code>= 关卡/储藏室/抽屉剧情</code> 挂 <code>StorageDrawerQuest</code>（<code>requiredDrawers = 3</code>），任意柜子累计拉开 3 格不同抽屉后播一次 <code>LV2_CabinetB</code>（发现维护记录）。</li>
     <li>柜子A：<code>FilingCabinet_Separated</code> 原模型移到 (3.5, 0, 12.4)，Y180（正面朝南）；<code>GlowCabinetInteract</code> / <code>FilingCabinetDrawer</code> / <code>FilingCabinetCard</code> 一并跟过去。</li>
+    <li><b>最上层抽屉不可交互</b>：16 个储藏室柜与柜子A 的 <code>Drawer1</code>（local y = 1.575）都关闭「允许交互」（<code>interactable = false</code>），视线对准时不显示交互提示、按键无效；抽屉碰撞体保留，仍会挡住射线。其余三格照常开合、照常计入抽屉计数。</li>
     <li>复印机：不动，位置 (8.5, 1.61, 8.4)。</li>
   </ul>
   <h2>8. 材质与光照</h2>

@@ -28,6 +28,13 @@
   - 新增 `Assets/Scripts/Level/BackRooms/StorageDrawerQuest.cs`（`requiredDrawers = 3`，累计拉开 3 格不同抽屉后播 `LV2_CabinetB` 并 `MarkOpenedCabinetB()`）；`EmptyCabinetDrawer` 增加 `state`/`quest`，首次拉开报数、锁柜后只能关。
   - 16 个柜子共 64 格抽屉统一挂 `EmptyCabinetDrawer`（此前只有南排 6 个可开）；`柜子_北6` 上的 `StorageCabinetInteract` 删除，柜子B 不再特殊。
   - 实测：Edit 模式射线先命中抽屉（dist 0.360）；Play 里红门 -94.5°、`OpenProgress 0.995`，`RegisterOpened()` 三次后 `OpenedCount=3`、`OpenedCabinetB=true`。
+- 修复（2026-11-20，用户报「最上层的抽屉不允许交互」）：
+  - `EmptyCabinetDrawer` / `FilingCabinetDrawer` 增加 `[SerializeField, LabelText("允许交互")] bool interactable = true`，`CanInteract()` 首个条件为 `interactable`；为 false 时 `InteractableBase.IsAimed()` 直接返回 false，不登记准心、按键无效，抽屉碰撞体保留。
+  - 场景 `Assets/Scenes/Level1.unity`：16 个储藏室柜与柜子A 共 17 个 `Drawer1`（local y=1.575）把 `interactable` 设为 false，其余 51 格保持 true；存盘后核对 YAML 中 `interactable: 0` 17 处、`interactable: 1` 51 处。
+- 修复（2026-11-20，用户报「前室和储藏室的门关得太慢，玩家会 peek 进去后快速出来」）：
+  - `AutoDoor` 增加 `hingeCloseSpeed` / `hingeCloseGain`（旋转门专用，0 表示沿用开门的 `hingeSpeed` / `hingeGain`）；`HingeDoorMotion` 在 `Open()` / `Close()` 里记 `_closing`，`FixedTick` 按方向选角速度上限与刚度。
+  - 储藏室门 `= 关卡/储藏室/储藏室门` 设 `hingeCloseSpeed = 720`、`hingeCloseGain = 24`，关门约 0.22 s（原 150°/s / 4 约 1.3 s），开门保持 150°/s / 4。
+  - 另注：门扇转动期间 `Player` 层被排除在碰撞之外、转到位且玩家离开门板包围盒后恢复，因此关门必须够快才能在玩家退回前把门关严。
 
 ## 现状基线（2026-11-20 场景 `Assets/Scenes/Level1.unity`）
 

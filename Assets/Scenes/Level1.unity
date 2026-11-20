@@ -138,6 +138,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!114 &34006631
@@ -156,6 +157,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &42905528
@@ -385,6 +387,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &91674453
@@ -744,6 +747,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &123364349
@@ -2562,6 +2566,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!114 &202334958
@@ -2580,6 +2585,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!65 &202334960
@@ -2624,6 +2630,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &206109405
@@ -3131,6 +3138,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &297019204
@@ -3276,6 +3284,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &313994053
@@ -3684,6 +3693,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!114 &339062209
@@ -3702,6 +3712,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!65 &339062211
@@ -4004,6 +4015,8 @@ MonoBehaviour:
   hingeOpenAngle: -95
   hingeSpeed: 150
   hingeGain: 4
+  hingeCloseSpeed: 0
+  hingeCloseGain: 0
   hingeMotorForce: 600
   duration: 0.8
   autoClose: 0
@@ -4245,6 +4258,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &394152390
@@ -4544,6 +4558,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &402619294
@@ -4962,6 +4977,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1001 &504883273
@@ -5130,6 +5146,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!114 &504883282
@@ -5148,6 +5165,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!65 &504883284
@@ -5552,6 +5570,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1001 &532849231
@@ -5683,6 +5702,7 @@ MonoBehaviour:
   maxDistance: 3
   cabinet: {fileID: 2118454037}
   state: {fileID: 229100188}
+  interactable: 1
   openDistance: 0.4
   duration: 0.3
 --- !u!65 &538437587
@@ -6061,6 +6081,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!4 &589012435 stripped
@@ -6299,6 +6320,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1001 &621254984
@@ -6833,6 +6855,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &683313682
@@ -7411,6 +7434,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &754378769
@@ -7583,6 +7607,7 @@ MonoBehaviour:
   maxDistance: 3
   cabinet: {fileID: 2118454037}
   state: {fileID: 229100188}
+  interactable: 1
   openDistance: 0.4
   duration: 0.3
 --- !u!65 &771822379
@@ -8095,6 +8120,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &846189799
@@ -8460,6 +8486,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &871546308
@@ -8889,6 +8916,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!114 &901860064
@@ -8907,6 +8935,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!65 &901860066
@@ -9343,6 +9372,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &966301935
@@ -9742,6 +9772,8 @@ MonoBehaviour:
   hingeOpenAngle: -95
   hingeSpeed: 150
   hingeGain: 4
+  hingeCloseSpeed: 0
+  hingeCloseGain: 0
   hingeMotorForce: 600
   duration: 0.8
   autoClose: 0
@@ -9817,6 +9849,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1007804865
@@ -11144,6 +11177,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1074082552 stripped
@@ -11167,6 +11201,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!4 &1078034790 stripped
@@ -11629,6 +11664,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1146897035 stripped
@@ -11652,6 +11688,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1001 &1153528141
@@ -11826,6 +11863,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1160668702 stripped
@@ -11849,6 +11887,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1168360655
@@ -11955,6 +11994,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1179259826
@@ -12010,6 +12050,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1194047592 stripped
@@ -12033,6 +12074,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1001 &1194311677
@@ -12575,6 +12617,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1255273218
@@ -13158,6 +13201,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1299858320
@@ -13322,6 +13366,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1330386427
@@ -13428,6 +13473,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1345149106
@@ -13701,6 +13747,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!114 &1360247272
@@ -13719,6 +13766,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!65 &1360247274
@@ -14055,6 +14103,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1420779789
@@ -14129,6 +14178,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1001 &1463898120
@@ -14908,6 +14958,7 @@ MonoBehaviour:
   maxDistance: 3
   cabinet: {fileID: 2118454037}
   state: {fileID: 229100188}
+  interactable: 1
   openDistance: 0.4
   duration: 0.3
 --- !u!1 &1543139106
@@ -14968,6 +15019,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!114 &1548969760
@@ -15005,6 +15057,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1562885604 stripped
@@ -15028,6 +15081,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1577334938
@@ -15435,6 +15489,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1589531300
@@ -15879,6 +15934,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1635880436
@@ -16007,6 +16063,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!134 &1637526602
@@ -16174,6 +16231,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1674907331
@@ -16232,6 +16290,8 @@ MonoBehaviour:
   hingeOpenAngle: -95
   hingeSpeed: 150
   hingeGain: 4
+  hingeCloseSpeed: 0
+  hingeCloseGain: 0
   hingeMotorForce: 600
   duration: 0.8
   autoClose: 0
@@ -16405,6 +16465,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1698642756
@@ -16967,6 +17028,7 @@ MonoBehaviour:
   maxDistance: 3
   cabinet: {fileID: 2118454037}
   state: {fileID: 229100188}
+  interactable: 0
   openDistance: 0.4
   duration: 0.3
 --- !u!65 &1793687434
@@ -17266,6 +17328,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!114 &1808238769
@@ -17651,6 +17714,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1846059188
@@ -17801,6 +17865,8 @@ MonoBehaviour:
   hingeOpenAngle: -95
   hingeSpeed: 150
   hingeGain: 4
+  hingeCloseSpeed: 720
+  hingeCloseGain: 24
   hingeMotorForce: 600
   duration: 0.8
   autoClose: 0
@@ -18085,6 +18151,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1898603989 stripped
@@ -18108,6 +18175,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1900568402 stripped
@@ -18131,6 +18199,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &1915251321
@@ -18867,6 +18936,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &2025927583
@@ -19195,6 +19265,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &2042858952
@@ -19394,6 +19465,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!114 &2043728122
@@ -19412,6 +19484,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!65 &2043728124
@@ -19451,6 +19524,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &2050530607
@@ -19614,6 +19688,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 1
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &2062976419
@@ -20050,6 +20125,7 @@ MonoBehaviour:
   maxDistance: 3
   state: {fileID: 229100188}
   quest: {fileID: 1330386429}
+  interactable: 0
   openDistance: 0.35
   duration: 0.25
 --- !u!1 &2114396613
@@ -20586,6 +20662,8 @@ MonoBehaviour:
   hingeOpenAngle: 95
   hingeSpeed: 150
   hingeGain: 4
+  hingeCloseSpeed: 0
+  hingeCloseGain: 0
   hingeMotorForce: 600
   duration: 0.8
   autoClose: 0

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Level1 北侧三区 · 定稿平面（1 格 = 1 m）</title>
+<style>
+  body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#f4f1ea;color:#2b2b2b;margin:0;padding:24px 28px 40px}
+  h1{font-size:22px;margin:0 0 6px}
+  .sub{color:#5b6472;font-size:13px;margin:0 0 14px;line-height:1.7}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:#444;margin:8px 0 18px}
+  .chip{display:inline-flex;align-items:center;gap:5px}
+  .sw{width:15px;height:10px;display:inline-block;border:1px solid #9a7a2a}
+  .panel{background:#fff;border:1px solid #e3dccd;border-radius:10px;padding:16px 18px;margin:0 0 18px;max-width:1060px}
+  .panel h2{font-size:15px;margin:0 0 10px}
+  svg{width:100%;height:auto;display:block}
+  .wall{fill:#d7b46a;stroke:#a8832f;stroke-width:.7}
+  .floor{fill:#fbf6e8}
+  .hallfloor{fill:#eceff4}
+  .mass{fill:#cbb586;stroke:#a8832f;stroke-width:.7}
+  .door{fill:#f3c33c;stroke:#b8912f;stroke-width:.5}
+  .leaf{fill:#b8912f}
+  .fake{fill:#e6e1d4;stroke:#9aa0ab;stroke-dasharray:3 2}
+  .file{fill:#e8d9a8;stroke:#a8832f;stroke-width:.5}
+  .steel{fill:#b9bec7;stroke:#7d848f;stroke-width:.5}
+  .box{fill:#f5c518;stroke:#c9a400;stroke-width:.5}
+  .path{fill:none;stroke:#1f8a4c;stroke-width:1.6;stroke-dasharray:4 3}
+  .sight{fill:none;stroke:#c0392b;stroke-width:1.1;stroke-dasharray:3 2}
+  .dim{stroke:#8a94a3;stroke-width:.6}
+  .dimlbl{font-size:7px;fill:#5b6472;text-anchor:middle}
+  text{font-size:7.5px;fill:#3a3a3a}
+  .rm{font-size:11px;font-weight:700;fill:#2b2b2b}
+  .sm{font-size:7.5px;fill:#5b6472}
+  .num{font-size:7px;font-weight:700;fill:#fff}
+  .badge{fill:#c0392b}
+  .bad{font-size:8px;font-weight:700;fill:#c0392b}
+  .ok{font-size:8px;font-weight:700;fill:#1f8a4c}
+  .desk{fill:none;stroke:#c9b27a;stroke-dasharray:2 2;stroke-width:.5}
+  table{border-collapse:collapse;width:100%;font-size:12px}
+  th,td{border:1px solid #e3dccd;padding:6px 8px;text-align:left;vertical-align:top}
+  th{background:#faf6ea;font-weight:600}
+  .foot{color:#5b6472;font-size:12px;line-height:1.7}
+</style>
+</head>
+<body>
+  <h1>Level1 北侧三区 · 定稿平面</h1>
+  <p class="sub">与表格 1 格 = 1 m 对齐：储藏室 <b>11×11</b>、前室 <b>8 宽 × 9 深</b>（L 形）、空腔 <b>1</b>、打印室 <b>29 宽 × 18 深</b>。
+    红门（-4.5..-3.0）在通头腿内，蓝门（3.0..4.5）在打印室左下；大厅、两扇门位置、8/10–16 号流程不动。</p>
+  <div class="legend">
+    <span class="chip"><i class="sw" style="background:#d7b46a"></i>墙</span>
+    <span class="chip"><i class="sw" style="background:#cbb586"></i>实心块</span>
+    <span class="chip"><i class="sw" style="background:#e8d9a8"></i>抽屉柜（模型）</span>
+    <span class="chip"><i class="sw" style="background:#f3c33c"></i>门洞</span>
+    <span class="chip"><i class="sw" style="background:#e6e1d4;border-style:dashed"></i>假门</span>
+    <span class="chip"><i class="sw" style="background:#1f8a4c"></i>玩家路线</span>
+    <span class="chip"><i class="sw" style="background:#c0392b"></i>进门视线</span>
+  </div>
+
+  <div class="panel">
+    <h2>平面（1 格 = 1 m；红圈数字是流程节点）</h2>
+    <div id="plan"></div>
+  </div>
+
+  <div class="panel">
+    <h2>相对现状要改什么</h2>
+    <table>
+      <thead><tr><th>部位</th><th>现状</th><th>改成</th></tr></thead>
+      <tbody>
+        <tr><td>储藏室</td><td>9.3×5.19（x -9.3..0）</td><td>11×11（x -21..-10，z 4.8..15.8）</td></tr>
+        <tr><td>前室</td><td>没有</td><td>8 宽 × 9 深（x -9.7..-1.7，z 4.8..13.8）；L 形，西南实心块 5×4.8（北缘齐储藏室门南边），通头腿在东 3.0</td></tr>
+        <tr><td>空腔</td><td>没有</td><td>1.0（x -1.4..-0.4）；前室东墙与打印室西墙脱开，无门无地板</td></tr>
+        <tr><td>打印室</td><td>9.3×5.19（x 0..9.3）</td><td>29 宽 × 18 深（x -0.1..28.9，z 4.8..22.8）</td></tr>
+        <tr><td>储藏室门</td><td>旧隔墙上的连通门</td><td>隔墙 A z 10.93..12.43（前室剩余深度中线，1.5 m），铰链在南侧，向储藏室内开、不锁</td></tr>
+        <tr><td>假门</td><td>西墙一块贴图</td><td>西墙 z 10.93..12.43，1.5×2.44 装饰门板，无碰撞</td></tr>
+        <tr><td>南排空柜</td><td>Quad 贴图，不可交互</td><td>6 个抽屉柜模型，每格抽屉可开关、无台词</td></tr>
+        <tr><td>北排 6 个 + 门/假门两侧 4 个</td><td>贴图 Quad</td><td>抽屉柜模型（静态，抽屉不可开；柜子B 保留原交互）</td></tr>
+        <tr><td>柜子A / 复印机</td><td>(2.2,0,9.19) / (8.5,1.61,8.4)</td><td>柜子A → (3.5,0,12.4)；复印机不动</td></tr>
+        <tr><td>触发 8/10/11/12/13/14</td><td>按旧房间摆</td><td>按新房间重摆（尺寸见规格文档）</td></tr>
+        <tr><td>台词</td><td>8 号写「蓝箭头指向隔间区」</td><td>改成「打印室」</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="foot">
+    大厅在图上按表格画成中间墙居中（示意）；场景里中间墙仍在 z=1.5，本图不改大厅。
+    储藏室西墙 -21.3、打印室东墙 29.2，建筑外轮廓比大厅（±9.3）向外扩出很多，玩家在大厅里看不到。
+    <br>配套规格：<a href="../specs/2026-11-20-level1-northrooms-adjustment-design.html">2026-11-20-level1-northrooms-adjustment-design.html</a>
+  </p>
+
+<script>
+const S = 12, X0 = -22.4, Z0 = 23.8;
+const px = x => ((x - X0) * S).toFixed(1);
+const py = z => ((Z0 - z) * S).toFixed(1);
+const R = (x1, z1, x2, z2, cls) =>
+  `<rect x="${px(x1)}" y="${py(z2)}" width="${((x2 - x1) * S).toFixed(1)}" height="${((z2 - z1) * S).toFixed(1)}" class="${cls}"/>`;
+const T = (x, z, t, cls = 'sm', a = 'middle') =>
+  `<text x="${px(x)}" y="${py(z)}" class="${cls}" text-anchor="${a}">${t}</text>`;
+const dimH = (z, x1, x2, label) => {
+  const y = py(z), xa = px(x1), xb = px(x2), mx = (parseFloat(xa) + parseFloat(xb)) / 2;
+  return `<line class="dim" x1="${xa}" y1="${y}" x2="${xb}" y2="${y}"/>
+    <line class="dim" x1="${xa}" y1="${y - 3}" x2="${xa}" y2="${y + 3}"/>
+    <line class="dim" x1="${xb}" y1="${y - 3}" x2="${xb}" y2="${y + 3}"/>
+    <text class="dimlbl" x="${mx}" y="${y - 3}">${label}</text>`;
+};
+const dimV = (x, z1, z2, label) => {
+  const X = px(x), ya = py(z1), yb = py(z2), my = (parseFloat(ya) + parseFloat(yb)) / 2;
+  return `<line class="dim" x1="${X}" y1="${ya}" x2="${X}" y2="${yb}"/>
+    <line class="dim" x1="${X - 3}" y1="${ya}" x2="${X + 3}" y2="${ya}"/>
+    <line class="dim" x1="${X - 3}" y1="${yb}" x2="${X + 3}" y2="${yb}"/>
+    <text class="dimlbl" x="${X - 4}" y="${my}" transform="rotate(-90 ${X - 4} ${my})">${label}</text>`;
+};
+const badge = (x, z, n) => {
+  const X = px(x), Y = py(z);
+  return `<circle cx="${X}" cy="${Y}" r="5" class="badge"/><text x="${X}" y="${Y + 2.5}" class="num" text-anchor="middle">${n}</text>`;
+};
+
+let s = '';
+
+// ---- 大厅 ----
+s += R(-9.0, -4.65, 9.0, 4.5, 'hallfloor');
+s += R(-9.3, -4.95, -9.0, 4.8, 'wall');
+s += R(9.0, -4.95, 9.3, 4.8, 'wall');
+s += R(-9.3, -4.95, -1.5, -4.65, 'wall');
+s += R(1.5, -4.95, 9.3, -4.65, 'wall');
+s += R(-1.5, -4.95, 1.5, -4.87, 'steel');
+// 中间墙（示意居中）
+s += R(-6.4, -0.07, -0.75, 0.23, 'wall');
+s += R(0.75, -0.07, 6.4, 0.23, 'wall');
+s += R(-0.75, -0.07, 0.75, 0.23, 'door');
+s += T(0, 0.62, '安全门 1.5', 'dimlbl');
+s += T(-7.7, 0.62, '缝隙 2.6', 'dimlbl');
+s += T(7.7, 0.62, '缝隙 2.6', 'dimlbl');
+s += T(0, 2.7, '大厅 18.0×9.15', 'rm');
+// 电梯
+s += R(-2.85, -6.6, -2.55, -4.95, 'steel');
+s += R(2.55, -6.6, 2.85, -4.95, 'steel');
+s += R(-2.55, -6.6, 2.55, -4.95, 'hallfloor');
+s += `<line x1="${px(-2.4)}" y1="${py(-6.4)}" x2="${px(2.4)}" y2="${py(-6.4)}" class="dim" stroke-dasharray="3 2"/>`;
+s += R(1.19, -5.81, 1.79, -5.21, 'box');
+s += T(0, -5.25, '电梯', 'sm');
+s += T(1.49, -6.0, '黄箱子', 'sm');
+s += T(0, -4.25, '电梯门 3.0', 'sm');
+
+// ---- 北墙（含红/蓝门洞）----
+s += R(-21.3, 4.5, -4.5, 4.8, 'wall');
+s += R(-3.0, 4.5, 3.0, 4.8, 'wall');
+s += R(4.5, 4.5, 28.9, 4.8, 'wall');
+s += R(-4.5, 4.5, -3.0, 4.8, 'door');
+s += R(3.0, 4.5, 4.5, 4.8, 'door');
+s += T(-3.75, 4.3, '红门 1.5', 'sm');
+s += T(3.75, 4.3, '蓝门 1.5', 'sm');
+
+// ---- 三区地板 ----
+s += R(-21, 4.8, -10, 15.8, 'floor');
+s += R(-9.7, 4.8, -1.7, 13.8, 'floor');
+s += R(-0.1, 4.8, 28.9, 22.8, 'floor');
+
+// ---- 墙 ----
+// 储藏室
+s += R(-21.3, 4.8, -21, 16.1, 'wall');
+s += R(-21.3, 15.8, -9.7, 16.1, 'wall');
+s += R(-10, 4.8, -9.7, 10.93, 'wall');
+s += R(-10, 12.43, -9.7, 15.8, 'wall');
+s += R(-10, 10.93, -9.7, 12.43, 'door');
+// 前室
+s += R(-9.7, 13.8, -1.4, 14.1, 'wall');
+s += R(-1.7, 4.8, -1.4, 13.8, 'wall');
+// 空腔（无地板，画成竖条示意）
+s += `<rect x="${px(-1.4)}" y="${py(13.8)}" width="${(1.0 * S).toFixed(1)}" height="${(9.0 * S).toFixed(1)}" fill="#f7f4ec" stroke="#cfc6b2" stroke-dasharray="3 2" stroke-width=".6"/>`;
+s += `<text x="${px(-0.9)}" y="${py(9.6)}" class="sm" text-anchor="middle" transform="rotate(-90 ${px(-0.9)} ${py(9.6)})">空腔 1.0</text>`;
+// 打印室
+s += R(-0.4, 4.8, -0.1, 22.8, 'wall');
+s += R(-0.4, 22.8, 29.2, 23.1, 'wall');
+s += R(28.9, 4.8, 29.2, 23.1, 'wall');
+
+// ---- 前室实心块（北缘齐储藏室门南边）----
+s += R(-9.7, 4.8, -4.7, 9.55, 'mass');
+s += T(-7.2, 7.5, '实心块', 'sm');
+s += T(-7.2, 6.8, '5.0×4.8', 'sm');
+
+// ---- 假门 ----
+s += R(-21, 10.93, -20.94, 12.43, 'fake');
+s += T(-20.6, 10.6, '假门', 'sm', 'end');
+
+// ---- 柜子（全部抽屉柜模型）----
+const cabX = [-19.9, -18.1, -16.3, -14.5, -12.7, -10.9];
+for (const x of cabX) s += R(x - 0.45, 15.2, x + 0.45, 15.8, 'file');
+for (const x of cabX) s += R(x - 0.45, 4.8, x + 0.45, 5.4, 'file');
+s += T(-10.9, 15.0, '柜子B', 'sm');
+s += T(-15.0, 5.95, '空柜 ×6（可开抽屉）', 'sm');
+s += R(-10.6, 9.83, -10, 10.93, 'file');
+s += R(-10.6, 12.43, -10, 13.53, 'file');
+s += R(-21, 9.83, -20.4, 10.93, 'file');
+s += R(-21, 12.43, -20.4, 13.53, 'file');
+
+// ---- 储藏室门扇 ----
+s += `<line x1="${px(-9.92)}" y1="${py(10.93)}" x2="${px(-9.92)}" y2="${py(11.48)}" stroke="#b8912f" stroke-width="1.4"/>`;
+s += T(-9.4, 12.5, '储藏室门 1.5', 'sm', 'start');
+
+// ---- 打印室道具 ----
+s += R(3.05, 12.1, 3.95, 12.7, 'cab');
+s += T(3.5, 11.85, '柜子A', 'sm');
+s += R(8.05, 8.05, 8.95, 8.75, 'steel');
+s += T(8.5, 7.75, '复印机', 'sm');
+// 12 桌预留（按表格 4×3 分布）
+const desks = [];
+for (const z of [7.4, 11.7, 16.0]) for (const x of [6.6, 10.9, 15.2, 19.5]) desks.push([x, z]);
+for (const [x, z] of desks) s += `<rect x="${px(x - 0.9)}" y="${py(z + 0.45)}" width="${(1.8 * S).toFixed(1)}" height="${(0.9 * S).toFixed(1)}" class="desk"/>`;
+s += T(12.0, 5.95, '12 桌预留位（暂不摆，蓝门右侧）', 'sm');
+
+// ---- 玩家路线 / 视线 ----
+s += `<polyline class="path" points="${px(-3.75)},${py(4.95)} ${px(-3.75)},${py(11.68)} ${px(-9.7)},${py(11.68)}" marker-end="url(#arrow)"/>`;
+s += `<line class="sight" x1="${px(-3.75)}" y1="${py(4.95)}" x2="${px(-9.7)}" y2="${py(11.68)}"/>`;
+s += `<text x="${px(-5.9)}" y="${py(9.15)}" class="bad" text-anchor="middle">视线被挡</text>`;
+s += `<text x="${px(-2.6)}" y="${py(9.0)}" class="ok" text-anchor="middle" transform="rotate(-90 ${px(-2.6)} ${py(9.0)})">通头腿 3.0</text>`;
+
+// ---- 流程节点 ----
+s += badge(5.4, 6.0, '8') + badge(3.4, 7.4, '11') + badge(-15.8, 8.0, '10');
+s += badge(-3.75, 5.35, '12') + badge(-2.2, 5.35, '13');
+s += badge(3.5, 11.7, '14') + badge(4.4, 12.4, '15');
+
+// ---- 房间名 ----
+s += T(-15.5, 13.9, '储藏室', 'rm');
+s += T(-15.5, 13.1, '11.0 × 11.0', 'sm');
+s += T(-5.7, 12.7, '前室', 'rm');
+s += T(-5.7, 12.0, '8.0 × 9.0', 'sm');
+s += T(24.4, 12.8, '打印室', 'rm');
+s += T(24.4, 12.0, '29.0 × 18.0', 'sm');
+
+// ---- 尺寸 ----
+s += dimH(16.9, -21, -10, '11.0');
+s += dimV(-21.7, 4.8, 15.8, '11.0');
+s += dimH(13.4, -9.7, -1.7, '8.0');
+s += dimV(-1.95, 4.8, 13.8, '9.0');
+s += dimH(22.45, -0.1, 28.9, '29.0');
+s += dimV(28.7, 4.8, 22.8, '18.0');
+
+// ---- 指北 ----
+s += T(29.4, 23.2, 'N ↑', 'sm', 'end');
+
+document.getElementById('plan').innerHTML =
+  `<svg viewBox="0 0 660 400" role="img">
+     <defs>
+       <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+         <path d="M0,0 L10,5 L0,10 z" fill="#1f8a4c"/>
+       </marker>
+     </defs>
+     ${s}
+   </svg>`;
+</script>
+</body>
+</html>

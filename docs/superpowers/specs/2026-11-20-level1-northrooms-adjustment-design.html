@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Level1 北侧三区调整规格（储藏室 / 前室 / 打印室）</title>
+<style>
+  :root{--ink:#2b2b2b;--muted:#5b6472;--line:#e3dccd;--cream:#faf6ea;--bg:#f4f1ea;--accent:#a8832f;--bad:#c0392b;--ok:#1f8a4c}
+  *{box-sizing:border-box}
+  body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--ink);margin:0;padding:28px 32px 56px;line-height:1.75}
+  main{max-width:980px;margin:0 auto}
+  h1{font-size:24px;margin:0 0 6px}
+  h2{font-size:17px;margin:30px 0 10px;padding-left:9px;border-left:4px solid var(--accent)}
+  h3{font-size:14px;margin:18px 0 6px}
+  .meta{color:var(--muted);font-size:12.5px;margin:0 0 18px}
+  .meta b{color:var(--ink)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:14px 0}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0;background:#fff}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--cream);font-weight:600;white-space:nowrap}
+  code{background:#f3efe2;border:1px solid #e0d8c4;border-radius:4px;padding:0 4px;font-size:12px}
+  ol,ul{margin:6px 0 6px 22px;padding:0}
+  li{margin:4px 0}
+  .tag{display:inline-block;font-size:11px;padding:0 7px;border-radius:10px;margin-right:6px;vertical-align:1px}
+  .t-ok{background:#e2f3e9;color:#1f6a42}
+  .t-bad{background:#fbe6e3;color:#a02a1c}
+  .t-note{background:#fdf3dd;color:#8a6300}
+  .num{font-weight:700;color:var(--accent);margin-right:4px}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:26px;border-top:1px dashed var(--line);padding-top:12px}
+  a{color:#1f6a8a}
+</style>
+</head>
+<body>
+<main>
+  <h1>Level1 北侧三区调整规格</h1>
+  <p class="meta">
+    <b>储藏室 / 前室 / 打印室</b> · 草案 v2 · 2026-11-20 · 状态：待用户确认后实施<br>
+    场景：<code>Assets/Scenes/Level1.unity</code>，节点 <code>= 关卡</code> · 表格：<code>docs/后室游戏交互节点_1-2 (1) (1).xlsx</code> → <code>办公室区域</code><br>
+    定稿平面图：<a href="../brainstorm/2026-11-20-ante-options.html">2026-11-20-ante-options.html</a>（1 格 = 1 m）
+  </p>
+
+  <h2>1. 目标</h2>
+  <p>把 Level1 北侧从「两间 9.3×5.19 的小房间」改成表格的比例，1 格 = 1 m：</p>
+  <table>
+    <thead><tr><th>区域</th><th>净尺寸</th><th>位置（场景坐标）</th></tr></thead>
+    <tbody>
+      <tr><td>储藏室</td><td>11.0 × 11.0</td><td>x -21.0..-10.0，z 4.8..15.8</td></tr>
+      <tr><td>前室</td><td>8.0 宽 × 9.0 深（L 形）</td><td>x -9.7..-1.7，z 4.8..13.8</td></tr>
+      <tr><td>空腔</td><td>1.0</td><td>x -1.4..-0.4，z 4.8..13.8</td></tr>
+      <tr><td>打印室</td><td>29.0 × 18.0</td><td>x -0.1..28.9，z 4.8..22.8</td></tr>
+    </tbody>
+  </table>
+  <p>红门（大厅北墙，x -4.5..-3.0）正对前室的东侧通头腿；蓝门（x 3.0..4.5）在打印室左下角。8、10–16 号流程、台词内容、大厅、两扇门的位置都不动。</p>
+
+  <h2>2. 非目标</h2>
+  <ul>
+    <li>不改大厅几何：中间墙仍在 z=1.5（不归中）、安全门 / 传送面 / 缝隙触发点 / 电梯厅都不动。</li>
+    <li>不放办公桌：打印室里只预留 12 桌的位置，不摆桌子。</li>
+    <li>不写新台词、不加新交互；不改光照风格与音效。</li>
+  </ul>
+
+  <h2>3. 现状（改造前）</h2>
+  <ul>
+    <li>大厅 <code>x -9.3..9.3</code>、<code>z -4.65..4.8</code>，中间墙 <code>x -6.4..6.4</code>（z 1.35..1.65），两扇北门在 x=±3.75。</li>
+    <li><code>关卡/储藏室</code> 与 <code>关卡/打印室</code> 各 9.3×5.19（x -9.3..0 / 0..9.3，z 4.8..10.0），中间 <code>关卡/储藏室/建筑/隔墙</code> 隔开；北墙 z 10.0..10.3，西/东墙 4.8..10.3。</li>
+    <li>储藏室是空的，只有墙；打印室有柜子B（贴图 Quad）、复印机（Quad）、柜子A（<code>FilingCabinet_Separated</code> 模型，根在 (2.2,0,9.19)、Y180）。</li>
+    <li>前室不存在；红门直接开进打印室（旧门洞 x -4.5..-3.0 在打印室西侧）。</li>
+    <li>触发 8（打印室整间）、10（储藏室整间）、11（蓝箭头）、12（红门前）、13（红门内）、14（柜子A 前）、15（安全门）都按旧房间尺寸摆。</li>
+  </ul>
+
+  <h2>4. 设计决定</h2>
+  <div class="card">
+    <p><span class="num">①</span><b>前室是 L 形，实心块在西南，通头腿在东。</b>
+    红门洞 x -4.5..-3.0 落在腿（x -4.7..-1.7）内，门与实心块之间还有 0.2 m 余量，红门不用移、不用改铰链。玩家进门先正对实心块，沿腿向北走到 z≈11.7 再左转，才看到储藏室门；从门口到储藏室门的斜线被实心块挡住。</p>
+    <p><span class="num">②</span><b>实心块 5.0×4.8（x -9.7..-4.7，z 4.8..9.55）</b>，它把前室 9 m 深切掉 4.8 m，剩下 4.25 m；储藏室门按这 4.25 m 的中线放（中心 11.68）。站在红门口视线被块挡住，沿东侧腿走到门边（z≈11.7）才看得到门。占前室宽 5/8、进深 4.8/9。</p>
+    <p><span class="num">③</span><b>储藏室门开在隔墙 A 上</b>（z 10.93..12.43，1.5 m），按「前室 9 m 深 − 实心块 4.8 m」剩余 4.25 m 的中线；铰链在门洞南侧、向储藏室内开、不锁。西墙同一位置放一块<b>装饰假门</b>（1.5×2.44），无碰撞、无交互——和表格里「两扇门相对」的画法一致。</p>
+    <p><span class="num">④</span><b>空腔 1 m，无门、无地板、无天花，北侧开口</b>：前室东墙（-1.7..-1.4）与打印室西墙（-0.4..-0.1）各自独立，中间留 1 m 缝。原因是表格里两区不共墙；玩家在大厅/房间里看不到这条缝，也没有屋顶可看。</p>
+    <p><span class="num">⑤</span><b>打印室 29×18 只放现有道具</b>：柜子A 移到 (3.5,0,12.4)（Y180 不变），复印机不动 (8.5,1.61,8.4)；12 张办公桌只在图纸上预留（4 列 × 3 行，x 5.5..20.5，z 6.5..16.5），场景里不摆。</p>
+    <p><span class="num">⑥</span><b>大厅不动</b>：图里把中间墙画在正中只是照表格画法；场景仍是 z=1.5。若以后要归中，另开任务。</p>
+  </div>
+
+  <h2>5. 空间结构（施工坐标表）</h2>
+  <p>墙厚 0.3、高 3；地板与墙内表面见上表。</p>
+  <table>
+    <thead><tr><th>#</th><th>部位</th><th>x 范围</th><th>z 范围</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>大厅北墙·西段</td><td>-21.3..-4.5</td><td>4.5..4.8</td></tr>
+      <tr><td>2</td><td>大厅北墙·中段</td><td>-3.0..3.0</td><td>4.5..4.8</td></tr>
+      <tr><td>3</td><td>大厅北墙·东段</td><td>4.5..28.9</td><td>4.5..4.8</td></tr>
+      <tr><td>4</td><td>储藏室西墙</td><td>-21.3..-21.0</td><td>4.8..16.1</td></tr>
+      <tr><td>5</td><td>储藏室北墙</td><td>-21.3..-9.7</td><td>15.8..16.1</td></tr>
+      <tr><td>6</td><td>隔墙 A（储藏室东）</td><td>-10.0..-9.7</td><td>4.8..15.8，门洞 z 10.93..12.43</td></tr>
+      <tr><td>7</td><td>前室北墙</td><td>-9.7..-1.4</td><td>13.8..14.1</td></tr>
+      <tr><td>8</td><td>前室东墙</td><td>-1.7..-1.4</td><td>4.8..13.8</td></tr>
+      <tr><td>9</td><td>打印室西墙</td><td>-0.4..-0.1</td><td>4.8..22.8</td></tr>
+      <tr><td>10</td><td>打印室北墙</td><td>-0.4..29.2</td><td>22.8..23.1</td></tr>
+      <tr><td>11</td><td>打印室东墙</td><td>28.9..29.2</td><td>4.8..23.1</td></tr>
+      <tr><td>12</td><td>前室实心块</td><td>-9.7..-4.7</td><td>4.8..9.55</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>红门洞：x -4.5..-3.0（西段与中段之间，门仍在，<code>AutoDoor(Hinge, autoClose=false)</code>，不锁）。</li>
+    <li>蓝门洞：x 3.0..4.5（中段与东段之间）。</li>
+    <li>地板：储藏室 -21..-10 × 4.8..15.8；前室 -9.7..-1.7 × 4.8..13.8；打印室 -0.1..28.9 × 4.8..22.8。三块各自独立的材质（见 §8）。</li>
+    <li>空腔：-1.4..-0.4 × 4.8..13.8，不铺地板。</li>
+  </ul>
+
+  <h2>6. 门</h2>
+  <table>
+    <thead><tr><th>门</th><th>位置</th><th>类型 / 行为</th></tr></thead>
+    <tbody>
+      <tr><td>红门</td><td>大厅北墙 x -4.5..-3.0</td><td>不动（<code>AutoDoor</code> Hinge，autoClose=false，不锁）</td></tr>
+      <tr><td>蓝门</td><td>大厅北墙 x 3.0..4.5</td><td>不动</td></tr>
+      <tr><td>储藏室门（新）</td><td>隔墙 A，z 10.93..12.43</td><td><code>AutoDoor</code> Hinge，autoClose=false，不锁；铰链在门洞<b>南侧</b>（z 10.93），门板向北伸、比门洞多压北侧 4 cm，向储藏室内（西）开，<code>hingeOpenAngle</code> 取 <b>-95°</b>；门板 1.5×2.44×0.08，用 <code>DoorBox</code> 网格、<code>Door_Office</code> 材质</td></tr>
+      <tr><td>假门（新）</td><td>储藏室西墙内表面 x=-21，z 10.93..12.43</td><td>只有门板（1.5×2.44×0.08，<code>DoorBox</code>），无碰撞、无脚本</td></tr>
+      <tr><td>安全门</td><td>大厅中间墙</td><td>不动</td></tr>
+    </tbody>
+  </table>
+  <p>门板一律贴在墙面之外 2 mm，别插进墙厚里。</p>
+
+  <h2>7. 柜子</h2>
+  <ul>
+    <li><b>统一用抽屉柜模型</b>（<code>FilingCabinet_Separated</code>，Body + Drawer1..4），不再用贴图 Quad + <code>YBillboard</code>；除南排外抽屉固定关着、不可交互（柜子B 除外）。</li>
+    <li><b>北排</b>：6 个，z 15.2..15.8，中心 x = -19.9、-18.1、-16.3、-14.5、-12.7、-10.9；<b>柜子B 用最东那格</b>（-10.9），保留 <code>StorageCabinetInteract</code> 与锁定逻辑，Body 上补一个可被射线打中的 <code>BoxCollider</code>。</li>
+    <li><b>南排</b>：6 个，z 4.8..5.4，中心同上；每格抽屉挂 <code>EmptyCabinetDrawer</code>，<b>只开关抽屉、不触发台词</b>（见 §10）。</li>
+    <li>内门两侧：2 个抽屉柜模型（静态），x -10.6..-10.0，z 9.83..10.93 与 12.43..13.53。</li>
+    <li>假门两侧：2 个抽屉柜模型（静态），x -21.0..-20.4，同样两段 z。</li>
+    <li>柜子A：<code>FilingCabinet_Separated</code> 原模型移到 (3.5, 0, 12.4)，Y180（正面朝南）；<code>GlowCabinetInteract</code> / <code>FilingCabinetDrawer</code> / <code>FilingCabinetCard</code> 一并跟过去。</li>
+    <li>复印机：不动，位置 (8.5, 1.61, 8.4)。</li>
+  </ul>
+  <h2>8. 材质与光照</h2>
+  <ul>
+    <li><b>地板</b>：从 <code>Floor_Office</code> 各存三份，<code>_BaseMap_ST</code> 按尺寸写死（2 m 一格）：储藏室 5.5×5.5、前室 4.0×4.5、打印室 14.5×9.0。</li>
+    <li><b>墙</b>：沿用 <code>Wall_Storage</code> 的贴图密度（现有 4.9 m 墙的 ST 约 1.37 列，即每米约 0.28 列），储藏室 11 m、打印室 18 m 与 29 m、前室 8/9 m 的墙另存 <code>Wall_Storage_11</code> / <code>Wall_Storage_9</code> / <code>Wall_Storage_18</code> / <code>Wall_Storage_29</code>，把 ST 写进材质资产；不要用 <code>MaterialPropertyBlock</code>。</li>
+    <li><b>灯光</b>：储藏室 11×11 补 1 盏点光，打印室 29×18 补 2–3 盏（照到北端与柜子A），前室 1 盏；颜色/强度沿用现有房间。</li>
+  </ul>
+
+  <h2>9. 触发区与流程</h2>
+  <table>
+    <thead><tr><th>号</th><th>触发盒（中心 / 尺寸）</th><th>行为</th></tr></thead>
+    <tbody>
+      <tr><td>8</td><td>(14.4, 1.2, 13.8) / 28.8×2.4×17.8</td><td>进打印室，<code>RoomEntryTrigger</code> 播 LV2_08</td></tr>
+      <tr><td>10</td><td>(-15.5, 1.2, 10.3) / 10.8×2.4×10.8</td><td>进储藏室，播 LV2_10</td></tr>
+      <tr><td>11</td><td>(3.9, 1.5, 6.0)</td><td>蓝箭头，<code>BlueArrowInteract</code> 触发 11</td></tr>
+      <tr><td>12</td><td>(-3.75, 1.2, 5.3) / 1.6×2.4×0.9</td><td>进前室：红门自动关 + <code>TimedDoorLock</code> 锁 60 s</td></tr>
+      <tr><td>13</td><td>(-2.4, 1.2, 5.4) / 3.2×2.4×1.2</td><td>进前室后的剧情 LV2_13</td></tr>
+      <tr><td>14</td><td>(3.5, 1.2, 11.6) / 2.0×2.4×1.4</td><td>柜子A 前，播 LV2_14</td></tr>
+      <tr><td>15</td><td>不变</td><td>安全门，播 LV2_15</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>12 和 13 都在门口，玩家进门一次同时触发：门关上的瞬间播 13 的「门锁上了」，顺序不冲突。</li>
+    <li>台词：<code>Assets/Yarn/Level2.yarn</code> 的 <code>LV2_08</code> 把「蓝箭头通向隔间区」改成「打印室」，其余节点原文不动。</li>
+  </ul>
+
+  <h2>10. 代码改动</h2>
+  <table>
+    <thead><tr><th>文件</th><th>改动</th></tr></thead>
+    <tbody>
+      <tr><td><code>Assets/Scripts/Level/BackRooms/EmptyCabinetDrawer.cs</code>（新）</td><td>每格抽屉一个：靠近 + 交互键 → 沿 -Z 滑出 0.28 m，再按滑回；无台词、无事件</td></tr>
+      <tr><td><code>Assets/Scripts/Level/BackRooms/FilingCabinetDrawer.cs</code></td><td>不改（它带台词/事件，南排不用它）</td></tr>
+      <tr><td><code>Assets/Yarn/Level2.yarn</code></td><td>只改 <code>LV2_08</code> 一句</td></tr>
+      <tr><td>场景</td><td>其余按 §5–§9 在编辑器 / MCP 里摆</td></tr>
+    </tbody>
+  </table>
+  <p><code>EmptyCabinetDrawer</code> 用 DOTween（<code>Assets/Scripts/Core/TweenAwaiter.cs</code> 的 <code>WaitForCompletionAsync</code>），不写协程；序列化字段加 <code>[LabelText]</code>。</p>
+
+  <h2>11. 实施顺序</h2>
+  <ol>
+    <li>先改大厅北墙三段（拆旧 <code>北墙_左</code>，按 §5 摆新段与门洞），确认红/蓝门洞位置不变。</li>
+    <li>拆旧隔墙与两间房的墙/地板，按 §5 建三区地板、墙、实心块。</li>
+    <li>克隆红门做储藏室门（改位置/尺寸/铰链），加假门。</li>
+    <li>柜子：北排 6 个 + 两侧 4 个用 <code>FilingCabinet_Separated</code>（静态），南排 6 个同模型（每格 <code>EmptyCabinetDrawer</code>），柜子B 保留原交互，柜子A 与复印机就位。</li>
+    <li>触发 8/10/11/12/13/14 按 §9 重摆，接台词；改 <code>LV2_08</code>。</li>
+    <li>灯光与材质（§8）。</li>
+    <li>Play 手测（见 §12），确认 Console 无报错。</li>
+  </ol>
+
+  <h2>12. 验收</h2>
+  <ul>
+    <li>从大厅开红门进前室：看不到储藏室门（被实心块挡）；沿东侧腿走到 z≈11.7 左转看到门；储藏室门可开、不锁。</li>
+    <li>储藏室 11×11：北排柜子B 可交互、其余抽屉柜静态；南排 6 个抽屉都能开合、不出台词；假门不可交互、无碰撞。</li>
+    <li>打印室：进蓝门触发 8，台词说「打印室」；柜子A 抽屉/卡片流程 14/15 正常；复印机拿卡正常。</li>
+    <li>12 → 红门关上并锁 60 s；60 s 后自动开。</li>
+    <li>三区之间没有缝（空腔 1 m 从房间里看不到）；墙/地板无 z-fighting；帧率不塌。</li>
+  </ul>
+
+  <h2>13. 已确认</h2>
+  <ul>
+    <li>大厅保持现状：中间墙仍在 z=1.5，不归中。</li>
+    <li>打印室 29 宽 × 18 深，北端空着（只预留 12 桌位置）。</li>
+    <li>空腔 1 m 做成无地板、无天花的缝，北侧开口。</li>
+    <li>柜子：除南排外全部复用抽屉柜模型（静态，不可开抽屉）；南排可开抽屉、无台词。</li>
+    <li>前室 8 宽 × 9 深（长宽已纠正）。</li>
+  </ul>
+  <p class="foot">与 <a href="../brainstorm/2026-11-20-ante-options.html">定稿平面图</a> 配套阅读；两张页面都是自包含 HTML，可直接用浏览器打开。</p>
+</main>
+</body>
+</html>

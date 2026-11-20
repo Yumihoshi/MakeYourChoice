@@ -23,6 +23,11 @@
 - 修复（2026-11-20，用户报「门以把手一侧为轴、应绕另一侧打开」）：
   - 储藏室门铰链从门洞北侧改到**南侧**：`铰链` world `(-10.042, 1.22, 10.93)`（`localPosition` 0.75,1.22,0.172），`门板` `localPosition` (-0.77,0,0)、跨 z 10.93..12.47（比门洞多压北侧 4 cm），`hingeOpenAngle` 改 **-95°**；门扇扫向西南、开门后贴在储藏室东墙上，所以 `柜子_门南` 从 z 10.2 挪到 **z 8.8**。
   - 实测（Play、`runInBackground` 保证推进）：开门 Y90→355.5°（-94.5°）、`OpenProgress 0.995`、门板落在 (-10.810,1.220,10.870)；关门回 Y89.5°、`progress 0.005`、`excludeLayers` 归 0 重新挡人。场景已 SaveScene。
+- 修复（2026-11-20，用户报「大厅和前室的门居中 + 柜子都能开、拉开一定数量才播剧情」）：
+  - 红门根 x -3.75 → **-3.2**（铰链 -3.95、门板中心 -3.18、跨 -3.95..-2.41）：在实心块东面 -4.7 与前室东墙 -1.7 之间居中；`北墙_西段` 收成 -21.3..-3.95、`北墙_中段` 改 -2.45..3.0、`北墙_门楣_红` 跟到 -3.2、触发 12 移到 x -3.2。
+  - 新增 `Assets/Scripts/Level/BackRooms/StorageDrawerQuest.cs`（`requiredDrawers = 3`，累计拉开 3 格不同抽屉后播 `LV2_CabinetB` 并 `MarkOpenedCabinetB()`）；`EmptyCabinetDrawer` 增加 `state`/`quest`，首次拉开报数、锁柜后只能关。
+  - 16 个柜子共 64 格抽屉统一挂 `EmptyCabinetDrawer`（此前只有南排 6 个可开）；`柜子_北6` 上的 `StorageCabinetInteract` 删除，柜子B 不再特殊。
+  - 实测：Edit 模式射线先命中抽屉（dist 0.360）；Play 里红门 -94.5°、`OpenProgress 0.995`，`RegisterOpened()` 三次后 `OpenedCount=3`、`OpenedCabinetB=true`。
 
 ## 现状基线（2026-11-20 场景 `Assets/Scenes/Level1.unity`）
 

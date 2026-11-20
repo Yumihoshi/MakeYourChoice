@@ -45,7 +45,7 @@ namespace Game.Level
             EnteredPrintRoom = true;
         }
 
-        /// <summary>记录玩家走进了储藏室；返回是否首次进入（首次时调用方要把红色门锁上）。</summary>
+        /// <summary>记录玩家走进了储藏室；返回是否首次进入（首次时调用方要把储藏室门锁上）。</summary>
         /// <returns>本次是否是第一次进入储藏室。</returns>
         public bool EnterStorage()
         {

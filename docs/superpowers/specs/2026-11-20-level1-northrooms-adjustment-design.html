@@ -150,6 +150,7 @@
   </table>
   <ul>
     <li>12 和 13 都在门口，玩家进门一次同时触发：门关上的瞬间播 13 的「门锁上了」，顺序不冲突。</li>
+    <li><b>2026-11-20 修正</b>：12 / 13 两个前室触发区实际未放置；关门 + 锁 60 s 由 <code>进入储藏室</code>（触发 10）的 <code>RoomEntryTrigger</code> 执行，目标是 <b>储藏室门（前室↔储藏室）</b>上的 <code>TimedDoorLock</code>，红门（前室↔大厅）不再定时锁。</li>
     <li>11 号「发现维护记录」（<code>LV2_CabinetB</code>）不再由某一只柜子触发，改由 <code>StorageDrawerQuest</code> 计数：任意柜子累计拉开 <b>3 格不同抽屉</b>后播一次，之后不再触发；拿临时卡后 `CabinetsLocked` 置真，抽屉只能关不能开。</li>
     <li>台词：<code>Assets/Yarn/Level2.yarn</code> 的 <code>LV2_08</code> 把「蓝箭头通向隔间区」改成「打印室」，其余节点原文不动。</li>
   </ul>

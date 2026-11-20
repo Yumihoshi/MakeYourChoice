@@ -6,7 +6,7 @@ namespace Game.Level
 {
     /// <summary>
     /// 关卡二的房间入口：玩家第一次走进打印室（触发 8）或储藏室（触发 10）时播放一次剧情。
-    /// 触发区用房间内部的 BoxCollider 当范围，进入储藏室时还会让红色门关上并锁一分钟。
+    /// 触发区用房间内部的 BoxCollider 当范围，进入储藏室时还会让储藏室门（前室与储藏室之间）关上并锁一分钟。
     /// </summary>
     public sealed class RoomEntryTrigger : MonoBehaviour
     {
@@ -32,8 +32,8 @@ namespace Game.Level
         [SerializeField, LabelText("房间")]
         Room room = Room.PrintRoom;
 
-        [SerializeField, LabelText("红色门定时锁")]
-        TimedDoorLock redDoorLock;
+        [SerializeField, LabelText("储藏室门定时锁")]
+        TimedDoorLock storageDoorLock;
 
         void Update()
         {
@@ -61,9 +61,9 @@ namespace Game.Level
             {
                 state.MarkEnteredPrintRoom();
             }
-            else if (state.EnterStorage() && redDoorLock != null)
+            else if (state.EnterStorage() && storageDoorLock != null)
             {
-                redDoorLock.LockForAWhile();
+                storageDoorLock.LockForAWhile();
             }
 
             dialogue.StartDialogue();

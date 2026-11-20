@@ -370,6 +370,8 @@ TriggerBox("进前室_台词", new Vector3(-2.4f, 1.2f, 5.4f), new Vector3(3.2f,
 
 门关/锁 60 s 用 `TimedDoorLock`（照抄旧用法：红门 AutoDoor 上已有或新加），进前室触发 12 时 `LockForAWhile()`；13 挂 `DialogueZoneTrigger`（`DialogueTrigger` 用 LV2_13），照旧写法。
 
+> 2026-11-20 修正：12 / 13 两个前室触发区最终没放；关门 + 锁 60 s 改由 `进入储藏室`（触发 10）的 `RoomEntryTrigger` 执行，`TimedDoorLock` 挂在**储藏室门（前室↔储藏室）**上，红门（前室↔大厅）上的定时锁已移除。
+
 - [ ] **步骤 4：11、14 号微调**
 
 `BlueArrowInteract` 的交互盒随蓝门 → (3.9, 1.5, 6.0)；`柜子A` 的 `GlowCabinetInteract` 触发 14 的剧情触发区 → 中心 (3.5, 1.2, 11.6)、尺寸 (2.0, 2.4, 1.4)。

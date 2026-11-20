@@ -2677,7 +2677,7 @@ MonoBehaviour:
   player: {fileID: 1078034790}
   area: {fileID: 206109409}
   room: 1
-  redDoorLock: {fileID: 371084770}
+  storageDoorLock: {fileID: 1846931412}
 --- !u!114 &206109408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3959,7 +3959,6 @@ GameObject:
   - component: {fileID: 371084767}
   - component: {fileID: 371084768}
   - component: {fileID: 371084769}
-  - component: {fileID: 371084770}
   m_Layer: 0
   m_Name: "\u7EA2\u95E8"
   m_TagString: Untagged
@@ -4025,20 +4024,6 @@ MonoBehaviour:
   maxDistance: 3
   door: {fileID: 371084768}
   openDialogue: {fileID: 0}
---- !u!114 &371084770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371084766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c84004c9da4833647a302d6f7e1f190e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  door: {fileID: 371084768}
-  lockSeconds: 60
 --- !u!1 &375216554
 GameObject:
   m_ObjectHideFlags: 0
@@ -7187,7 +7172,7 @@ MonoBehaviour:
   player: {fileID: 1078034790}
   area: {fileID: 720952117}
   room: 0
-  redDoorLock: {fileID: 0}
+  storageDoorLock: {fileID: 0}
 --- !u!114 &720952116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17754,6 +17739,7 @@ GameObject:
   - component: {fileID: 1846931409}
   - component: {fileID: 1846931411}
   - component: {fileID: 1846931410}
+  - component: {fileID: 1846931412}
   m_Layer: 0
   m_Name: "\u50A8\u85CF\u5BA4\u95E8"
   m_TagString: Untagged
@@ -17819,6 +17805,20 @@ MonoBehaviour:
   duration: 0.8
   autoClose: 0
   closeDelay: 2
+--- !u!114 &1846931412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846931408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84004c9da4833647a302d6f7e1f190e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: {fileID: 1846931411}
+  lockSeconds: 60
 --- !u!134 &1853854159
 PhysicMaterial:
   m_ObjectHideFlags: 0

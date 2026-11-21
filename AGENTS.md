@@ -31,6 +31,7 @@
 | 交互聚焦与准心 HUD | `Assets/Scripts/Interaction/InteractFocus.cs` + `Assets/Scripts/UI/InteractPromptView.cs` |
 | 关卡几何、第一人称视角 | ProBuilder（5.2.4）搭 3D 几何 + Cinemachine 第一人称 |
 | 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
+| 道具模型、外部 FBX 预处理 | `Assets/Prefabs/Props` + `Assets/Art/Models`；Blender 拆分与缩放烘焙见 `.agent-guides/props.md` |
 
 各模块的脚本职责、场景坐标、材质参数与踩坑记录不在本文件重复，按下一节协议加载。
 
@@ -60,6 +61,10 @@
 - 不手改 `.meta`；移动、重命名、删除资产时连同 `.meta` 一起处理。
 - 场景、预制体、`.asset` 等序列化文件通过 Unity 编辑器或 Unity MCP 修改，不手写 YAML。
 - **AI 的一次性脚本、临时目录与中间产物统一放仓库根目录的 `AITemp/`**（该目录已在 `.gitignore` 中忽略）：不要散落在仓库根、`Assets/` 或 `docs/` 下；需要长期保留的产物再移到正式位置。
+
+## 外部工具
+
+- **Blender 5.2 / 5.3** 已安装在本机：`F:\SteamLibrary\steamapps\common\Blender\blender.exe`。FBX / GLB 的网格拆分、门扇轴心对齐、比例修正与重新导出都可以用它；无头执行用 `blender.exe -b <输入.blend> -P <脚本.py>`（或 `--python-expr`）。这是 Steam 安装目录，只读使用，不要把工程资产写进去。
 
 ## 文档
 

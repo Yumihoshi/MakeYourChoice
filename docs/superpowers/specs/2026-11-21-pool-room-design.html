@@ -35,7 +35,7 @@ li{margin:4px 0}
 </style></head><body><main>
 <h1>泳池房搭建规格</h1>
 <p class="meta">MakeYourChoice · Unity 2022.3.62f3c1 / URP 14 · 规格日期 2026-11-21 · 数据源 <code>docs/Back D Room.xlsx</code> 子表「泳池房区域」（保存于 2026-11-21 13:24） · 场景基准 <code>Assets/Scenes/Level1.unity</code> / <code>Assets/Prefabs/Level/TestRoom.prefab</code></p>
-<div class="lead"><b>一句话</b>：把 <code>TestRoom.prefab</code> 重命名为 <code>泳池房.prefab</code>，保留 13.3 m 长廊，在其 +z 侧按图纸 1:1 接出室内净 25 × 32 m 的泳池层（更衣室 25×5 / 泵房 9×9 / 主厅含走道 25×27 / 长池 8×13 / 池核 11×20），池体下挖 1.5 m，两块水面 y=-0.25，材质优先复用现有资产、缺失项用纯红占位。</div>
+<div class="lead"><b>一句话</b>：把 <code>TestRoom.prefab</code> 重命名为 <code>泳池房.prefab</code>，现有 13.3 m 长廊一米不缩，只把地板/墙/吊顶延长到 z=14.3 与更衣室南墙对接，再用其 +z 侧按图纸 1:1 接出室内净 25 × 32 m 的泳池层（更衣室 25×5 / 泵房 9×9 / 主厅含走道 25×27 / 长池 8×13 / 池核 11×20），池体下挖 1.5 m，两块水面 y=-0.25，材质优先复用现有资产、缺失项用纯红占位。</div>
 <h2>1. 输入与坐标映射</h2>
 <p>表格把平面图直接画在格子里：1 格 = 1 m，填充色区分墙体/水体/地面/柜体/门。读出的外框为 <b>K..AK（27 列）× r10..43（34 行）</b>，即 27 × 34 m；墙体在图纸上画满 1 格，实际按项目约定建 0.3 m 厚并贴室内侧，因此内净为 25 × 32。</p>
 <pre>x_local = (列序号 - 11) - 23.5      # 图纸长廊中心 x=23.5 → 局部 x=0

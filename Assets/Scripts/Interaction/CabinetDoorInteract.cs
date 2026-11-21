@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using Game.Dialogue;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -11,6 +12,13 @@ namespace Game.Level
     /// </summary>
     public sealed class CabinetDoorInteract : InteractableBase
     {
+        public enum LockMode
+        {
+            Unlocked,
+            SilentLocked,
+            FeedbackLocked
+        }
+
         [SerializeField, Required, LabelText("铰链节点")]
         Transform hinge;
 
@@ -20,10 +28,20 @@ namespace Game.Level
         [SerializeField, LabelText("开合时长")]
         float duration = 0.45f;
 
+        [SerializeField, LabelText("初始锁状态")]
+        LockMode lockMode = LockMode.Unlocked;
+
+        [SerializeField, ShowIf(nameof(lockMode), LockMode.FeedbackLocked), LabelText("上锁提示剧情")]
+        DialogueTrigger lockedDialogue;
+
         Collider _panelCollider;
         Quaternion _closedRotation;
         bool _open;
         bool _moving;
+        bool _locked;
+
+        /// <summary>锁着时是否仍然显示准心并给短句反馈。</summary>
+        bool IsFeedbackLocked => _locked && lockMode == LockMode.FeedbackLocked;
 
         protected override void Awake()
         {
@@ -41,23 +59,58 @@ namespace Game.Level
             }
 
             _closedRotation = hinge.localRotation;
-            _panelCollider = GetComponent<Collider>();
+            _panelCollider = GetComponentInChildren<Collider>();
+            _locked = lockMode != LockMode.Unlocked;
+
+            if (IsFeedbackLocked && lockedDialogue == null)
+            {
+                Debug.LogError("CabinetDoorInteract 配置为 FeedbackLocked，但没有上锁提示剧情", this);
+            }
         }
 
         protected override bool CanInteract()
         {
-            return hinge != null && !_moving;
+            if (hinge == null || _moving)
+            {
+                return false;
+            }
+
+            return !(_locked && lockMode == LockMode.SilentLocked);
         }
 
         protected override void OnInteract()
         {
-            ToggleAsync().Forget();
+            if (_locked)
+            {
+                if (IsFeedbackLocked && lockedDialogue != null)
+                {
+                    lockedDialogue.StartDialogue();
+                }
+
+                return;
+            }
+
+            SetOpenAsync(!_open).Forget();
         }
 
-        async UniTaskVoid ToggleAsync()
+        /// <summary>解锁；之后由玩家自己开门，或由剧情调用 <see cref="Open"/>。</summary>
+        public void Unlock() => _locked = false;
+
+        /// <summary>解锁后由剧情直接打开；已开或正在转时忽略。</summary>
+        public void Open()
+        {
+            if (_locked || _open || _moving || hinge == null)
+            {
+                return;
+            }
+
+            SetOpenAsync(true).Forget();
+        }
+
+        async UniTaskVoid SetOpenAsync(bool open)
         {
             _moving = true;
-            var target = _open ? _closedRotation : _closedRotation * Quaternion.Euler(0f, openAngle, 0f);
+            var target = open ? _closedRotation * Quaternion.Euler(0f, openAngle, 0f) : _closedRotation;
             var from = hinge.localRotation;
             var originalExclude = _panelCollider != null ? _panelCollider.excludeLayers : default;
 
@@ -88,7 +141,7 @@ namespace Game.Level
                     _panelCollider.excludeLayers = originalExclude;
                 }
 
-                _open = !_open;
+                _open = open;
                 _moving = false;
             }
         }

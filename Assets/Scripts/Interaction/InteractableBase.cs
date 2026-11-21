@@ -49,7 +49,19 @@ namespace Game.Level
             InteractFocus.Set(this);
 
             var input = PlayerInputRouter.Instance;
-            if (input != null && input.Interact.WasPressedThisFrame())
+            if (input == null)
+            {
+                return;
+            }
+
+            if (IsHoldInteraction)
+            {
+                if (input.Interact.IsPressed())
+                {
+                    OnInteractHeld(Time.deltaTime);
+                }
+            }
+            else if (input.Interact.WasPressedThisFrame())
             {
                 OnInteract();
             }
@@ -62,6 +74,12 @@ namespace Game.Level
 
         /// <summary>玩家按交互键时调用；此时已确认视线对准且 <see cref="CanInteract"/> 为真。</summary>
         protected abstract void OnInteract();
+
+        /// <summary>为 true 时走按住分支，由子类在 <see cref="OnInteractHeld"/> 里累计。</summary>
+        protected virtual bool IsHoldInteraction => false;
+
+        /// <summary>按住交互键期间每帧调用；只有 <see cref="IsHoldInteraction"/> 为 true 时才会走到。</summary>
+        protected virtual void OnInteractHeld(float deltaTime) { }
 
         /// <summary>光标锁定、视线对准自己的子物体且没有被遮挡。</summary>
         bool IsAimed()

@@ -53,3 +53,63 @@ title: LV2_CabinetA_Second
 （获得“门禁卡”）
 ……好吧。你比我想的细心。我确实不知道夹层。（拿到门禁卡）
 ===
+
+title: LV2_Pool_PumpHint
+---
+抽水泵没有反应。<br>得先打开主阀，水压才上得来。
+===
+
+title: LV2_Pool_Number
+---
+池底有个数字……00。<br>更衣室那排柜子里，00 号是假的。
+===
+
+title: LV2_Pool_NeedWrench
+---
+主阀锈死了。<br>得找一把扳手才能拧动。
+===
+
+title: LV2_Pool_WheelPicked
+---
+一个阀轮。<br>长池西墙的管道上缺的就是它。
+===
+
+title: LV2_Pool_InstallWheel
+---
+轮装上了。<br>按住左键，把它转到底。
+===
+
+title: LV2_Pool_LongDrained
+---
+长池的水退下去了。<br>池底露出来了。
+===
+
+title: LV2_Pool_Locked37
+---
+37 号柜锁着。<br>钥匙应该在长池池底。
+===
+
+title: LV2_Pool_Key
+---
+一把小钥匙。<br>上面刻着 37。
+===
+
+title: LV2_Pool_Wrench
+---
+扳手到手了。<br>去主阀那边。
+===
+
+title: LV2_Pool_NoWrench
+---
+主阀的螺母太大，徒手拧不动。<br>需要扳手。
+===
+
+title: LV2_Pool_MainValveOpen
+---
+主阀松动了。<br>池核的水开始往下退。
+===
+
+title: LV2_Pool_CoreDrained
+---
+池核的水也退干净了。<br>地漏下面有风。
+===

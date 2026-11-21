@@ -595,7 +595,9 @@ di.maxDistance = 3f; di.door = ad;
 
 门楣沿用已有的 `建筑/门楣_更衣室`（1.50 × 1.95 × 0.30，中心 (-2.5, 3.375, 19.45)），不需要再建。场景实例里把 `DoorInteract.eye` 覆盖为 `Main Camera`（预制体里留空，由 `InteractableBase.Awake` 取 `Camera.main`，取不到会 LogError 并禁用——关卡一的口袋空间实例也靠这条兜底）。
 
-- [x] **步骤 2：暗门（OldMetalWardrobe 假柜，X 缩放 2.04）**
+- [x] **步骤 2：暗门（OldMetalWardrobe 假柜，常规缩放 + 两侧补墙）**
+
+> 2026-11-21 修复：初版把柜体沿 X 拉到 2.04 倍堵满 1.0 m 洞（柜门花纹被拉宽、与其它柜子不同尺寸）。现改为与长廊口同一套「常规柜 + 墙体补洞」，柜体保持 0.45 × 1.80 × 0.49。
 
 ```csharp
 var root = PrefabUtility.LoadPrefabContents(PREFAB);
@@ -603,20 +605,38 @@ var prop = Group(root, "道具");
 var shelf = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Props/OldMetalWardrobe.prefab");
 var go = (GameObject)PrefabUtility.InstantiatePrefab(shelf, prop);
 go.name = "门_暗门";
-go.transform.localPosition = new Vector3(-20.5f, 0f, 19.45f);
-go.transform.localScale = new Vector3(2.04f, 1f, 1f);      // 0.49 → 1.00 m，柜内净宽 0.98
-// 关键：铰链 localPosition.x 要跟着放大，否则门绕柜子中心转
-go.transform.Find("Body/Hinge_FrontDoor").localPosition = new Vector3(0.459f, 1.121f, 0.206f);
-go.transform.Find("Body/Hinge_BackDoor").localPosition  = new Vector3(-0.459f, 0.900f, 0.225f);
+go.transform.localPosition = new Vector3(-20.5f, 0f, 19.45f);   // 旋转 90° 让正面朝更衣室
+go.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
+go.transform.localScale = Vector3.one;                            // 保持原始缩放
+// 柜体换开背网格，玩家才能从更衣室穿到泵房
+var openBack = AssetDatabase.LoadAssetAtPath<Mesh>("Assets/Art/Models/储物柜2/processed/Meshes/OldMetalWardrobe_Body_OpenBack.asset");
+var body = go.transform.Find("Body");
+body.GetComponent<MeshFilter>().sharedMesh = openBack;
+body.GetComponent<MeshCollider>().sharedMesh = openBack;
+// 两扇门挂 CabinetDoorInteract（外门朝更衣室 -90°、背门朝泵房 +90°）
+foreach (var (door, hinge, angle) in new[] {
+    ("Hinge_FrontDoor/Door_Front", "Hinge_FrontDoor", -90f),
+    ("Hinge_BackDoor/Door_Back",  "Hinge_BackDoor",   90f) }) {
+    var cdi = go.transform.Find(hinge + "/" + door.Split('/')[1]).gameObject.AddComponent<CabinetDoorInteract>();
+    cdi.hinge = go.transform.Find(hinge); cdi.openAngle = angle; cdi.duration = 0.45f;
+}
+// 1.0 m 墙洞剩下的左右各 0.275 m 用墙补（Cube、BoxCollider、Default 层、复制相邻墙的渲染设置）
+AddWall(Group(root, "建筑"), "墙_更衣室北_暗门洞补_西", new Vector3(-20.8625f, 0.90f, 19.45f), new Vector3(0.275f, 1.80f, 0.30f), WALL_0275);
+AddWall(Group(root, "建筑"), "墙_更衣室北_暗门洞补_东", new Vector3(-20.1375f, 0.90f, 19.45f), new Vector3(0.275f, 1.80f, 0.30f), WALL_0275);
+// 门楣下移，底面对齐柜顶 1.80（原 y=3.08 留了 5 mm 缝）
+Group(root, "建筑").Find("门楣_暗门").localPosition = new Vector3(-20.5f, 3.075f, 19.45f);
 PrefabUtility.SaveAsPrefabAsset(root, PREFAB);
 PrefabUtility.UnloadPrefabContents(root);
 return "ok";
 ```
 
+补墙材质新建 `Assets/Materials/Level/Tile_Pool_Wall_0.275.mat`（复制 `Tile_Pool_Wall_2.08`，`_BaseMap_ST=(0.1375,0.9)`，2 m 一循环）。
+
 - [x] **步骤 3：验证**
-更衣室门洞净宽 1.5、门板不穿透墙；暗门占满 1.0 m 洞、柜门开合不绕中心转；玩家胶囊（0.34 宽含 skin）能从柜体空腔穿过（净宽 0.98）。
+更衣室门洞净宽 1.5、门板不穿透墙；暗门柜体为常规尺寸、两侧补墙与柜体齐平、门楣底面对齐柜顶；玩家胶囊（0.34 宽含 skin）能从柜体空腔穿过（柜内净宽 0.412）。
 更衣室门复核：关门时从 z=18.9 向 +Z 的 `CapsuleCast` 在门中心命中 `门板`（中心 (-2.48,1.22,19.62)、包围盒 1.54×2.44×0.08）；把 `铰链` 临时转到 -95° 后，x −3.00..−1.95 全部 clear，门板打开后包围盒 (-3.42,0,19.62)..(-3.21,2.44,21.16)，贴走道南墙北面、不穿墙/门楣，随后转回 0。
-用户手测：进更衣室走到北墙门洞（x −3.25..−1.75），对准门板按交互键，门向走道打开后穿过。
+暗门复核：把 `Hinge_FrontDoor` 转 −90°、`Hinge_BackDoor` 转 +90° 并 `Physics.SyncTransforms()` 后，按双脚站柜内底板 y=0.051、radius 0.15 / height 1.55 的 `CapsuleCast` 双向各扫 1.6 m：x=−20.50、±0.04 全部 clear；x=−20.42（东侧 +0.08）撞柜体前框、x=−20.58 撞补墙，即中线可活动范围约 ±0.055 m；双脚在地面 y=0 起扫则命中柜体底板 5.1 cm 台阶（stepOffset 0.3 可跨）。开门后前面门板包围盒 (-20.309,0.051,18.812)..(-20.254,1.749,19.225)，背门 (-20.295,0.005,19.675)..(-20.275,1.795,20.123)，都不穿墙。
+用户手测：进更衣室走到北墙门洞（x −3.25..−1.75），对准门板按交互键，门向走道打开后穿过；到北墙西端（x −21..−20）对准假柜门板按交互键，开外门→走进柜内→开背门→进泵房，再原路返回。
 
 ---
 
@@ -1116,8 +1136,8 @@ Shader "Pool/PoolWater"
 2. **地板覆盖校验的采样点落在边界上**：以 `x=-22.5` 起算会把「恰好贴在板边」的点判为未覆盖（9872 个假阳性）。改成从 `-22.45/+0.1` 步进取样后为 0，`Bounds` 判定仍用 `|x-cx| < extents - 0.001`。
 3. **图纸里两条 1 m 水渠没有底与水面**：补充 `水渠_底_1/2`（顶面 -0.4，材质 `Tile_Pool_池底_1x8`）与 `水渠水面_08/09`（y -0.1）。水面因此从 7 块变 9 块，池底从 7 块变 9 块。
 4. **干区平台原先只有四周围墙**：补充实体块 `池坑_干区平台`（x -7.5..-2.5、z 26.3..30.3、顶面 y=0、材质 `Tile_Pool_Floor_5x4`），抽水泵与排水交互点才有立足面。
-5. **两个门洞在墙上留的是通高缺口**：补 `门楣_更衣室`（1.5×1.95，y 3.38）与 `门楣_暗门`（1.0×2.55，y 3.08），材质 `Tile_Pool_Wall_1.5` / `_1.0`。
-6. **暗门缩放轴向**：`AutoDoor.prefab` 实测是 2.90×2.40×0.20 而不是计划里写的 1.5 m → 实例缩放 `x = 1.5/2.9`。暗门假柜正面原本朝 +X，要朝 -Z 需 `Euler(0,90,0)`，此时柜宽 0.45 映射到世界 X，所以缩放加在 **Z** 轴（`1.0/0.45`），不是计划里写的 X 轴 2.04。
+5. **两个门洞在墙上留的是通高缺口**：补 `门楣_更衣室`（1.5×1.95，y 3.38）与 `门楣_暗门`（1.0×2.55，y 3.075，2026-11-21 从 3.08 下移对齐柜顶），材质 `Tile_Pool_Wall_1.5` / `_1.0`。
+6. **暗门缩放轴向**：初版把 `OldMetalWardrobe` 沿 Z 缩放 `1.0/0.45`（`AutoDoor.prefab` 实测是 2.90×2.40×0.20 而不是计划里写的 1.5 m，实例缩放 `x = 1.5/2.9` 用于更衣室门）；2026-11-21 修复后暗门不再缩放，改为常规柜 + 两侧各 0.275 m 补墙（见文末附录）。
 7. **`execute_code` 的安全检查拦 `AssetDatabase.DeleteAsset` 与 `MoveAssetToTrash`**：改成「存在则 `Clear()` 后重写顶点」的幂等方式，不删资产。
 8. **`Object` 在 execute_code 里歧义**（`UnityEngine.Object` vs `object`）：一律写全名 `UnityEngine.Object`。
 9. **贴图不可读**：打包 `_MetallicGlossMap` 前要把源贴图 importer 的 `isReadable` 打开，否则 `GetPixels32()` 抛 `ArgumentException`。
@@ -1211,7 +1231,7 @@ Shader "Pool/PoolWater"
 - 玩家 `Assets/Prefabs/= 玩家.prefab` 的 CharacterController 改为 height 1.55、radius 0.15、center (0,0.775,0)、skinWidth 0.02（原 1.8/0.3/0.9/0.08）；眼睛保持 local y=1.60。柜内净宽 0.412、柜门开口净高 1.749，站上柜内 0.051 地板后胶囊顶 1.601 < 1.749，直径 0.34 < 0.412。
 - 通行复核：把两扇门转到开门角（先 `Physics.SyncTransforms()`）后，按「玩家站在柜内底板 y=0.051」用 radius 0.15 / height 1.55 的 CapsuleCast 从 z=13.9 向 +Z 扫 1.8 m：x=0、±0.03、+0.05 均无命中；x=−0.05 会碰到开着的 `Door_Front`（门板内侧 x≈−0.19），x=+0.06 会碰到柜体正面右上框（x≈0.21）。即胶囊中心可活动范围约 x −0.035..+0.055，沿中线偏右一点通过最稳。
 - **2026-11-21 二修（回程 bug）**：玩家穿柜进更衣室后无法原路返回，回看只看到柜子背板。原因是 `OldMetalWardrobe_Body` 的背板（8 个三角形，x=−0.206，法线朝柜内 +X）单面碰撞：从长廊侧不挡、从更衣室侧挡。复制网格为 `Assets/Art/Models/储物柜2/processed/Meshes/OldMetalWardrobe_Body_OpenBack.asset`（删掉这 8 个背面三角形，174→166，包围盒不变），只把 `储物柜_54/Body` 的 `MeshFilter.sharedMesh` 与 `MeshCollider.sharedMesh` 指到它；其余储物柜仍用原 `OldMetalWardrobe_Body`（背后靠墙，不需要开口）。复核：开门后按站在柜内底板的高度，从 z=14.4 向 ±Z 各 CapsuleCast 1.6 m 均无命中，往返都能通过，且从更衣室回看能直接看到长廊。
-- 遗留：更衣室北墙的假柜 `门_暗门` 与 54 同源（背板单面、从更衣室侧会被挡住），且当前没有任何交互组件（门打不开）；它不在本次 54 修复范围内，待单独处理。
+- 遗留（已处理）：更衣室北墙的假柜 `门_暗门` 与 54 同源（背板单面、从更衣室侧会被挡住），且当时没有任何交互组件；2026-11-21 已按同一套做法修复，见文末「附：门_暗门 改回常规尺寸 + 补墙」。
 
 ## 附：更衣室门换成办公室门 + 删 储物柜_23/24（2026-11-21 迭代）
 
@@ -1235,3 +1255,17 @@ Shader "Pool/PoolWater"
 
 **验证**：`InteractableBase.Awake` 编译通过、Console 无 error/warning；预制体里 `门_更衣室/DoorInteract.eye` 仍为空（靠兜底），场景实例为 Main Camera。
 
+
+## 附：门_暗门 改回常规尺寸 + 补墙（2026-11-21 修复）
+
+问题：`门_暗门` 原先把柜体沿世界 X 拉伸到 1.00 m 堵 1.0 m 门洞，柜体与门板比例失真、与其它储物柜尺寸不一致；`Body` 又用原网格（实心背板），两扇门也没有交互组件，玩家从更衣室打不开也穿不过去。
+
+改法（与长廊口 54 同一套）：
+
+- 根节点 `localScale=(1,1,1)`（仍 `rot 90°`、lp (-20.5,0,19.45)），柜体世界包围盒回到 0.45 × 1.80 × 0.49：x −20.725..−20.275、z 19.19..19.68。
+- 门洞左右各补一块墙：`建筑/墙_更衣室北_暗门洞补_西` lp(-20.8625,0.90,19.45) ls(0.275,1.80,0.30)、`_东` lp(-20.1375,0.90,19.45) 同尺寸；Cube + BoxCollider + Default 层，渲染设置复制相邻墙；材质新建 `Assets/Materials/Level/Tile_Pool_Wall_0.275.mat`（`_BaseMap_ST=(0.1375,0.9)`）。
+- `建筑/门楣_暗门` 从 y 3.08 下移到 3.075，底面对齐柜顶 1.80（不再留 5 mm 缝）。
+- `Body` 的 MeshFilter 与 MeshCollider 换成 `OldMetalWardrobe_Body_OpenBack`（与 54 同一份开背网格）。
+- 两扇门挂 `CabinetDoorInteract`：`Door_Front`（hinge=Hinge_FrontDoor、−90°，朝更衣室）、`Door_Back`（hinge=Hinge_BackDoor、+90°，朝泵房）；预制体 `eye` 留空，靠 `InteractableBase.Awake` 取 `Camera.main` 兜底。
+- 通行复核（CapsuleCast，radius 0.15 / height 1.55，双脚站柜内底板 y=0.051，双向各 1.6 m）：x=−20.50、±0.04 clear；x=−20.42 撞柜体前框、x=−20.58 撞补墙，即中线可活动范围约 ±0.055 m；y=0 起扫命中 5.1 cm 底板台阶（stepOffset 0.3 可跨）。门板打开后包围盒：前 (−20.309,0.051,18.812)..(−20.254,1.749,19.225)，背 (−20.295,0.005,19.675)..(−20.275,1.795,20.123)，均不穿墙。
+- 用户手测：更衣室北墙西端 x −21..−20，对准假柜门板按交互键开外门，走进柜内，再开背门进泵房，原路可返回。

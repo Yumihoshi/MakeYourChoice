@@ -33,7 +33,11 @@ OldMetalWardrobe（根，identity）
 
 关卡二长廊口 1.44 宽 × 3.00 高的南墙开口用**常规尺寸** `储物柜_54`（0.45 × 1.80 × 0.49，根节点 (0,0,14.53)、rot 270°）堵住，门洞左右与柜顶用补墙封住（三块墙的坐标见 `level2-backrooms.md`）。`Door_Front` −90° 朝更衣室、`Door_Back` +90° 朝长廊，交互脚本见 `doors.md`。
 
-2026-11-21 二修：`OldMetalWardrobe_Body` 的 −X 背板是 8 个单面三角形（x=−0.206），单面碰撞导致玩家从更衣室侧走不回来、回看只看到柜背。已复制网格为 `Assets/Art/Models/储物柜2/processed/Meshes/OldMetalWardrobe_Body_OpenBack.asset`（删掉这 8 个三角形，174→166），**只**给 `储物柜_54/Body` 的 MeshFilter 与 MeshCollider 用；其它储物柜背后靠墙，继续用原 `OldMetalWardrobe_Body`（有背板）。要再做可穿人的假柜时照此复制网格、删背面三角形，别直接改原网格。
+2026-11-21 二修：`OldMetalWardrobe_Body` 的 −X 背板是 8 个单面三角形（x=−0.206），单面碰撞导致玩家从更衣室侧走不回来、回看只看到柜背。已复制网格为 `Assets/Art/Models/储物柜2/processed/Meshes/OldMetalWardrobe_Body_OpenBack.asset`（删掉这 8 个三角形，174→166），目前给 `储物柜_54/Body`（长廊口）与 `门_暗门/Body`（更衣室北墙）的 MeshFilter 与 MeshCollider 用；其它储物柜背后靠墙，继续用原 `OldMetalWardrobe_Body`（有背板）。要再做可穿人的假柜时照此复制网格、删背面三角形，别直接改原网格。
+
+## 更衣室北墙暗门（常规柜 + 墙体补洞）
+
+`泳池房/道具/门_暗门` 与长廊口同一套做法：1.0 m 墙洞（x −21..−20、z 19.45）里放**常规尺寸** `OldMetalWardrobe`（根节点 (-20.5,0,19.45)、rot 90°、scale 1，柜体 0.45 × 1.80 × 0.49），洞左右各补 0.275 × 1.80 × 0.30 墙（`建筑/墙_更衣室北_暗门洞补_西/东`，材质 `Tile_Pool_Wall_0.275`，`_BaseMap_ST=(0.1375,0.9)`），`门楣_暗门` 下移到 y=3.075 对齐柜顶。`Body` 用开背网格，两扇门挂 `CabinetDoorInteract`（外门 −90° 朝更衣室、背门 +90° 朝泵房），玩家可从更衣室穿到泵房。历史：初版把柜体沿世界 X 拉伸 2.04 倍堵满 1.0 m 洞，2026-11-21 修复为常规柜 + 补墙。
 
 玩家胶囊 2026-11-21 缩到 height 1.55 / radius 0.15 / skinWidth 0.02（center (0,0.775,0)；柜内净宽 0.412、开口净高 1.749 可过）。
 

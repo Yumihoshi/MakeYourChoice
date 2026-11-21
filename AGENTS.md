@@ -29,6 +29,7 @@
 | 关卡流程、门与传送门 | `Assets/Scripts/Level`（Hall / BackRooms / Portal / Elevator）与 `Assets/Scripts/Player` |
 | 输入（键位 / 手柄） | `Assets/Scripts/Player/PlayerInputRouter.cs`（新版 Input System 动作表） |
 | 交互聚焦与准心 HUD | `Assets/Scripts/Interaction/InteractFocus.cs` + `Assets/Scripts/UI/InteractPromptView.cs` |
+| 可交互物（按键交互） | `Assets/Scripts/Interaction`：`InteractableBase`（抽象基类，视线 Raycast + 交互键）、`DoorInteract`（AutoDoor 门）、`CabinetDoorInteract`（无刚体柜门，绕铰链 Slerp）；用法见 `.agent-guides/doors.md` |
 | 关卡几何、第一人称视角 | ProBuilder（5.2.4）搭 3D 几何 + Cinemachine 第一人称 |
 | 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
 | 道具模型、外部 FBX 预处理 | `Assets/Prefabs/Props` + `Assets/Art/Models`；Blender 拆分与缩放烘焙见 `.agent-guides/props.md` |

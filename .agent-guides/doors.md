@@ -15,3 +15,14 @@ description: 改动或新增门（AutoDoor 三种模式、铰链运动、锁定/
 运动学刚体则与碰撞、玩家站位都无关。转动到位且不再压着玩家后恢复碰撞：门板要整块贴在墙体朝房间的那一面之外（只留 2 mm 防止与墙面共面闪），门扇才会始终在墙面以外扫掠、铰链轴可以直接压在门洞边角上把门洞盖严；若门板插在门洞厚度里，铰链必须离侧壁留出门厚一半的余量，关门时就会留下一条竖缝）；
 
 滑动门的两扇要略宽于门洞并在中缝重叠，滑到底还要多滑几厘米藏进门洞侧壁后面，否则会露出薄片或与侧壁共面闪。
+
+## 储物柜门（CabinetDoorInteract）
+
+`Assets/Scripts/Interaction/CabinetDoorInteract.cs`（`Game.Level`，`InteractableBase` 子类）给没有刚体的柜门做旋转开启，**不要**为它加 `Rigidbody`/`HingeJoint` 再套 `AutoDoor`：柜子根节点带非均匀缩放，刚体在这种缩放下发数会变形。
+
+- 挂在**门板本身**（`Door_Front` / `Door_Back`，碰撞体就在这层，`IsAimed` 的 `IsChildOf(transform)` 才能命中）；`hinge` 指对应的 `Hinge_*` 节点（必填，为空会 LogError 并禁用），`openAngle` 决定外开方向，`duration` 默认 0.45 s。
+- 关门态由 `Awake` 里的 `hinge.localRotation` 缓存，开门角 = `_closedRotation * Quaternion.Euler(0, openAngle, 0)`，用 `Quaternion.SlerpUnclamped` 在 `UniTask.Yield(PlayerLoopTiming.Update)` 循环里插值，不做物理。
+- 转动期间给门板碰撞体的 `excludeLayers` 加上 `Player` 层（与 `HingeDoorMotion` 同规则：放行而不是关碰撞体），结束时恢复；不要在协程里做（项目禁用协程）。
+- `eye` 绑 **Main Camera** 的 Transform：`玩家_测试` 那套是测试容器，会被 `TestSandboxGuard` 销毁，绑它换场景/换玩家实例就失效。
+- 关卡二长廊口的「假柜」是两段式：走廊侧先开背门（`Hinge_BackDoor`，+90°），进柜体空腔后再开前门（`Hinge_FrontDoor`，−90°）进更衣室。几何与拉伸做法见 `props.md`。
+

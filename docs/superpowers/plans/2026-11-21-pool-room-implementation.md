@@ -1158,3 +1158,25 @@ Shader "Pool/PoolWater"
 - 立管/横管/法兰用 convex `MeshCollider`；弯头球体面数超 256（Unity 会警告并退化成局部 hull），改用 `SphereCollider`（radius 0.065）。
 - 法兰外侧 `锚点_轮阀安装位`（空物体，x=-22.095、y=1.0，forward +X，已设 `sv_icon_dot11_pix16_gizmo` 图标），后续交互挂这里。
 - 复核：与墙面仅接触不穿透，不碰池壁/池沿；Console 无报错。
+
+## 附：长廊口假柜与锥形光（2026-11-21 迭代）
+
+设计变更：长廊尽头的南墙开口（1.44 宽、通高 4.35）原本直接看见更衣室净空，上方 3.00..4.35 的夹层没有任何遮挡。改为「柜子堵门洞 + 门楣挡天空 + 两段式开门」，让玩家先开柜子背后的暗门、再开前门进更衣室。
+
+**储物柜_54 拉伸**（`泳池房/道具/储物柜_54`）
+
+- 根节点保持 `(1,1,1)`；`Body`、`Door_Front`、`Door_Back` 各自 `localScale=(1, 1.6666667, 3.2)`，把柜体从 0.49 × 1.80 × 0.45 拉到 1.44 宽 × 3.00 高。
+- 铰链同步改位置：`Hinge_FrontDoor.localPosition=(0.225, 1.868333, 0.6592)`、`Hinge_BackDoor.localPosition=(-0.225, 1.5, 0.72)`；两者 `localRotation` 保持 identity（关门）。
+- **不要把缩放写在根节点**：父级非均匀缩放下，转 90° 的门扇会落到不受缩放的那根轴上，实测门宽从 1.43 m 缩到 0.448 m。
+- 顶点级 AABB 复核：Body x −0.720..0.720 / y 0..3.000 / z 14.300..14.790；Door_Front 关门 z 14.734..14.790、Door_Back 关门 z 14.300..14.320。
+- 开门角：`Door_Back` +90° → 门板贴长廊西墙（x −0.720..−0.700、z 12.866..14.300）；`Door_Front` −90° → 朝更衣室内（x −0.699..−0.643、z 14.750..16.070）。
+- 与 54 完全重合的重复实例 `储物柜_60` 删除，道具目录从 62 个柜降到 61 个；两侧邻柜（x −1.225..−0.775 的 53/59、x 0.775..1.225 的 61）都在门洞宽度（−0.72..0.72）之外，保留不动。
+
+**门楣**：`泳池房/建筑/墙_更衣室南_门楣`，Cube、(1.44, 1.35, 0.30)、中心 `(0, 3.675, 14.15)`，覆盖 y 3.00..4.35、z 14.00..14.30，带 BoxCollider。材质新建为资产 `Assets/Materials/Level/Tile_Pool_Wall_门楣.mat`（复制 `Tile_Pool_Wall_22.08`，`mainTextureScale=(0.72, 0.675)`，与南墙 2 m 一循环的密度一致），不再用运行时材质实例。
+
+**长廊锥形光**：`泳池房/长廊/点光_1/2/3` 由 Point 改 Spot —— `localPosition=(0, 4.25, 2.5 / 7 / 11.5)`、`localRotation=(90, 0, 0)`、`spotAngle=40`、`innerSpotAngle=14`、`range=10`、`intensity=7`、`shadows=Soft`、颜色仍 `(1, 0.92, 0.82)`。
+
+**柜门交互**：新增 `Assets/Scripts/Interaction/CabinetDoorInteract.cs`（`Game.Level`，`InteractableBase` 子类，挂在门板上、`hinge` 指铰链、`openAngle` 定开向、`duration=0.45`、转动期把 `Player` 层写进门板 `excludeLayers`）。`Door_Front`：hinge=`Hinge_FrontDoor`、−90°；`Door_Back`：hinge=`Hinge_BackDoor`、+90°。预制体里 `eye` 留空，`Awake` 取 `Camera.main`（取不到会 LogError 并禁用）；Level2 场景实例里显式指向 `Main Camera`。
+
+以上改动同时落在 `Assets/Prefabs/Level/泳池房.prefab` 与 `Assets/Scenes/Level2.unity` 的实例上，Level1 口袋空间的实例随预制体一并更新。复核：Console 无报错。
+

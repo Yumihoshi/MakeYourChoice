@@ -52,6 +52,7 @@
 - 不手改 `.meta`；移动、重命名、删除资产时连同 `.meta` 一起处理。
 - 场景、预制体、`.asset` 等序列化文件通过 Unity 编辑器或 Unity MCP 修改，不手写 YAML。
 - **没有渲染器的触发点、锚点要设 Inspector 图标**：触发区、空锚点这类在场景里看不见的物体，用 Unity MCP 的 `execute_code` 调 `EditorGUIUtility.SetIconForObject(go, EditorGUIUtility.IconContent("sv_icon_dot11_pix16_gizmo").image as Texture2D)` 设一个内置圆点图标，再保存场景；图标存在 `m_Icon` 里随场景序列化，在 Inspector 标题处可见（HierarchyDecorator 不绘制该图标，Hierarchy 里仍显示方块）。
+- **AI 的一次性脚本、临时目录与中间产物统一放仓库根目录的 `AITemp/`**（该目录已在 `.gitignore` 中忽略）：不要散落在仓库根、`Assets/` 或 `docs/` 下；需要长期保留的产物再移到正式位置。
 
 ## 文档
 

@@ -1,0 +1,53 @@
+---
+description: 改动关卡墙体/地面几何、材质与贴图平铺、招牌、门板网格或场景锚点图标时使用。
+---
+
+# 关卡几何、材质与贴图
+
+改动本域代码前通读本文件；项目级约束见根 `AGENTS.md`，同目录其他条目按需加载。
+
+## 材质、平铺与 _BaseMap_ST
+
+几何用 `Assets/Materials/Level` 下的材质（`Floor_Office` / `Floor_OfficeElevator` / `Door_Office` / `Door_Elevator` / `Wall_ElevatorSide` / `Wall_ElevatorBack` / `YellowBox`；中间墙仍是整块 `关卡/大厅/建筑/中间墙`（12.8×3×0.3，材质 `Wall_Mid`，实心无洞）；关卡二两间房之间的隔墙 `关卡/储藏室/建筑/隔墙` 用 `Wall_Divider`（从 `Wall_Storage` 另存，只把 `_BaseMap` 平铺改成 1.37×1.5 让 4.9 m 隔墙和 9.3 m 长墙上的点一样大），贴图来自 `Assets/Art/素材`，导入用 Point + 不压缩）。
+
+**平铺必须写进材质资产的 `_BaseMap_ST`**：`MaterialPropertyBlock` 不随场景序列化，Play 里正常、退出 Play 就丢了；
+
+同一种贴图尺寸不同要做成两份材质
+
+## 关卡贴图与招牌
+
+`Assets/Art/素材` 的原图带透明边距，直接用 URP/Unlit 不透明画会出现黑边——要先用 Pillow 裁成 `*_trim.png`（`办公室门_trim`、`黄箱子立方_trim`），黄箱子这种还留透明角的材质要开 Alpha Clipping（`_AlphaClip=1`、`_Cutoff=0.5`、`renderQueue=2450`）。
+
+黄箱子不是立方体而是 **Quad + `YBillboard`**（`Assets/Scripts/Level/Visual/YBillboard.cs`，始终面向相机；注意 Unity Quad 正面法线是 `(0,0,-1)`）。
+
+门板要和墙同厚（0.3）藏住侧脸，且别和墙内表面共面（门放 z=4.63，墙内表面 4.5），否则 z-fighting。
+
+**门板网格用 `Assets/Art/Meshes/DoorBox.asset`，不要用 Unity 内置 Cube**：内置 Cube 的 −Z 面 UV 相对 +Z 面是 180° 旋转的（上下左右全反），而玩家正好看门板这一面，直接贴图会看到倒置+镜像的门；
+
+`DoorBox` 按面重算了 UV，六个面从外侧看都是正字。TMP 招牌不要当带非均匀缩放的物体的子级（父级 scale 会拉扯字形、还会让 TMP 缓存包围盒失效被视锥剔除），红字这类低对比文字用 `Assets/Materials/Level/Sign_Red.mat`（描边 `_OutlineWidth` + `_FaceDilate`）；
+
+材质要在编辑期 `AssetDatabase.CreateAsset` 存成资产，运行时 `new Material` 保存场景后会丢
+
+## 墙面接缝与电梯天花板/地板边界
+
+`办公室墙` / `电梯侧面墙` / `电梯内测墙` 原图带 1px 黑边、圆角矩形黑条与镜像接缝黑线，在 Repeat 下会随非整数平铺出现在墙中间（`Wall.mat` V=1.45，黑线落在 3.0 m 高；`Wall_ElevatorSide.mat` V=1.5、U=2.11，圆角条落在 1.6 m 高、镜像线竖着重复两次），现已按相邻像素修补黑边/黑条/接缝并让首尾行与首尾列内容一致（wrapV / wrapH 像素 MAD=0）——**换贴图时不要拿回带边框的原图**（原件在 git 历史里）。
+
+电梯天花板 `电梯/建筑/天花板` 前端必须止于 z=-4.7（藏进 `大厅/建筑/南墙_门楣` 的实体内），伸到 -3.92 会在大厅一侧突出 0.58 m；
+
+电梯地板前端止于 z=-4.65（与 `大厅/建筑/地板` 在墙厚内对接），否则两块地板顶面同在 y=0、在 z∈[-4.65,-4.03] 共面 z-fighting。
+
+**材质 tiling 是按「面」算的**：内置 `Cube` 每面 UV 固定 0–1，所以同一份材质挂到不同尺寸的墙段上，贴图在世界空间的密度就不一样（`Wall.mat` ST=(1,1.45) 在 7.8×4.35 的南墙上 = 水平 7.8 m、竖直 3.0 m 一次；搬到 3.0×1.95 的门楣上就变成 3.0 m / 1.34 m 一次，接缝处横线全断）。
+
+修法是给异形墙段单独做材质，把 ST 按世界尺寸反算，并补 offset 让相位与邻居同函数：`南墙_门楣` → `Wall_Lintel.mat` ST=(3.0/7.8, 1.95/3.0, 0, 2.4/3.0)；
+
+`北墙_门楣_红`/`蓝` → `Wall_Lintel_Red.mat`/`Wall_Lintel_Blue.mat` ST=(1.5/5.45, 1.91/3.0, ±, 0)（对齐 `北墙_中段`）。
+
+**朝大厅的南墙是 +Z 面、北墙是 -Z 面，而内置 Cube 的 -Z 面 UV 相对 +Z 面是 180° 旋转的**——竖直方向会反相，offset 的符号不能照抄，正确做法是读 `MeshFilter.sharedMesh` 的面 UV 拟合出「uv = a·x + b」再反解 ST（本工程实测：中段采样函数 v=-1/3·y+1.45，门楣自身局部 v=-0.5236·y+2.2775，于是 ty=0.6367、offsetY=0）。
+
+水平方向的虚线相位只有在两段墙的贴图周期能整除时才可能两侧都对齐（门楣宽 3.0 m 对 7.8 m 周期，只能对齐一侧，另一侧差 0.385 周期），横线本身只要竖直同函数就是连续的
+
+## 场景锚点与触发区的 Inspector 图标
+
+**没有渲染器的触发点、锚点要设 Inspector 图标**：触发区、空锚点这类在场景里看不见的物体，用 Unity MCP 的 `execute_code` 调 `EditorGUIUtility.SetIconForObject(go, EditorGUIUtility.IconContent("sv_icon_dot11_pix16_gizmo").image as Texture2D)` 设一个内置圆点图标，再保存场景；
+
+图标存在 `m_Icon` 里随场景序列化，在 Inspector 标题处可见（HierarchyDecorator 不绘制该图标，Hierarchy 里仍显示方块）。

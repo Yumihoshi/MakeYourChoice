@@ -16,6 +16,28 @@ namespace Game.Level
         [SerializeField, LabelText("交互距离")]
         protected float maxDistance = 3f;
 
+        /// <summary>
+        /// 视线起点留空时取场景里的 Main Camera，让预制体实例（如泳池房）在关卡一、关卡二里都能交互；
+        /// 场景里没有 Main Camera 就报错并禁用，而不是静默失效。
+        /// </summary>
+        protected virtual void Awake()
+        {
+            if (eye != null)
+            {
+                return;
+            }
+
+            var mainCamera = Camera.main;
+            if (mainCamera == null)
+            {
+                Debug.LogError($"{GetType().Name} 的视线起点为空，且场景里没有 Main Camera", this);
+                enabled = false;
+                return;
+            }
+
+            eye = mainCamera.transform;
+        }
+
         void Update()
         {
             if (!IsAimed())

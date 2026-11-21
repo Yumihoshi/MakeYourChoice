@@ -23,6 +23,14 @@ description: 改动或新增门（AutoDoor 三种模式、铰链运动、锁定/
 - 挂在**门板本身**（`Door_Front` / `Door_Back`，碰撞体就在这层，`IsAimed` 的 `IsChildOf(transform)` 才能命中）；`hinge` 指对应的 `Hinge_*` 节点（必填，为空会 LogError 并禁用），`openAngle` 决定外开方向，`duration` 默认 0.45 s。
 - 关门态由 `Awake` 里的 `hinge.localRotation` 缓存，开门角 = `_closedRotation * Quaternion.Euler(0, openAngle, 0)`，用 `Quaternion.SlerpUnclamped` 在 `UniTask.Yield(PlayerLoopTiming.Update)` 循环里插值，不做物理。
 - 转动期间给门板碰撞体的 `excludeLayers` 加上 `Player` 层（与 `HingeDoorMotion` 同规则：放行而不是关碰撞体），结束时恢复；不要在协程里做（项目禁用协程）。
-- `eye` 绑 **Main Camera** 的 Transform：`玩家_测试` 那套是测试容器，会被 `TestSandboxGuard` 销毁，绑它换场景/换玩家实例就失效。
+- `eye` 留空时由 `InteractableBase.Awake` 取 `Camera.main`（取不到 LogError 并禁用），不要绑 `玩家_测试` 那套测试容器——它会被 `TestSandboxGuard` 销毁，换场景/换玩家实例就失效。
 - 关卡二长廊口的「假柜」是两段式：走廊侧先开背门（`Hinge_BackDoor`，+90°），进柜体空腔后再开前门（`Hinge_FrontDoor`，−90°）进更衣室。柜体 2026-11-21 已改回常规尺寸，门洞用补墙封住，几何做法见 `props.md`。
+
+## 关卡二更衣室门（复用办公室门）
+
+`泳池房/道具/门_更衣室` 不是 `AutoDoor.prefab` 的实例——那个预制体是 `Rise` 占位门（`Panel` 2.9 宽、整体上抬、根节点 `BoxCollider` 非 Trigger），实际打不开。正确做法是照大厅红/蓝门、储藏室门组装：根上 `AutoDoor(mode=Hinge)` + `DoorInteract`，子节点 `铰链`（`Rigidbody` + `HingeJoint`，铰在门洞西侧 `x=-3.25`），`铰链/门板` 用 `DoorBox` 网格 + `Door_Office.mat`（1.54 × 2.44 × 0.08），`hingeOpenAngle=-95°` 向走道开，门楣沿用 `建筑/门楣_更衣室`。
+
+`InteractableBase.Awake` 会在 `eye` 留空时取 `Camera.main`（取不到 LogError 并禁用），所以预制体里的 `eye` 可以留空；场景实例显式指 `Main Camera`。这条兜底让关卡一的口袋空间实例与关卡二的实例都能交互，新增可交互物时别再各写一份 Camera.main 查找。
+
+改这个门时注意：`储物柜_23/24` 已从预制体删除（原先堵在门洞前）；开着的门板包围盒 z 19.62..21.16、贴着走道南墙，不要再往南挪门洞或加墙，否则门板会插墙。
 

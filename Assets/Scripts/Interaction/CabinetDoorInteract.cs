@@ -25,26 +25,19 @@ namespace Game.Level
         bool _open;
         bool _moving;
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            if (!enabled)
+            {
+                return;
+            }
+
             if (hinge == null)
             {
                 Debug.LogError("CabinetDoorInteract 缺少铰链节点引用", this);
                 enabled = false;
                 return;
-            }
-
-            if (eye == null)
-            {
-                var mainCamera = Camera.main;
-                if (mainCamera == null)
-                {
-                    Debug.LogError("CabinetDoorInteract 的视线起点为空，且场景里没有 MainCamera", this);
-                    enabled = false;
-                    return;
-                }
-
-                eye = mainCamera.transform;
             }
 
             _closedRotation = hinge.localRotation;

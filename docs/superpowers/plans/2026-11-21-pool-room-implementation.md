@@ -33,7 +33,7 @@
 ## 现有基线（开工前实测）
 
 - `Assets/Prefabs/Level/TestRoom.prefab`：子物体 `地板`（1.70×0.13×13.3，中心 0,-0.07,6.65）、`左墙` / `右墙`（0.13×4.35×13.3，x=±0.79）、`天花板`（0.13 厚，中心 y=4.42）、`尽头封墙`（z 13.3..13.43）、`入口侧壁_左/右`、`入口门楣`、`返回传送面` / `返回传送相机` / `返回裁剪面`、`点光_1..3`。
-- 玩家：`CharacterController` radius 0.15、height 1.6、skinWidth 0.02（2026-11-21 修复后；原 0.3/1.8/0.08）→ 通行净宽需 ≥ 0.34。
+- 玩家：`CharacterController` radius 0.15、height 1.55、skinWidth 0.02（2026-11-21 修复后；原 0.3/1.8/0.08）→ 通行净宽需 ≥ 0.34。
 - 已有可复用：`OldMetalWardrobe.prefab`（0.49×1.80×0.45，正面 +X，双门可转）、`AutoDoor.prefab`、`DoorBox` 网格、`Door.mat`、`Wall_Lintel` 材质。
 - 贴图：`Assets/Art/泳池/瓷砖.png`（64×64，8×8 块砖，缝 1 px）。
 
@@ -539,7 +539,7 @@ return "ok";
 ```
 
 - [x] **步骤 4：验证**
-`道具` 下对象数 = 62 + 4 + 5 = **71**；储物柜北排正面朝南、南排朝北，正对暗门处留 1.0 m 空档；Console 无报错。
+`道具` 下对象数 = 62 + 4 + 5 = **71**（2026-11-21 迭代后现状：**58** —— 储物柜 39、其余 19；`储物柜_23/24` 已删、长廊口 `储物柜_54` 改常规尺寸）；储物柜北排正面朝南、南排朝北，正对暗门处留 1.0 m 空档；Console 无报错。
 
 ---
 
@@ -547,33 +547,53 @@ return "ok";
 
 **文件：** `泳池房.prefab` → `道具/门_更衣室`、`道具/门_暗门`
 
-- [x] **步骤 1：更衣室门（AutoDoor 旋转门，洞 x -3.25..-1.75，z=19.45）**
+- [x] **步骤 1：更衣室门（复用大厅办公室门，洞 x -3.25..-1.75，z=19.45）**
 
-`AutoDoor.prefab` 本身就是 1.5 m 洞的铰链门（门板 1.54×2.44×0.08、`DoorBox` 网格 + `Door.mat`、`铰链` 子节点、`AutoDoor` 已设 `mode=Hinge` / `autoClose=false` / 未锁定），直接实例化摆位即可：
+不要直接实例化 `AutoDoor.prefab`——那个预制体是 `mode=Rise` 的占位门（`Panel` 2.9 宽、整体向上抬，根节点 `BoxCollider` 又不是 Trigger），实际打不开。复用大厅红/蓝门、储藏室门同款的「办公室门」组合：`DoorBox` 门板 + `Door_Office.mat` + `铰链`（`Rigidbody` + `HingeJoint`）+ `AutoDoor(mode=Hinge)` + `DoorInteract`，根节点原地摆放：
 
 ```csharp
-var root = PrefabUtility.LoadPrefabContents(PREFAB);
-var prop = Group(root, "道具");
-var doorPf = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Level/AutoDoor.prefab");
-
+var prop = root.transform.Find("道具");
 var old = prop.Find("门_更衣室");
 if (old != null) Object.DestroyImmediate(old.gameObject);
-var d = (GameObject)PrefabUtility.InstantiatePrefab(doorPf, prop);
-d.name = "门_更衣室";
-d.transform.localPosition = new Vector3(-2.5f, 0f, 19.45f);
-d.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);   // 门朝走道（-z）方向开
 
-// 门楣：与墙同厚，盖在门洞上方（洞高 2.4，墙高 4.35）
-var lintel = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Wall_Lintel.mat");
-var lm = prop.Find("门_更衣室_门楣");
-if (lm != null) Object.DestroyImmediate(lm.gameObject);
-Box(prop, "门_更衣室_门楣", new Vector3(-2.5f, (2.4f + 4.35f) / 2f, 19.45f),
-    new Vector3(1.9f, 4.35f - 2.4f, 0.30f), lintel);
+var d = new GameObject("门_更衣室");
+d.transform.SetParent(prop, false);
+d.transform.localPosition = new Vector3(-2.5f, 0f, 19.45f);   // 门扇向走道（+z）开
 
-PrefabUtility.SaveAsPrefabAsset(root, PREFAB);
-PrefabUtility.UnloadPrefabContents(root);
-return "ok";
+var hinge = new GameObject("铰链");
+hinge.transform.SetParent(d.transform, false);
+hinge.transform.localPosition = new Vector3(-0.75f, 1.22f, 0.172f);
+var rb = hinge.AddComponent<Rigidbody>();
+rb.mass = 25f; rb.drag = 0f; rb.angularDrag = 4f; rb.useGravity = false;
+rb.interpolate = RigidbodyInterpolation.Interpolate;
+rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+var hj = hinge.AddComponent<HingeJoint>();
+hj.axis = Vector3.up; hj.useMotor = true; hj.motor = new JointMotor { force = 600f };
+hj.useLimits = true; hj.limits = new JointLimits { min = -95f, max = 0f };
+hj.enableCollision = false; hj.connectedBody = null;
+
+var leaf = new GameObject("门板");
+leaf.transform.SetParent(hinge.transform, false);
+leaf.transform.localPosition = new Vector3(0.77f, 0f, 0f);
+leaf.transform.localScale = new Vector3(1.54f, 2.44f, 0.08f);
+leaf.AddComponent<MeshFilter>().sharedMesh =
+    AssetDatabase.LoadAssetAtPath<Mesh>("Assets/Art/Meshes/DoorBox.asset");
+leaf.AddComponent<MeshRenderer>().sharedMaterial =
+    AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Level/Door_Office.mat");
+leaf.AddComponent<BoxCollider>();
+
+var ad = d.AddComponent<AutoDoor>();
+ad.mode = AutoDoor.Mode.Hinge;
+ad.doorPanel = leaf.transform; ad.hinge = hinge.transform;
+ad.hingeOpenAngle = -95f; ad.hingeSpeed = 150f; ad.hingeGain = 4f;
+ad.hingeCloseSpeed = 0f; ad.hingeCloseGain = 0f; ad.hingeMotorForce = 600f;
+ad.duration = 0.8f; ad.autoClose = false; ad.closeDelay = 2f;
+var di = d.AddComponent<DoorInteract>();
+di.maxDistance = 3f; di.door = ad;
 ```
+
+门楣沿用已有的 `建筑/门楣_更衣室`（1.50 × 1.95 × 0.30，中心 (-2.5, 3.375, 19.45)），不需要再建。场景实例里把 `DoorInteract.eye` 覆盖为 `Main Camera`（预制体里留空，由 `InteractableBase.Awake` 取 `Camera.main`，取不到会 LogError 并禁用——关卡一的口袋空间实例也靠这条兜底）。
 
 - [x] **步骤 2：暗门（OldMetalWardrobe 假柜，X 缩放 2.04）**
 
@@ -595,7 +615,8 @@ return "ok";
 
 - [x] **步骤 3：验证**
 更衣室门洞净宽 1.5、门板不穿透墙；暗门占满 1.0 m 洞、柜门开合不绕中心转；玩家胶囊（0.34 宽含 skin）能从柜体空腔穿过（净宽 0.98）。
-用户手测：进更衣室开门 → 走到北墙西端 → 打开假柜 → 穿过去到泵房。
+更衣室门复核：关门时从 z=18.9 向 +Z 的 `CapsuleCast` 在门中心命中 `门板`（中心 (-2.48,1.22,19.62)、包围盒 1.54×2.44×0.08）；把 `铰链` 临时转到 -95° 后，x −3.00..−1.95 全部 clear，门板打开后包围盒 (-3.42,0,19.62)..(-3.21,2.44,21.16)，贴走道南墙北面、不穿墙/门楣，随后转回 0。
+用户手测：进更衣室走到北墙门洞（x −3.25..−1.75），对准门板按交互键，门向走道打开后穿过。
 
 ---
 
@@ -1184,10 +1205,33 @@ Shader "Pool/PoolWater"
 
 问题：`储物柜_54` 被拉伸到 1.44 × 3.00 堵门洞，柜体与门板比例失真；玩家胶囊进入后左右余量也太小。改为「常规柜 + 墙体补洞」：
 
-- `储物柜_54` 的 `Body`、`Door_Front`、`Door_Back` 恢复 `localScale=1`，铰链恢复 `Hinge_FrontDoor=(0.23,1.12,0.21)`、`Hinge_BackDoor=(-0.23,0.90,0.23)`；柜体世界尺寸回到 0.45 × 1.80 × 0.49，根节点仍在 `(0,0,14.53)`、rot 270°。柜体 -X 背板是单面片、法线朝柜内：从长廊侧看不可见、碰撞也被忽略，所以玩家仍能从柜体背面穿入；从更衣室侧看则是正常柜子的实心背板。
+- `储物柜_54` 的 `Body`、`Door_Front`、`Door_Back` 恢复 `localScale=1`，铰链恢复 `Hinge_FrontDoor=(0.23,1.12,0.21)`、`Hinge_BackDoor=(-0.23,0.90,0.23)`；柜体世界尺寸回到 0.45 × 1.80 × 0.49，根节点仍在 `(0,0,14.53)`、rot 270°。柜体 -X 背板最初是 8 个单面三角形、法线朝柜内：从长廊侧看不可见、碰撞也被忽略，所以玩家能从背面穿入；但从更衣室侧回看会被它挡住并看到“柜子背板”，2026-11-21 二修已删除（见下）。
 - 门洞剩余部分补三块墙：`墙_更衣室南_门洞补_西`（0.495 × 3.00 × 0.30，x −0.72..−0.225）、`_东`（x 0.225..0.72）、`_上`（0.45 × 1.20 × 0.30，y 1.80..3.00），全部 z 14.00..14.30、Cube、BoxCollider、Default 层；左右补墙内侧面与柜体侧面齐平（缝 <1 mm）。
 - 新材质 `Assets/Materials/Level/Tile_Pool_Wall_0.495.mat`（`_BaseMap_ST=(0.2475,1.5)`）与 `Tile_Pool_Wall_0.45x1.2.mat`（`(0.225,0.6)`），沿用 2 m 一循环的瓷砖密度。
-- 玩家 `Assets/Prefabs/= 玩家.prefab` 的 CharacterController 改为 height 1.6、radius 0.15、center (0,0.8,0)、skinWidth 0.02（原 1.8/0.3/0.9/0.08）；眼睛保持 local y=1.60。柜内净宽 0.412、柜门开口净高 1.749，站上柜内 0.051 地板后胶囊顶 1.651 < 1.749，直径 0.34 < 0.412。
-- 通行复核：把两扇门转到开门角（先 `Physics.SyncTransforms()`）后，按「玩家站在柜内底板 y=0.051」用 radius 0.15 / height 1.6 的 CapsuleCast 从 z=13.9 向 +Z 扫 1.8 m：x=0、±0.03、+0.05 均无命中；x=−0.05 会碰到开着的 `Door_Front`（门板内侧 x≈−0.19），x=+0.06 会碰到柜体正面右上框（x≈0.21）。即胶囊中心可活动范围约 x −0.035..+0.055，沿中线偏右一点通过最稳。
-- 遗留：更衣室北墙的假柜 `门_暗门` 背板法线朝更衣室，当前从更衣室侧会被背板挡住（从泵房侧可穿），与本次 54 的修复无关，待单独处理。
+- 玩家 `Assets/Prefabs/= 玩家.prefab` 的 CharacterController 改为 height 1.55、radius 0.15、center (0,0.775,0)、skinWidth 0.02（原 1.8/0.3/0.9/0.08）；眼睛保持 local y=1.60。柜内净宽 0.412、柜门开口净高 1.749，站上柜内 0.051 地板后胶囊顶 1.601 < 1.749，直径 0.34 < 0.412。
+- 通行复核：把两扇门转到开门角（先 `Physics.SyncTransforms()`）后，按「玩家站在柜内底板 y=0.051」用 radius 0.15 / height 1.55 的 CapsuleCast 从 z=13.9 向 +Z 扫 1.8 m：x=0、±0.03、+0.05 均无命中；x=−0.05 会碰到开着的 `Door_Front`（门板内侧 x≈−0.19），x=+0.06 会碰到柜体正面右上框（x≈0.21）。即胶囊中心可活动范围约 x −0.035..+0.055，沿中线偏右一点通过最稳。
+- **2026-11-21 二修（回程 bug）**：玩家穿柜进更衣室后无法原路返回，回看只看到柜子背板。原因是 `OldMetalWardrobe_Body` 的背板（8 个三角形，x=−0.206，法线朝柜内 +X）单面碰撞：从长廊侧不挡、从更衣室侧挡。复制网格为 `Assets/Art/Models/储物柜2/processed/Meshes/OldMetalWardrobe_Body_OpenBack.asset`（删掉这 8 个背面三角形，174→166，包围盒不变），只把 `储物柜_54/Body` 的 `MeshFilter.sharedMesh` 与 `MeshCollider.sharedMesh` 指到它；其余储物柜仍用原 `OldMetalWardrobe_Body`（背后靠墙，不需要开口）。复核：开门后按站在柜内底板的高度，从 z=14.4 向 ±Z 各 CapsuleCast 1.6 m 均无命中，往返都能通过，且从更衣室回看能直接看到长廊。
+- 遗留：更衣室北墙的假柜 `门_暗门` 与 54 同源（背板单面、从更衣室侧会被挡住），且当前没有任何交互组件（门打不开）；它不在本次 54 修复范围内，待单独处理。
+
+## 附：更衣室门换成办公室门 + 删 储物柜_23/24（2026-11-21 迭代）
+
+用户要求：删掉堵在更衣室门前的 `储物柜_23/24`，并让 `门_更衣室` 复用大厅/储藏室的「办公室门」。
+
+**删柜**：`泳池房/道具/储物柜_23`、`储物柜_24` 删除（场景实例里用户已先删，Unity 已自动清掉 `m_RemovedGameObjects` 覆盖）。`道具` 子物体 60 → 58，其中 `储物柜_*` 共 39 个（北排 18、南排 21），其余 19 个是水面/阀门/气垫/地漏/管道/门_暗门/门_更衣室。
+
+**换门**：旧 `门_更衣室` 是 `AutoDoor.prefab` 的 Rise 占位门（面板 2.9 宽、整体上抬，根节点 BoxCollider 非 Trigger，实际打不开）。整棵删掉，按大厅红/蓝门同款重建（原 `道具/门_更衣室` 位置 `(-2.5, 0, 19.45)`、旋转 0）：
+
+- 根：`AutoDoor(mode=Hinge, doorPanel=门板, hinge=铰链, hingeOpenAngle=-95, speed 150, gain 4, closeSpeed 0, closeGain 0, motorForce 600, duration 0.8, autoClose=false, closeDelay 2)` + `DoorInteract(maxDistance=3, door=门_更衣室)`；预制体 `eye` 留空、场景实例覆盖为 `Main Camera`。
+- `铰链`：lp `(-0.75, 1.22, 0.172)`；`Rigidbody` mass 25 / drag 0 / angularDrag 4 / useGravity false / Interpolate / constraints 80（FreezeRotationX|Z）/ ContinuousSpeculative；`HingeJoint` axis (0,1,0)、useMotor 1 force 600、useLimits 1 min -95 max 0、enableCollision 0、connectedBody null。
+- `门板`：lp `(0.77, 0, 0)`、ls `(1.54, 2.44, 0.08)`；`DoorBox.asset` 网格 + `Assets/Materials/Level/Door_Office.mat` + `BoxCollider`。
+- 门楣沿用已有 `建筑/门楣_更衣室`（1.50 × 1.95 × 0.30，中心 (-2.5, 3.375, 19.45)），未新建。
+- 开门方向：`hingeOpenAngle=-95°` 使门扇向走道（+z）打开，打开后包围盒 `(-3.42,0,19.62)..(-3.21,2.44,21.16)`，贴着走道南墙北面，不穿墙/门楣。
+
+**验证**：关门时从 z=18.9 向 +Z 的 `CapsuleCast`（radius 0.15 / height 1.55，玩家 CC 参数）在门中心命中 `门板`（dist 0.532、命中点 z 19.58）；把铰链转到 -95° 后，x −3.00..−1.95 全部 clear（x=−3.15 命中 `墙_更衣室北_B`，属胶囊贴门框的正常情况），门洞 x −3.25..−1.75 的可用宽度与储物柜通道相当。Console 无 error/warning。
+
+**注意**：`AutoDoor.prefab` 本身仍是 Rise 占位门，不能直接拿来当铰链门用；要新增门请复制大厅红/蓝门或储藏室门的结构。
+
+**脚本改动**：`InteractableBase` 增加 `protected virtual void Awake()`——`eye` 留空时取 `Camera.main`，取不到就 LogError 并禁用；`CabinetDoorInteract.Awake` 改为先 `base.Awake()`、删掉自己那份 Camera.main 查找。这样 `泳池房.prefab` 里留空的 `eye` 在关卡一的口袋空间实例里也能拿到相机，不再只有关卡二手动覆盖的那份能交互。
+
+**验证**：`InteractableBase.Awake` 编译通过、Console 无 error/warning；预制体里 `门_更衣室/DoorInteract.eye` 仍为空（靠兜底），场景实例为 Main Camera。
 

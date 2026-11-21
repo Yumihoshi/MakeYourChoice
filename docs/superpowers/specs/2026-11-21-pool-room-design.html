@@ -1035,7 +1035,7 @@ z_local = 14.3 + (33 - z_drawing)   # 更衣室内南边界对齐局部 z=14.3
 <tr><td>墙_长廊左</td><td>z 0..14.3 / x 0.79</td><td>14.3 × 0.13</td><td>4.35</td><td>Wall_Pool_Corridor</td></tr>
 <tr><td>墙_长廊右</td><td>z 0..14.3 / x -0.79</td><td>14.3 × 0.13</td><td>4.35</td><td>Wall_Pool_Corridor</td></tr>
 </tbody></table>
-<p>更衣室北墙被两道门洞切成三段：A（-22.8..-21.0，暗门洞净宽 1.0）、B（-20.0..-3.25）、C（-1.75..2.8，更衣室门洞净宽 1.5）。图纸上两个洞都只占 1 格：暗门按柜体取 1.0 m，更衣室门取 1.5 m 以复用 AutoDoor 标准件（门板 1.54 已适配）。更衣室南墙被长廊开口切成两段，开口净宽 1.44。</p>
+<p>更衣室北墙被两道门洞切成三段：A（-22.8..-21.0，暗门洞净宽 1.0）、B（-20.0..-3.25）、C（-1.75..2.8，更衣室门洞净宽 1.5）。图纸上两个洞都只占 1 格：暗门按柜体取 1.0 m，更衣室门取 1.5 m 以复用大厅/储藏室的「办公室门」组合（DoorBox 门板 1.54 + Door_Office 材质 + 铰链 + AutoDoor），门板比门洞宽 4 cm 压住门框。更衣室南墙被长廊开口切成两段，开口净宽 1.44。</p>
 <h3>地板块（自动分解，容器 − 池坑/水渠）</h3>
 <table class=""><thead><tr>
 <th>名称</th>
@@ -1216,8 +1216,8 @@ z_local = 14.3 + (33 - z_drawing)   # 更衣室内南边界对齐局部 z=14.3
 
 <h3>轮阀安装口（2026-11-21 补充）</h3>
 <p>在 <code>墙_西外墙</code> 内表面、<code>地板_08</code> 的 z 中央（管心 x=-22.44、z=37.8）新增 <code>道具/管道_轮阀接口</code>，作为后续玩家放置轮阀的预留接口：Ø0.12 立管从地面到 y=1.0，顶部弯头转向 +X 伸出 0.30 m 横管，端头 Ø0.26×0.03 法兰（中心 y=1.0、x=-22.125）；材质 <code>Pipe_Metal</code>（URP/Lit，灰 #61666B、metallic 0.85、smoothness 0.5）；立管/横管/法兰带 convex 碰撞，弯头用 <code>SphereCollider</code>；法兰外侧留空锚点 <code>锚点_轮阀安装位</code>（forward +X，已设 Inspector 圆点图标），后续交互挂在这里。</p>
-<h3>储物柜（62 个 OldMetalWardrobe）</h3>
-<p>用你新导入的 <code>Assets/Prefabs/Props/OldMetalWardrobe.prefab</code>（0.49 × 1.80 × 0.45）：一格 1 m 并排 2 个、留 0.02 缝、背贴墙，<b>北排 26 个</b>（x -21.5..-14.5 与 -13.5..-6.5，z 中心 19.075，正面朝南；正对暗门处跳过 2 个柜，留出 1.0 m 空档）、<b>南排 36 个</b>（再多 x -5.5..-1.5 一段，z 中心 14.525，正面朝北），共 <b>62 个</b>。柜子默认正面朝 +X（锁在左、铰链在右），北排绕 Y 转 180°、南排转 0°，两排都能开正门。柜内隔板已按 props.md 拆除，柜体是空腔——这正好留作后续「藏东西」的空间。</p>
+<h3>储物柜（39 个 OldMetalWardrobe）</h3>
+<p>用你新导入的 <code>Assets/Prefabs/Props/OldMetalWardrobe.prefab</code>（0.49 × 1.80 × 0.45）：一格 1 m 并排 2 个、留 0.02 缝、背贴墙。初版按图纸排了 62 个（北排 26、南排 36），之后删掉 16 个完全重叠的重复实例（<code>_13..18</code> / <code>_41..46</code> / <code>_55..58</code>）、删掉与长廊口 54 重合的 <code>_60</code>、再删掉堵住更衣室门的 <code>_23/24</code>，现场为 <b>39 个</b>（北排 18、南排 21）：北排 z 中心 19.075、正面朝南，正对暗门处留 1.0 m 空档；南排 z 中心 14.525、正面朝北。柜子默认正面朝 +X（锁在左、铰链在右），北排绕 Y 转 180°、南排转 0°。柜内隔板已按 props.md 拆除，柜体是空腔——这正好留作后续「藏东西」的空间。</p>
 <h3>门</h3>
 <table class=""><thead><tr>
 <th>名称</th>
@@ -1227,21 +1227,30 @@ z_local = 14.3 + (33 - z_drawing)   # 更衣室内南边界对齐局部 z=14.3
 <th>做法</th>
 <th>连接</th>
 </tr></thead><tbody>
-<tr><td>门_更衣室</td><td>-3.25..-1.75</td><td>更衣室北墙 z=19.45</td><td>1.5 × 2.4</td><td>AutoDoor + DoorBox + Door 材质 + Wall_Lintel</td><td>AutoDoor，通往走道</td></tr>
+<tr><td>门_更衣室</td><td>-3.25..-1.75</td><td>更衣室北墙 z=19.45</td><td>1.5 × 2.4</td><td>办公室门组合：DoorBox 门板 + Door_Office 材质 + 铰链 Rigidbody/HingeJoint + AutoDoor Hinge + DoorInteract</td><td>通往走道，向走道开</td></tr>
 <tr><td>门_暗门</td><td>-21..-20</td><td>更衣室北墙 z=19.45</td><td>1.0 × 1.8</td><td>OldMetalWardrobe 实例，X 缩放 2.04</td><td>旧铁皮衣柜假柜（X 缩放 2.04），通往泵房</td></tr>
 </tbody></table>
-<p><b>更衣室门</b>与现有门同款：<code>AutoDoor(mode=Hinge, autoClose=false)</code>，门扇 <code>门板</code> 挂在 <code>铰链</code> 子节点下，门板 1.54 × 2.44 × 0.08 用 <code>DoorBox</code> 网格与 <code>Door</code> 材质，门楣用 <code>Wall_Lintel</code>。</p>
+<p><b>更衣室门</b>复用大厅红/蓝门、储藏室的同款「办公室门」：<code>AutoDoor(mode=Hinge, autoClose=false)</code>，门扇 <code>门板</code> 挂在 <code>铰链</code> 子节点下（铰链在门洞西侧 x=-3.25），门板 1.54 × 2.44 × 0.08 用 <code>DoorBox</code> 网格与 <code>Door_Office</code> 材质，向走道开（<code>hingeOpenAngle=-95°</code>），门楣沿用 <code>建筑/门楣_更衣室</code>。</p>
 <p><b>暗门</b>按 Q19-a 做成「假柜子」：把 <code>OldMetalWardrobe.prefab</code> 摆进 1.0 × 1.8 的墙洞、贴更衣室一侧，沿 X 缩放 <b>2.04 倍</b>（0.49 → 1.00 m，柜内净宽 0.98，玩家胶囊直径 0.60 能过），Y/Z 不动（高 1.80、深 0.45）。缩放后要同步调两个铰链的 localPosition.x（±0.225 → ±0.459），否则门会绕着柜子中心转。两道门都保留：外部门（<code>Hinge_FrontDoor</code>）朝更衣室开，背门（<code>Hinge_BackDoor</code>）朝泵房开，柜体隔板已拆，玩家开门后从柜体中间穿过去。贴图锁具会被横向拉宽约 2 倍，属可接受代价（只影响柜门正面的花纹比例）。</p>
 
 <h3>长廊口的假柜与门楣（2026-11-21 迭代）</h3>
 <p>原设计是站在长廊尽头直接看见更衣室净空的南墙开口（1.44 宽、通高 4.35），长廊与更衣室的地面高差、天花板夹层从洞口一眼望穿。改法是把长廊口也做成同一套「假柜」：</p>
 <ul>
-<li><b>储物柜_54 改回常规尺寸（2026-11-21 修复）</b>：最初把 54 拉伸到 1.44 × 3.00 堵门洞，柜门与柜体比例失真，玩家胶囊进柜后左右余量也偏小。现恢复为与其它储物柜一致的 <b>0.45 × 1.80 × 0.49</b>（根节点仍在 (0,0,14.53)、rot 270°，Body/两扇门 localScale=1，铰链回到 (0.23,1.12,0.21)/(−0.23,0.90,0.23)），门洞剩余部分用三块墙补上：左右各 0.495 × 3.00 × 0.30、柜顶上方 0.45 × 1.20 × 0.30。柜体 -X 背板是单面片、法线朝柜内，从长廊侧不可见且不参与碰撞，玩家仍能从背面穿入。</li>
-<li><b>补墙材质与玩家胶囊</b>：新建 <code>Assets/Materials/Level/Tile_Pool_Wall_0.495.mat</code>（_BaseMap_ST=(0.2475,1.5)）与 <code>Tile_Pool_Wall_0.45x1.2.mat</code>（(0.225,0.6)），沿用 2 m 一循环的瓷砖密度；<code>= 玩家.prefab</code> 的 CharacterController 统一为 height 1.6、radius 0.15、center (0,0.8,0)、skinWidth 0.02（原 1.8/0.3/0.9/0.08），眼睛仍 local y=1.60。柜内净宽 0.412、开口净高 1.749，站上柜内 0.051 地板后胶囊顶 1.651、直径 0.34，均可通过；CapsuleCast 复核（自柜内底板高度起扫）x=0、±0.03、+0.05 全程无命中，x=−0.05 碰开着的门板、x=+0.06 碰柜体前框，中心可活动范围约 −0.035..+0.055。</li>
+<li><b>储物柜_54 改回常规尺寸（2026-11-21 修复）</b>：最初把 54 拉伸到 1.44 × 3.00 堵门洞，柜门与柜体比例失真，玩家胶囊进柜后左右余量也偏小。现恢复为与其它储物柜一致的 <b>0.45 × 1.80 × 0.49</b>（根节点仍在 (0,0,14.53)、rot 270°，Body/两扇门 localScale=1，铰链回到 (0.23,1.12,0.21)/(−0.23,0.90,0.23)），门洞剩余部分用三块墙补上：左右各 0.495 × 3.00 × 0.30、柜顶上方 0.45 × 1.20 × 0.30。柜体 -X 背板原为单面片、法线朝柜内，从长廊侧不可见且不参与碰撞，玩家能从背面穿入；但该背板从更衣室侧会挡住回程，2026-11-21 二修已为 54 单独换成开背网格（见下）。</li>
+<li><b>补墙材质与玩家胶囊</b>：新建 <code>Assets/Materials/Level/Tile_Pool_Wall_0.495.mat</code>（_BaseMap_ST=(0.2475,1.5)）与 <code>Tile_Pool_Wall_0.45x1.2.mat</code>（(0.225,0.6)），沿用 2 m 一循环的瓷砖密度；<code>= 玩家.prefab</code> 的 CharacterController 统一为 height 1.55、radius 0.15、center (0,0.775,0)、skinWidth 0.02（原 1.8/0.3/0.9/0.08），眼睛仍 local y=1.60。柜内净宽 0.412、开口净高 1.749，站上柜内 0.051 地板后胶囊顶 1.601、直径 0.34，均可通过；CapsuleCast 复核（自柜内底板高度起扫）x=0、±0.03、+0.05 全程无命中，x=−0.05 碰开着的门板、x=+0.06 碰柜体前框，中心可活动范围约 −0.035..+0.055。</li>
+<li><b>回程 bug（2026-11-21 二修）</b>：玩家穿柜进更衣室后走不回来、回看只看到柜子背面，根因是 <code>OldMetalWardrobe_Body</code> 的背板单面碰撞。复制为 <code>Assets/Art/Models/储物柜2/processed/Meshes/OldMetalWardrobe_Body_OpenBack.asset</code>（删掉 8 个背面三角形，174→166），只把 <code>储物柜_54/Body</code> 的 MeshFilter 与 MeshCollider 指到它；其余储物柜继续用原网格。开门后从柜内底板高度向 ±Z 各 CapsuleCast 1.6 m 均无命中，往返可通，回看长廊可见。</li>
 <li><b>门楣挡天空</b>：更衣室天花板只到 y=3.00，其上方 3.00..4.35 原本是敞开的夹层。新增 <code>泳池房/建筑/墙_更衣室南_门楣</code>（Cube，(1.44, 1.35, 0.30)，中心 (0, 3.675, 14.15)），材质复用 <code>Tile_Pool_Wall_22.08</code> 的实例、tiling 按 2 m 一循环取 <code>(0.72, 0.675)</code>，从长廊抬头只能看到瓷砖而不是天空。</li>
 <li><b>两段式开门</b>：新增 <code>Game.Level.CabinetDoorInteract</code>（`InteractableBase` 子类，不经 AutoDoor、不加刚体）挂在 <code>Door_Front</code>（hinge=Hinge_FrontDoor，−90°）与 <code>Door_Back</code>（hinge=Hinge_BackDoor，+90°）。玩家在长廊里先开背门，走进柜体空腔，再开前门进入更衣室；两扇门转动期间都把 <code>Player</code> 层写进门板碰撞体的 <code>excludeLayers</code>，只放行不改碰撞体。视线绑定 Main Camera，换玩家实例不失效。</li>
 </ul>
 <p><b>贴图渗透修复（2026-11-21）</b>：长廊口两侧曾出现亮条 + 点阵噪点，成因有两处——①门楣在预制体与场景里各被建了两个完全重叠的实例，整面墙抢同一批深度值；②长廊 <code>左墙</code>/<code>右墙</code> 的内侧面与南墙两段端面同在 x=±0.72 且法线都朝长廊，重叠 0.3 × 4.35。修法是删掉重复门楣，把长廊两侧墙缩到 z 0..14.0，洞口 0.3 m 侧壁交给南墙端面（门洞仍为 1.44，由南墙两段的 x 边界决定），门楣上沿顶到长廊吊顶底面 4.355 封住 5 mm 横缝。另外清掉 16 个完全重叠的重复储物柜（<code>_13..18</code> / <code>_41..46</code> / <code>_55..58</code>），道具柜数 57 → 41（每个位置只留一个）。</p>
+
+<h3>更衣室门换办公室门 + 删储物柜_23/24（2026-11-21 迭代）</h3>
+<p>原来的 <code>门_更衣室</code> 是 <code>AutoDoor.prefab</code> 的 Rise 占位门（面板 2.9 宽、整体上抬，根节点 BoxCollider 不是 Trigger），实际打不开；用户要求「复用办公室的门」。同时 <code>储物柜_23/24</code> 正好堵在更衣室门洞（x -3.25..-1.75）前面，一并删除。</p>
+<ul>
+<li><b>删柜</b>：<code>泳池房/道具/储物柜_23</code>、<code>储物柜_24</code> 删除；场景实例里用户先删过，Unity 已自动清掉 <code>m_RemovedGameObjects</code> 覆盖，<code>道具</code> 子物体 60 → 58（储物柜 39）。</li>
+<li><b>门结构</b>：根 <code>(-2.5, 0, 19.45)</code>、旋转 0；<code>AutoDoor(mode=Hinge, doorPanel=门板, hinge=铰链, hingeOpenAngle=-95, speed 150, gain 4, closeSpeed/closeGain 0, motorForce 600, duration 0.8, autoClose=false, closeDelay 2)</code> + <code>DoorInteract(maxDistance=3)</code>；<code>铰链</code> lp (-0.75, 1.22, 0.172) 带 Rigidbody（mass 25、useGravity false、Interpolate、constraints 80、ContinuousSpeculative）与 HingeJoint（axis Y、useMotor force 600、limits -95..0、enableCollision false）；<code>门板</code> lp (0.77, 0, 0)、ls (1.54, 2.44, 0.08)，DoorBox + <code>Door_Office.mat</code> + BoxCollider。预制体 eye 留空（<code>InteractableBase.Awake</code> 兜底取 <code>Camera.main</code>）、场景实例指 Main Camera。</li>
+<li><b>验证</b>：关门时从 z=18.9 向 +Z 的 CapsuleCast（radius 0.15 / height 1.55）在门中心命中门板；开 -95° 后 x -3.00..-1.95 全部 clear（x=-3.15 命中 <code>墙_更衣室北_B</code> 属贴门框），门板打开后包围盒 (-3.42,0,19.62)..(-3.21,2.44,21.16) 贴走道南墙、不穿墙/门楣。Console 无报错。</li>
+</ul>
 
 <h2>7. 灯光</h2>
 <table class=""><thead><tr>
@@ -1291,9 +1300,9 @@ z_local = 14.3 + (33 - z_drawing)   # 更衣室内南边界对齐局部 z=14.3
 │   ├─ 墙_更衣室南_门楣                          ← Cube (1.44, 1.35, 0.30)，挡 3.00..4.35 的天空
 │   └─ 空气墙_长池北叶 / 长池颈 / 长池南叶 / 池核 / 水渠_西 / 水渠_东   ← 只有 BoxCollider
 ├─ 道具
-│   ├─ 储物柜_北_01..28 / 储物柜_南_01..36        ← OldMetalWardrobe 实例（长廊口那只拉到 1.44 × 3.00，原储物柜_60 已删）
+│   ├─ 储物柜_北_01..28 / 储物柜_南_01..36        ← OldMetalWardrobe 实例（现状 39 个：去重、删 _60、删 _23/24 后；长廊口那只恢复常规尺寸 + 补墙）
 │   ├─ 水面_长池（3 块 Quad）/ 水面_池核（4 块 Quad）      ← 水面不加碰撞
-│   ├─ 门_更衣室（AutoDoor）/ 门_暗门（旧铁皮衣柜假柜，X 缩放 2.04）
+│   ├─ 门_更衣室（办公室门：DoorBox + Door_Office + 铰链 + AutoDoor Hinge + DoorInteract）/ 门_暗门（旧铁皮衣柜假柜，X 缩放 2.04）
 │   ├─ 主阀 / 轮（Valve.prefab）、抽水泵（PumpLP.prefab）、扳手（Wrench.prefab）
 │   └─ 气垫_长池 / 气垫_池核 / 占位_地漏 / 占位_管道_*
 ├─ 灯光
@@ -1302,7 +1311,7 @@ z_local = 14.3 + (33 - z_drawing)   # 更衣室内南边界对齐局部 z=14.3
 ├─ 触发                        ← 空，等解密接
 └─ 剧情锚点                    ← 空，放 交互点_主阀 / 交互点_排水 / 交互点_暗门（带 dot11 图标）</pre>
 <h2>9. 实施步骤</h2>
-<ol><li><code>AssetDatabase.RenameAsset("Assets/Prefabs/Level/TestRoom.prefab", "泳池房")</code>，GUID 不变，Level1 口袋空间与 Level2 两处实例自动跟随。</li><li>进入预制体编辑：删除「尽头封墙」，长廊地板从 13.3 延到 14.3（`localScale.z` 13.3→14.3，`position.z` 6.65→7.15），两侧墙与天花板同步延到 14.3。</li><li>按第 3 节建墙与地板：先地板（凹出池坑），再池壁/池底/池沿/台阶，最后天花板。</li><li>按第 5 节建材质：全部用 <code>瓷砖.png</code>，每份材质 <code>AssetDatabase.CreateAsset</code> 落盘，把尺寸对应的 ST 写进资产（砖 0.25 m）；<b>长廊两侧墙与地板不要动材质</b>。</li><li>加空气墙：6 个空物体 + BoxCollider（高 1.8 m，中心 y=0.7），盖住长池三叶、池核、两条水渠。</li><li>先做三个新道具的预制体：<code>Valve</code> / <code>PumpLP</code> / <code>Wrench</code>（props.md 流程），再去放水面（自写 shader）、储物柜（62 个实例）、门、占位道具。</li><li>布灯、加占位图标（<code>sv_icon_dot11_pix16_gizmo</code>），保存预制体。</li><li>分别在 Level1（口袋空间）与 Level2 实例上核对位置，Play 走一遍第 10 节验收。</li></ol>
+<ol><li><code>AssetDatabase.RenameAsset("Assets/Prefabs/Level/TestRoom.prefab", "泳池房")</code>，GUID 不变，Level1 口袋空间与 Level2 两处实例自动跟随。</li><li>进入预制体编辑：删除「尽头封墙」，长廊地板从 13.3 延到 14.3（`localScale.z` 13.3→14.3，`position.z` 6.65→7.15），两侧墙与天花板同步延到 14.3。</li><li>按第 3 节建墙与地板：先地板（凹出池坑），再池壁/池底/池沿/台阶，最后天花板。</li><li>按第 5 节建材质：全部用 <code>瓷砖.png</code>，每份材质 <code>AssetDatabase.CreateAsset</code> 落盘，把尺寸对应的 ST 写进资产（砖 0.25 m）；<b>长廊两侧墙与地板不要动材质</b>。</li><li>加空气墙：6 个空物体 + BoxCollider（高 1.8 m，中心 y=0.7），盖住长池三叶、池核、两条水渠。</li><li>先做三个新道具的预制体：<code>Valve</code> / <code>PumpLP</code> / <code>Wrench</code>（props.md 流程），再去放水面（自写 shader）、储物柜（39 个实例）、门、占位道具。</li><li>布灯、加占位图标（<code>sv_icon_dot11_pix16_gizmo</code>），保存预制体。</li><li>分别在 Level1（口袋空间）与 Level2 实例上核对位置，Play 走一遍第 10 节验收。</li></ol>
 <h2>10. 边界与不做的事</h2>
 <table class=""><thead><tr>
 <th>对象</th>
@@ -1324,9 +1333,9 @@ z_local = 14.3 + (33 - z_drawing)   # 更衣室内南边界对齐局部 z=14.3
 <th>通过标准</th>
 </tr></thead><tbody>
 <tr><td>传送进场</td><td>大厅拿门禁卡 → 安全门 → 传送</td><td>落点仍在长廊入口 z=0，无穿墙、无二次叠加 -1000</td></tr>
-<tr><td>长廊</td><td>沿 +z 走 13.3 m</td><td>顶部 3 盏锥形光在地上留下三段光斑、墙面自上而下变暗；尽头是一只撑满门洞的 3 m 高铁皮柜（不是敞开的墙洞），抬头看不到天空</td></tr>
+<tr><td>长廊</td><td>沿 +z 走 13.3 m</td><td>顶部 3 盏锥形光在地上留下三段光斑、墙面自上而下变暗；尽头是常规尺寸的铁皮柜（0.45 × 1.80），两侧与柜顶是补墙，不是撑满门洞的高柜；抬头看不到天空</td></tr>
 <tr><td>长廊口假柜</td><td>走到柜子前按交互键开背门，走进柜内，再开后门进入更衣室</td><td>背门朝长廊、前门朝更衣室各自外开，不插进柜体；柜内空腔能站立与转身；两扇门都关上后从更衣室侧看是完整的柜子正面</td></tr>
-<tr><td>更衣室</td><td>进入后环视</td><td>两排储物柜（北 28 / 南 36，共 62 个实例里长廊口那只被拉高拉宽、重合的储物柜_60 已删），更衣室门可开，净高 3.0</td></tr>
+<tr><td>更衣室</td><td>进入后环视</td><td>两排储物柜（现场 39 个：北排 18、南排 21；长廊口那只为常规尺寸），更衣室门是办公室门、可开可过，净高 3.0</td></tr>
 <tr><td>暗门</td><td>从更衣室走到北墙西端</td><td>看见一个贴墙的宽柜子；开门 → 柜内为空腔 → 背门后是泵房，玩家能直穿过去（净宽 0.98）</td></tr>
 <tr><td>泳池房</td><td>走到池边</td><td>长池哑铃形轮廓正确、池沿与地面齐平（只靠材质区分）、水面低于地面 0.25</td></tr>
 <tr><td>走道</td><td>从更衣室门进来往东、再往北拐</td><td>先过 16×4 的横段，再沿泵房东墙走 3×5 的竖段进泳池房，两段之间无门无墙</td></tr>
@@ -1337,10 +1346,10 @@ z_local = 14.3 + (33 - z_drawing)   # 更衣室内南边界对齐局部 z=14.3
 <tr><td>水面</td><td>改 `水面_长池` / `水面_池核` 的 y</td><td>可独立升降，穿模检查通过</td></tr>
 <tr><td>瓷砖</td><td>贴墙看砖缝、走一圈全场</td><td>砖约 0.25 m 见方、缝直、墙地天花纹理连续；长廊仍是旧材质（对比明显）</td></tr>
 <tr><td>空气墙</td><td>朝长池/池核/水渠走过去</td><td>人物被挡在池边贴边滑行，不会掉进 -1.5 m 池坑；Console 无报错</td></tr>
-<tr><td>性能</td><td>打开 Profiler 走一圈</td><td>22 盏点光 + 62 个储物柜下帧率不低于大厅区域</td></tr>
+<tr><td>性能</td><td>打开 Profiler 走一圈</td><td>22 盏点光 + 39 个储物柜下帧率不低于大厅区域</td></tr>
 </tbody></table>
 <h2>12. 风险与后续</h2>
-<ul><li><b>长廊宽度与图纸差 0.45 m</b>：图纸 1 m、现状 1.45 m。选保现状避免重做传送面/门楣；若你希望严格 1 m，需要同步改地板、两侧墙、天花板、传送面（1.44→1.0）、返回相机与裁剪面。</li><li><b>Unlit 材质下点光效果弱</b>：22 盏灯主要作用于道具。若观感偏平，后续可把墙地材质改 URP/Lit + 烘焙，但会与现有场景风格不一致，属单独决策。</li><li><b>62 个储物柜 = 约 620 个渲染器</b>：可选静态合批（编辑器 Merge），或北/南各隔一格摆放（减半）。</li><li><b>池坑靠空气墙挡住（Q25）</b>：水面没有实体围挡、池沿与地面齐平，所以用 6 个 BoxCollider 罩住水面（高 1.8 m）。玩家贴边会滑、不会掉进 1.5 m 深的池坑；同时池核中央平台与抽水泵不可达。若要做「排水后走下去」的解谜，得在排水后把对应空气墙关掉（<code>collider.enabled=false</code>）。</li><li><b>全场一张贴图容易看腻</b>：瓷砖纹只有 8×8、无脏污变化。后续可选：给水面加污渍贴花、给泵房/更衣室换深一号的 tint（同一材质改 <code>_BaseColor</code>），或加第二张破损瓷砖。</li><li><b>排水解谜接口</b>：水面对象已独立、主阀/排水/暗门已留空锚点，后续只需加脚本改 <code>水面_*.transform.position.y</code>。</li><li><b>图纸仅表达"有这个东西"</b>：阀门、泵、轮的朝向、管道走向、气垫造型由实施时定，规格只锁位置与尺寸。</li><li><b>暗门柜体横向拉伸 2 倍</b>：锁具花纹会变宽。若观感不行，退路是换 1.0 m 宽的定制柜门网格（Q19-a 备选）。</li><li><b>走道与泳池房同高（Q22=A）</b>：L 形走道净高 4.35、吊顶 4.5，与泳池房天花连成一片，不设跌级；泵房/更衣室仍是 3.0，交界处靠 1.35 m 高的夹层空腔收口，从走道看是整面 4.35 高墙。</li><li><b>池核比泳池房南边界多出 5 m</b>：池核 z 23.3..43.3 而泳池房主体从 z 28.3 起，池核南端伸进走道北段，因此单列为「泳池房 池核南延段」——它的天花板与泳池房同高，地板几乎全是池坑。</li></ul>
+<ul><li><b>长廊宽度与图纸差 0.45 m</b>：图纸 1 m、现状 1.45 m。选保现状避免重做传送面/门楣；若你希望严格 1 m，需要同步改地板、两侧墙、天花板、传送面（1.44→1.0）、返回相机与裁剪面。</li><li><b>Unlit 材质下点光效果弱</b>：22 盏灯主要作用于道具。若观感偏平，后续可把墙地材质改 URP/Lit + 烘焙，但会与现有场景风格不一致，属单独决策。</li><li><b>39 个储物柜 = 约 390 个渲染器</b>：可选静态合批（编辑器 Merge），或北/南各隔一格摆放（减半）。</li><li><b>池坑靠空气墙挡住（Q25）</b>：水面没有实体围挡、池沿与地面齐平，所以用 6 个 BoxCollider 罩住水面（高 1.8 m）。玩家贴边会滑、不会掉进 1.5 m 深的池坑；同时池核中央平台与抽水泵不可达。若要做「排水后走下去」的解谜，得在排水后把对应空气墙关掉（<code>collider.enabled=false</code>）。</li><li><b>全场一张贴图容易看腻</b>：瓷砖纹只有 8×8、无脏污变化。后续可选：给水面加污渍贴花、给泵房/更衣室换深一号的 tint（同一材质改 <code>_BaseColor</code>），或加第二张破损瓷砖。</li><li><b>排水解谜接口</b>：水面对象已独立、主阀/排水/暗门已留空锚点，后续只需加脚本改 <code>水面_*.transform.position.y</code>。</li><li><b>图纸仅表达"有这个东西"</b>：阀门、泵、轮的朝向、管道走向、气垫造型由实施时定，规格只锁位置与尺寸。</li><li><b>暗门柜体横向拉伸 2 倍</b>：锁具花纹会变宽。若观感不行，退路是换 1.0 m 宽的定制柜门网格（Q19-a 备选）。</li><li><b>走道与泳池房同高（Q22=A）</b>：L 形走道净高 4.35、吊顶 4.5，与泳池房天花连成一片，不设跌级；泵房/更衣室仍是 3.0，交界处靠 1.35 m 高的夹层空腔收口，从走道看是整面 4.35 高墙。</li><li><b>池核比泳池房南边界多出 5 m</b>：池核 z 23.3..43.3 而泳池房主体从 z 28.3 起，池核南端伸进走道北段，因此单列为「泳池房 池核南延段」——它的天花板与泳池房同高，地板几乎全是池坑。</li></ul>
 <h2>13. 决策记录</h2>
 <table class=""><thead><tr>
 <th>议题</th>
@@ -1361,14 +1370,14 @@ z_local = 14.3 + (33 - z_drawing)   # 更衣室内南边界对齐局部 z=14.3
 <tr><td>Q11 道具</td><td>A 示意级 / B 灰模 / C 精细</td><td>储物柜复用 FilingCabinet 预制体，其余临时示意</td><td>模型已有，其余等美术</td></tr>
 <tr><td>Q12 灯光</td><td>A 沿用点光约定 / B 全暖白 / C 开阴影</td><td>A</td><td>与全场一致：无阴影、暖白、点光</td></tr>
 <tr><td>Q13 长廊</td><td>A 保 1.44 宽 + 开口对齐 / B 改 1 m / C 不换材质</td><td>A</td><td>避免改动传送面/门楣尺寸</td></tr>
-<tr><td>Q14 门</td><td>A 复用 AutoDoor / B 新做门板</td><td>A：两道门都用 AutoDoor（含暗门）</td><td>门板 1.54 已适配 1.5 门洞，不新增资产</td></tr>
+<tr><td>Q14 门</td><td>A 复用 AutoDoor / B 新做门板 / C 复用办公室门</td><td>C：更衣室门用大厅红/蓝门同款（DoorBox + Door_Office + 铰链 + AutoDoor Hinge + DoorInteract）；暗门仍是柜门</td><td>与楼层其它门同款观感；门板 1.54 适配 1.5 门洞，不新增资产</td></tr>
 <tr><td>Q15 行政区块</td><td>建 / 不建</td><td>不建</td><td>与办公室区域表底部同为方位示意</td></tr>
 <tr><td>Q16 预制体</td><td>重命名 / 新建</td><td>重命名 TestRoom → 泳池房，两层实例自动跟随</td><td>GUID 不变，Level1/Level2 引用不断</td></tr>
 <tr><td>Q17 预留位</td><td>A 留钩子 / B 纯静态 / C 钩子+说明</td><td>A：水面/主阀/排水三处空物体 + 图标</td><td>后续接解谜时不用翻找</td></tr>
-<tr><td>Q18 门洞宽度</td><td>A 1.5 m / B 1.0 m / C 混用</td><td>A：更衣室门 1.5 m</td><td>复用 AutoDoor 标准件，门板 1.54 已适配</td></tr>
+<tr><td>Q18 门洞宽度</td><td>A 1.5 m / B 1.0 m / C 混用</td><td>A：更衣室门 1.5 m</td><td>复用办公室门组合，门板 1.54 压住门框</td></tr>
 <tr><td>Q19 暗门</td><td>A 柜门网格拉宽 / B 0.5 m 侧身过 / C 整柜嵌入假柜</td><td>C + a：整柜嵌入 + X 缩放 2.04 到 1.0 m 宽</td><td>玩家胶囊直径 0.60 才能通过，0.47 内腔会卡人；2026-11-21 胶囊已缩到 0.34，暗门开口 0.98 仍保留</td></tr>
 <tr><td>Q20 新模型落地</td><td>A 按 props.md 烘焙预制体 / B 直接摆源 FBX</td><td>A</td><td>与 OldMetalWardrobe 同一套流程，避免 100 倍节点后患</td></tr>
-<tr><td>Q21 储物柜</td><td>A 新 OldMetalWardrobe 一格两个 / B 旧 FilingCabinet 一格一个 / C 混用</td><td>A：64 个</td><td>更衣室观感更衣室化，也符合图纸柜格密度</td></tr>
+<tr><td>Q21 储物柜</td><td>A 新 OldMetalWardrobe 一格两个 / B 旧 FilingCabinet 一格一个 / C 混用</td><td>A：初版 64，现场 39（去重删 16、删 _60、删 _23/24）</td><td>更衣室观感更衣室化，也符合图纸柜格密度；重叠与堵门的实例后续删除</td></tr>
 <tr><td>Q22 走道层高</td><td>A 4.35 同泳池房 / B 独立 3.0 低矮通道</td><td>A：4.35，吊顶 4.5 连成一片</td><td>走道是动线不是房间，不必压低；也省掉三处跌级收口</td></tr>
 <tr><td>Q23 池沿</td><td>A 高 5 cm / B 与地面齐平</td><td>B：池沿顶面 y=0 与地面齐平</td><td>水与地面一个平面，边界只靠材质区分，观感更像后室的积水空间</td></tr>
 <tr><td>Q24 表面材质</td><td>A 沿用办公室墙/地板贴图 / B 整层统一瓷砖</td><td>B：地面/墙/天花板/池壁/池底/池沿/台阶全部用 瓷砖.png</td><td>泳池房是后室里最"整"的一层，统一瓷砖才能读出水的边界；一张贴图 = 2 m，砖 0.25 m</td></tr>

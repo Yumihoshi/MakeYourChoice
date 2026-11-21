@@ -24,5 +24,5 @@ description: 改动或新增门（AutoDoor 三种模式、铰链运动、锁定/
 - 关门态由 `Awake` 里的 `hinge.localRotation` 缓存，开门角 = `_closedRotation * Quaternion.Euler(0, openAngle, 0)`，用 `Quaternion.SlerpUnclamped` 在 `UniTask.Yield(PlayerLoopTiming.Update)` 循环里插值，不做物理。
 - 转动期间给门板碰撞体的 `excludeLayers` 加上 `Player` 层（与 `HingeDoorMotion` 同规则：放行而不是关碰撞体），结束时恢复；不要在协程里做（项目禁用协程）。
 - `eye` 绑 **Main Camera** 的 Transform：`玩家_测试` 那套是测试容器，会被 `TestSandboxGuard` 销毁，绑它换场景/换玩家实例就失效。
-- 关卡二长廊口的「假柜」是两段式：走廊侧先开背门（`Hinge_BackDoor`，+90°），进柜体空腔后再开前门（`Hinge_FrontDoor`，−90°）进更衣室。几何与拉伸做法见 `props.md`。
+- 关卡二长廊口的「假柜」是两段式：走廊侧先开背门（`Hinge_BackDoor`，+90°），进柜体空腔后再开前门（`Hinge_FrontDoor`，−90°）进更衣室。柜体 2026-11-21 已改回常规尺寸，门洞用补墙封住，几何做法见 `props.md`。
 

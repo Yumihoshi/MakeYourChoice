@@ -33,7 +33,7 @@
 ## 现有基线（开工前实测）
 
 - `Assets/Prefabs/Level/TestRoom.prefab`：子物体 `地板`（1.70×0.13×13.3，中心 0,-0.07,6.65）、`左墙` / `右墙`（0.13×4.35×13.3，x=±0.79）、`天花板`（0.13 厚，中心 y=4.42）、`尽头封墙`（z 13.3..13.43）、`入口侧壁_左/右`、`入口门楣`、`返回传送面` / `返回传送相机` / `返回裁剪面`、`点光_1..3`。
-- 玩家：`CharacterController` radius 0.3、height 1.8 → 通行净宽需 ≥ 0.62。
+- 玩家：`CharacterController` radius 0.15、height 1.6、skinWidth 0.02（2026-11-21 修复后；原 0.3/1.8/0.08）→ 通行净宽需 ≥ 0.34。
 - 已有可复用：`OldMetalWardrobe.prefab`（0.49×1.80×0.45，正面 +X，双门可转）、`AutoDoor.prefab`、`DoorBox` 网格、`Door.mat`、`Wall_Lintel` 材质。
 - 贴图：`Assets/Art/泳池/瓷砖.png`（64×64，8×8 块砖，缝 1 px）。
 
@@ -594,7 +594,7 @@ return "ok";
 ```
 
 - [x] **步骤 3：验证**
-更衣室门洞净宽 1.5、门板不穿透墙；暗门占满 1.0 m 洞、柜门开合不绕中心转；玩家胶囊（0.6 宽）能从柜体空腔穿过（净宽 0.98）。
+更衣室门洞净宽 1.5、门板不穿透墙；暗门占满 1.0 m 洞、柜门开合不绕中心转；玩家胶囊（0.34 宽含 skin）能从柜体空腔穿过（净宽 0.98）。
 用户手测：进更衣室开门 → 走到北墙西端 → 打开假柜 → 穿过去到泵房。
 
 ---
@@ -1179,4 +1179,15 @@ Shader "Pool/PoolWater"
 **柜门交互**：新增 `Assets/Scripts/Interaction/CabinetDoorInteract.cs`（`Game.Level`，`InteractableBase` 子类，挂在门板上、`hinge` 指铰链、`openAngle` 定开向、`duration=0.45`、转动期把 `Player` 层写进门板 `excludeLayers`）。`Door_Front`：hinge=`Hinge_FrontDoor`、−90°；`Door_Back`：hinge=`Hinge_BackDoor`、+90°。预制体里 `eye` 留空，`Awake` 取 `Camera.main`（取不到会 LogError 并禁用）；Level2 场景实例里显式指向 `Main Camera`。
 
 以上改动同时落在 `Assets/Prefabs/Level/泳池房.prefab` 与 `Assets/Scenes/Level2.unity` 的实例上，Level1 口袋空间的实例随预制体一并更新。复核：Console 无报错。
+
+## 附：长廊口假柜改回常规尺寸（2026-11-21 修复）
+
+问题：`储物柜_54` 被拉伸到 1.44 × 3.00 堵门洞，柜体与门板比例失真；玩家胶囊进入后左右余量也太小。改为「常规柜 + 墙体补洞」：
+
+- `储物柜_54` 的 `Body`、`Door_Front`、`Door_Back` 恢复 `localScale=1`，铰链恢复 `Hinge_FrontDoor=(0.23,1.12,0.21)`、`Hinge_BackDoor=(-0.23,0.90,0.23)`；柜体世界尺寸回到 0.45 × 1.80 × 0.49，根节点仍在 `(0,0,14.53)`、rot 270°。柜体 -X 背板是单面片、法线朝柜内：从长廊侧看不可见、碰撞也被忽略，所以玩家仍能从柜体背面穿入；从更衣室侧看则是正常柜子的实心背板。
+- 门洞剩余部分补三块墙：`墙_更衣室南_门洞补_西`（0.495 × 3.00 × 0.30，x −0.72..−0.225）、`_东`（x 0.225..0.72）、`_上`（0.45 × 1.20 × 0.30，y 1.80..3.00），全部 z 14.00..14.30、Cube、BoxCollider、Default 层；左右补墙内侧面与柜体侧面齐平（缝 <1 mm）。
+- 新材质 `Assets/Materials/Level/Tile_Pool_Wall_0.495.mat`（`_BaseMap_ST=(0.2475,1.5)`）与 `Tile_Pool_Wall_0.45x1.2.mat`（`(0.225,0.6)`），沿用 2 m 一循环的瓷砖密度。
+- 玩家 `Assets/Prefabs/= 玩家.prefab` 的 CharacterController 改为 height 1.6、radius 0.15、center (0,0.8,0)、skinWidth 0.02（原 1.8/0.3/0.9/0.08）；眼睛保持 local y=1.60。柜内净宽 0.412、柜门开口净高 1.749，站上柜内 0.051 地板后胶囊顶 1.651 < 1.749，直径 0.34 < 0.412。
+- 通行复核：把两扇门转到开门角（先 `Physics.SyncTransforms()`）后，按「玩家站在柜内底板 y=0.051」用 radius 0.15 / height 1.6 的 CapsuleCast 从 z=13.9 向 +Z 扫 1.8 m：x=0、±0.03、+0.05 均无命中；x=−0.05 会碰到开着的 `Door_Front`（门板内侧 x≈−0.19），x=+0.06 会碰到柜体正面右上框（x≈0.21）。即胶囊中心可活动范围约 x −0.035..+0.055，沿中线偏右一点通过最稳。
+- 遗留：更衣室北墙的假柜 `门_暗门` 背板法线朝更衣室，当前从更衣室侧会被背板挡住（从泵房侧可穿），与本次 54 的修复无关，待单独处理。
 

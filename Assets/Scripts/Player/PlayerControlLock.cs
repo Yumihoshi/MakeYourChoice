@@ -26,9 +26,20 @@ namespace Game.Level
 
         void Awake()
         {
-            if (controller == null || gate == null)
+            if (controller == null)
             {
-                Debug.LogError("PlayerControlLock 缺少玩家控制器或剧情引用", this);
+                Debug.LogError("PlayerControlLock 缺少玩家控制器引用", this);
+                enabled = false;
+                return;
+            }
+
+            if (gate == null)
+            {
+                // 没有开场剧情就没有要等的门：本场景不锁玩家，控制权直接留在手上。
+                // 典型是 Level2 这类调试场景——玩家预制体自带锁组件，但场景里不挂开场独白。
+                Debug.LogWarning("PlayerControlLock 没有指定需要播完的剧情，本场景不锁玩家控制", this);
+                controller.enabled = true;
+                IsLocked = false;
                 enabled = false;
                 return;
             }

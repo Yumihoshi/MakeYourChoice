@@ -412,6 +412,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 482997071}
     m_Modifications:
+    - target: {fileID: 79031967321203201, guid: 213506765a8d39c4d9ee591b8fb3609e, type: 3}
+      propertyPath: m_Height
+      value: 1.6
+      objectReference: {fileID: 0}
     - target: {fileID: 2574529718655918018, guid: 213506765a8d39c4d9ee591b8fb3609e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.013
@@ -621,6 +625,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u6CF3\u6C60\u623F"
       objectReference: {fileID: 0}
+    - target: {fileID: 5533198912401625016, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533198912401625016, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533198912401625016, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6565319603968978539, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -661,10 +677,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7796630553915405732, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 7796630553915405732, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+      propertyPath: m_Name
+      value: "\u4E3B\u9600"
+      objectReference: {fileID: 0}
     - target: {fileID: 8052631534776517057, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
       propertyPath: eye
       value: 
       objectReference: {fileID: 589896264}
+    - target: {fileID: 8409582461804118575, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -18.18517
+      objectReference: {fileID: 0}
+    - target: {fileID: 8409582461804118575, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0508857
+      objectReference: {fileID: 0}
+    - target: {fileID: 8409582461804118575, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 27.38
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

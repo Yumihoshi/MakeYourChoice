@@ -31,6 +31,16 @@ namespace Game.Level
         /// <summary>目标状态是否为打开；开始打开时为 true，开始关闭时为 false。</summary>
         public bool IsOpen => _open;
 
+        /// <summary>抽屉是否已经完全停在关闭位；打开后、补间进行中以及推回途中都为 false。</summary>
+        public bool IsClosedAtRest
+        {
+            get
+            {
+                return !_open
+                       && (transform.localPosition - _closedLocalPosition).sqrMagnitude < 1e-6f;
+            }
+        }
+
         protected override void Awake()
         {
             base.Awake();

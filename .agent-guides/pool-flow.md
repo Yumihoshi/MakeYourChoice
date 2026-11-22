@@ -14,7 +14,7 @@ description: 改动泳池房八步流程（抽水泵提示、池底数字、暗�
 - `PoolPickupInteract`：轮 / 钥匙 / 扳手共用；按 `Kind` 组合状态门控，拾取后 `SetActive(false)`。
 - `PoolValveWheelInteract`：长池阀；第一次左键装轮，之后**按住左键**累计 1080° 后长池退水。
 - `PoolMainValveInteract`：主阀；无扳手只播提示（不置 `WrenchNeedLearned`），有扳手转 1.2 s 后池核退水。
-- `PoolWaterDrain`：一次退水；水面本地 y 在 2 s 内降到 -1.55 后禁用，空气墙同帧禁用；长池/池核各调一次。
+- `PoolWaterDrain`：一次退水；水面本地 y 在 2 s 内降到 -1.55 后禁用，浮物（长池/池核气垫）保持起始相对水位的高度随水面下沉，落到池底顶面 `floatRestY=-1.5` 后停住；空气墙同帧禁用；长池/池核各调一次。
 - `PoolNumberSightTrigger`：池底数字的一次性视线判定：观察区 + 距离 + 视口 + 水平夹角 + 可见几何遮挡（`RaycastNonAlloc` 跳过无渲染器的空气墙，地板/池壁等有渲染器的实体算遮挡）。不要改回 `ScreenVisibility`（池边空气墙会挡 `Physics.Linecast`），也不能只做视口判定——隔着池沿和地板会误触发。
 - `PoolStoryTrigger`：泵平台提示、暗门内侧“要扳手”两个区域触发。
 - `PoolRoomEntryTrigger`：玩家进入长池/池核所在泳池房的一次性区域触发；`OnTriggerEnter/Stay` 检查 `Player` 标签与 `GameCursorState.IsPlaying`，置 `EnteredPoolRoom`。
@@ -33,6 +33,7 @@ description: 改动泳池房八步流程（抽水泵提示、池底数字、暗�
 
 - `CabinetDoorInteract` 的 `FeedbackLocked` 锁着时仍要求 `CanInteract()` 为真，才能给短句；`SilentLocked` 不可被瞄准。未绑定 `poolFlowState` 时 20 柜（原 36 柜）用前者、00 暗门用后者；Level2 的 01..25 与 00 暗门绑定后，进入泳池房前仍保持这两种表现，进入后 `EnteredPoolRoom` 为真，这些柜门忽略锁可开。**20 号柜刻意不绑定**，保持 `FeedbackLocked` + 钥匙 `Unlock()`：进入泳池房也不解锁。不要把 00 暗门或普通柜改回永久 `SilentLocked`。
 - `PoolRoomEntryTrigger` 必须覆盖长池与池核两片区域，且只置位、不重置；`EnteredPoolRoom` 是一次性进度。Level2 的 01..25 号 `Door_Front` 与 00 暗门都要挂 `CabinetDoorInteract` 并绑同一个 `流程状态`，漏掉的门会退回旧锁逻辑（20 号柜就是刻意保留旧锁逻辑的例外）。**20 号柜前门不绑定**：它必须是 `FeedbackLocked`，没拿钥匙点只播“锁着”，钥匙 `Unlock()` 后才可开。**26 号是长廊→更衣室的唯一入口假柜，它的 `Door_Front` / `Door_Back` 都不能绑 `poolFlowState`**：一旦绑定，进入泳池房前两扇门都无准心，玩家根本进不了更衣室（2026-11-22 修复的 bug）。
+- 气垫是 `道具` 下的独立预制体实例，不是水面的子物体，退水时不会自动跟随。改/换气垫后必须把它填进 `退水控制` 对应池的 `longPoolFloats` / `coreFloats`；漏填时退水后气垫悬在原位（2026-11-22 修复的 bug）。
 - 锁门/拾取物隐藏后再解锁的目标必须用**常驻空锚点**（`剧情锚点/交互点_*`）挂 `DialogueTrigger`；拾取物会 `SetActive(false)`，不要把 3D 飘字挂在它身上。
 - 号牌与文字必须挂在各自 `Door_Front` 下：00 为 `门_暗门/Hinge_FrontDoor/Door_Front/号牌_00`、`文字_00`；Level2 场景当前 26 个柜子按 01..26 连续编号（原 36 柜=新 20 柜、原 37 柜=新 21 柜），每扇 `储物柜_XX/Hinge_FrontDoor/Door_Front` 下也有 `号牌_XX`、`文字_XX`（同一套本地变换，字号 0.8，编号取柜名）；文字本地 Y 旋转 270° 才正面朝房间，90° 会左右镜像。预制体仍保留 39 个旧编号柜，Level1 不受本次重排影响。它们曾挂在 `道具` 下，开门时不会跟门板旋转，会留在原地浮空。
 - `PoolPickupInteract` 的轮必须等 `WrenchNeedLearned` 才能捡；主阀无扳手时**不能**补置 `WrenchNeedLearned`，否则玩家可绕过暗门。

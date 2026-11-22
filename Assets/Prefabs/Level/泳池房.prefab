@@ -23516,6 +23516,11 @@ MonoBehaviour:
   - {fileID: 314782616872281914}
   - {fileID: 6836769837081752288}
   - {fileID: 9040260981066138759}
+  longPoolFloats:
+  - {fileID: 1641167523218610519}
+  coreFloats:
+  - {fileID: 7515086447826951247}
+  floatRestY: -1.5
   duration: 2
   lowerY: -1.55
   longPoolDialogue: {fileID: 844721190911281199}

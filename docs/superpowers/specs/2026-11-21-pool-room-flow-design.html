@@ -344,13 +344,13 @@ public void Open() { /* 未锁、未动、未开时 SetOpenAsync(true).Forget() 
 
 <h3>4.4 退水数组</h3>
 <table>
-<thead><tr><th>组</th><th>水面</th><th>空气墙</th></tr></thead>
+<thead><tr><th>组</th><th>水面</th><th>空气墙</th><th>浮物</th></tr></thead>
 <tbody>
-<tr><td>长池</td><td><code>水面_01</code>、<code>水面_02</code>、<code>水面_03</code></td><td><code>空气墙_长池北叶</code>、<code>空气墙_长池颈</code>、<code>空气墙_长池颈_北</code>、<code>空气墙_长池南叶</code></td></tr>
-<tr><td>池核</td><td><code>水面_04</code>、<code>水面_05</code>、<code>水面_06</code>、<code>水面_07</code></td><td><code>空气墙_池核</code>、<code>空气墙_池核_北</code>、<code>空气墙_池核_北中</code>、<code>空气墙_池核_南</code>、<code>空气墙_池核_东</code></td></tr>
+<tr><td>长池</td><td><code>水面_01</code>、<code>水面_02</code>、<code>水面_03</code></td><td><code>空气墙_长池北叶</code>、<code>空气墙_长池颈</code>、<code>空气墙_长池颈_北</code>、<code>空气墙_长池南叶</code></td><td><code>气垫_长池</code></td></tr>
+<tr><td>池核</td><td><code>水面_04</code>、<code>水面_05</code>、<code>水面_06</code>、<code>水面_07</code></td><td><code>空气墙_池核</code>、<code>空气墙_池核_北</code>、<code>空气墙_池核_北中</code>、<code>空气墙_池核_南</code>、<code>空气墙_池核_东</code></td><td><code>气垫_池核</code></td></tr>
 </tbody>
 </table>
-<p>水渠 <code>水面_08/09</code> 在泵房，不参与退水，不要填进数组。</p>
+<p>水渠 <code>水面_08/09</code> 在泵房，不参与退水，不要填进数组。浮物保持起始时相对水位的高度、随水面一起下沉，落到池底顶面 <code>floatRestY=-1.5</code> 后停住，水面继续降到 -1.55，避免气垫穿进池底。<b>气垫是独立道具、不是水面子物体</b>，新增或替换气垫时必须填进对应浮物数组，否则退水后仍悬在原位。</p>
 
 <h3>4.5 Level1 / Level2 接线</h3>
 <table>
@@ -395,7 +395,7 @@ public void Open() { /* 未锁、未动、未开时 SetOpenAsync(true).Forget() 
 <text x="80" y="318" font-size="12" fill="#4a5563">LongPoolDrained / CoreDrained 在 t=2.0 s 置位，随后播退水完成台词</text>
 </g>
 </svg>
-<figcaption>水面在 2 s 内线性下降，降到 -1.55 后禁用；空气墙在同一帧关闭，不提前放玩家进水。</figcaption>
+<figcaption>水面在 2 s 内线性下降，降到 -1.55 后禁用；气垫随水面下沉，落到池底 y=-1.5 后停住；空气墙在同一帧关闭，不提前放玩家进水。</figcaption>
 </figure>
 
 <h3>5.2 地漏与竖井</h3>
@@ -500,11 +500,13 @@ protected override bool CanInteract()
 protected override bool IsHoldInteraction
     =&gt; state.WheelInstalled &amp;&amp; !state.LongPoolDrained &amp;&amp; !_draining;
 
-// PoolWaterDrain：本地 y 下降，2 s，结束禁用
+// PoolWaterDrain：水面与浮物本地 y 同步下降，2 s；浮物落到 floatRestY 停住，结束禁用
 for (var t = 0f; t &lt; duration; t += Time.deltaTime)
 {
     var k = Mathf.Clamp01(t / duration);
-    foreach (var s in surfaces) { var p = s.localPosition; p.y = Mathf.Lerp(startY, lowerY, k); s.localPosition = p; }
+    var waterY = Mathf.Lerp(startY, lowerY, k);
+    foreach (var s in surfaces) { var p = s.localPosition; p.y = waterY; s.localPosition = p; }
+    foreach (var f in floats) { var p = f.localPosition; p.y = Mathf.Max(floatRestY, waterY + offset[f]); f.localPosition = p; }
     await UniTask.Yield(PlayerLoopTiming.Update, destroyCancellationToken);
 }
 foreach (var s in surfaces) s.gameObject.SetActive(false);
@@ -525,6 +527,7 @@ foreach (var b in blockers) b.gameObject.SetActive(false);</code></pre>
 <tr><td>装上轮后按住无效</td><td><code>CanInteract</code> 同时接受 <code>HasWheel</code> 与 <code>WheelInstalled</code></td></tr>
 <tr><td>退水重复触发</td><td><code>DrainAsync</code> 入口用 <code>_longDraining/_coreDraining</code> 直接返回；状态置位后交互也关</td></tr>
 <tr><td>退水时玩家已在水里</td><td>空气墙只在结束帧关闭，水面下降期间仍挡住玩家；不做“把玩家推出水”逻辑</td></tr>
+<tr><td>退水后气垫悬空</td><td>气垫是独立道具、不是水面子物体；把它填进 <code>PoolWaterDrain</code> 对应浮物数组，随水面下沉并在 <code>floatRestY=-1.5</code>（池底顶面）停住</td></tr>
 <tr><td>地漏洞提前可坠</td><td>洞一直在，但池核空气墙未关前玩家进不去；<code>PoolDrainExitTrigger</code> 再要求 <code>CoreDrained</code></td></tr>
 <tr><td>下一关事件没挂</td><td>玩家落在竖井底地板上，不会无限下坠；事件留空是允许的</td></tr>
 <tr><td>存档 / 重进</td><td>不做；流程状态只在本场景实例内有效，离开即重置</td></tr>
@@ -541,9 +544,9 @@ foreach (var b in blockers) b.gameObject.SetActive(false);</code></pre>
 <li>进入泳池房触发区后返回更衣室：01..25 号柜门与 00 暗门都出现准心并可开关；00 不再需要先看池底 00；20 柜在拿到钥匙前仍只播“锁着”、开不了；26 号入口假柜前后双门始终可开。</li>
 <li>在泳池区把视线落到长池南叶池底：看到亮黄色 <code>00</code>，播 <code>LV2_Pool_Number</code>；回更衣室，00 暗门前后双门已打开。</li>
 <li>穿过暗门进泵房：播 <code>LV2_Pool_NeedWrench</code>；泵房地上的轮出现准心。</li>
-<li>捡轮 → 到长池阀接口左键安装 → 按住左键约 4.5 s，轮转 3 圈 → 长池 3 块水面 2 s 内降到 -1.55 并消失，4 块空气墙关闭，播 <code>LV2_Pool_LongDrained</code>。</li>
+<li>捡轮 → 到长池阀接口左键安装 → 按住左键约 4.5 s，轮转 3 圈 → 长池 3 块水面 2 s 内降到 -1.55 并消失，长池气垫随水面落到池底（y=-1.5），4 块空气墙关闭，播 <code>LV2_Pool_LongDrained</code>。</li>
 <li>从南岸走新台阶下到长池池底，捡钥匙；钥匙消失，20 号柜前门解锁。</li>
-<li>回更衣室开 20 柜，拿扳手；到泵房点主阀，主阀轮转 1.2 s，池核 4 块水面降完消失，5 块空气墙关闭，播 <code>LV2_Pool_CoreDrained</code>。</li>
+<li>回更衣室开 20 柜，拿扳手；到泵房点主阀，主阀轮转 1.2 s，池核 4 块水面降完消失，池核气垫随水面落到池底（y=-1.5），5 块空气墙关闭，播 <code>LV2_Pool_CoreDrained</code>。</li>
 <li>从干区平台坠入池核，走到地漏，从 0.9 × 0.9 洞落进竖井；底部触发一次 <code>NextLevelReached</code> 与 <code>onNextLevel</code>。</li>
 </ol>
 
@@ -589,7 +592,7 @@ foreach (var b in blockers) b.gameObject.SetActive(false);</code></pre>
 <tr><td>5</td><td>长池南叶新增 3 级台阶；现有池核西侧台阶不动</td><td>用户确认</td></tr>
 <tr><td>6</td><td>流程逻辑放场景实例，Level1 / Level2 各接一套；预制体只保留几何/道具</td><td>用户确认；能直接引用各场景自己的对话系统</td></tr>
 <tr><td>7</td><td>锁定反馈用短句剧情，不新增 HUD 文字</td><td>用户确认；现有 <code>InteractPromptView</code> 没有自定义文字</td></tr>
-<tr><td>8</td><td>退水：2 s 从 -0.25 降到 -1.55，结束禁用；同一帧关空气墙</td><td>用户确认</td></tr>
+<tr><td>8</td><td>退水：2 s 从 -0.25 降到 -1.55，结束禁用；气垫随水面落到池底 y=-1.5；同一帧关空气墙</td><td>用户确认</td></tr>
 <tr><td>9</td><td>主阀不需要扳手模型，左键一次直接启动</td><td>用户确认；扳手仍是前置道具</td></tr>
 <tr><td>10</td><td>地漏处开 0.9×0.9 洞，接 5–6 m 竖井，玩家真实坠落</td><td>用户确认</td></tr>
 <tr><td>11</td><td><code>PumpLP_part1</code> 就是主阀，保留不换；抽水泵是新导入的独立模型</td><td>用户修正</td></tr>

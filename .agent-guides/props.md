@@ -49,6 +49,14 @@ OldMetalWardrobe（根，identity）
 
 `Assets/Prefabs/Props/气垫.prefab` 的根节点带 `BoxCollider`（center (0,0.1165,0.008)、size (2,0.2329,1.416)，顶面 = 模型最高点），两只实例（`气垫_长池` scale 0.90、`气垫_池核` scale 1.45）因此能站人。垫子浮在水面里，原本被 `建筑/空气墙_长池颈`、`空气墙_池核` 整体罩住；2026-11-21 修复「玩家无法走上气垫」时按垫子轮廓把这两个盒子拆开留口：长池颈拆成 z 35.3..37.17 与 38.444..40.3 两段，池核先拆成南段 z 23.3..26.285、北段 z 28.338..43.3、东段 x −7.55..0.5 三段，随后又按平台轮廓改成 5 段（池核 / 池核_北 / 池核_南 / 池核_北中 / 池核_东），为「干区平台 + 四周池沿」留出 x −7.8..−2.2 / z 26.0..30.6 的口——玩家从池核气垫东侧迈上西池沿就能走上平台。改完先 `Physics.SyncTransforms()` 再验证，否则 `Collider.bounds` / `CapsuleCast` 会读到旧位置。
 
+## 抽水泵（Pump）
+
+- 结构：`Assets/Prefabs/Props/Pump.prefab`（内层）套在 `Assets/Prefabs/Level/泳池房.prefab` 的 `道具/抽水泵` 下，scale 0.02；材质改内层 prefab 的 renderer 即可传播到关卡实例。
+- 材质 `Assets/Materials/Props/Pump.mat`（URP/Lit）：`_BaseMap=pumpa_albedo.png`、`_BumpMap=pumpa_normal.png`（importer 必须是 NormalMap、sRGB 关闭，`_NORMALMAP` 关键字已开启）、`_Metallic=0.45`、`_Smoothness=0.22`。贴图在 `Assets/Art/Models/抽水泵/textures/`。
+- `pumpa_roughness.png` 的亮度几乎恒定（mean 0.945、std 0.052），直接当标量 smoothness 用即可，没有打包 metallic/smoothness mask；`internal_ground_ao_texture.jpeg` 是通用 AO，未使用。
+- `PumpLP.mat` 属于主阀（不同网格/UV），不要混用。
+- 注意：2026-11-22 泵被移到干区平台，Level2 场景里是 transform override（`(-4.904,0.15,30.332)`），而 `泳池房.prefab` 内仍是旧泵房位置 `(-15.8,0.15,27)`；只改 prefab 不会移动场景实例。
+
 ## 外部 FBX 的缩放坑（重要）
 
 Sketchfab 的 game-ready FBX 常把 100 倍缩放烘在节点上（本模型根节点 localScale=100、rotation=(270,0,0)）。Unity 的 `ModelImporter.globalScale`/fileScale 0.01 与之互补，**无法靠导入设置抵消**：`useFileScale=false` 会把模型放大 100 倍；`bakeAxisConversion=true` 只能清掉 90° 旋转，100 缩放仍在。

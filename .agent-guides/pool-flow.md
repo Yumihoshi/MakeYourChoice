@@ -38,7 +38,9 @@ description: 改动泳池房八步流程（抽水泵提示、池底数字、暗�
 - `PoolPickupInteract` 的轮必须等 `WrenchNeedLearned` 才能捡；主阀无扳手时**不能**补置 `WrenchNeedLearned`，否则玩家可绕过暗门。
 - 钥匙只 `Unlock()` 20 门（原 37 柜已改为原 36 柜，即新 20 柜），不自动开；即使玩家已进入泳池房，没钥匙也开不了 20。00 暗门由 `PoolNumberSightTrigger` 解锁并 `Open()` 双门。
 - 扳手柜从原 37 改到原 36（新 20）：`CabinetDoorInteract` 已复制到新 20 门，旧 21 门移除；钥匙的 `unlockDoors` 与 `剧情_20锁着` / `剧情_扳手` 的 `textAnchor` 都指向新 20 的 `交互点_20柜`。移动柜子后记得同步这个锚点。
-- Level2 的 20 号柜使用专用 Yarn 节点 `LV2_Pool_Locked20` / `LV2_Pool_Key20`；Level1 测试房仍用 `LV2_Pool_Locked37` / `LV2_Pool_Key`（编号 37）。不要把 Level2 改回共用节点。
+- Level2 与 Level1 测试房现在共用预制体里的同一套 `剧情`，20 号柜的专用 Yarn 节点是 `LV2_Pool_Locked20` / `LV2_Pool_Key20`。旧版 Level1 里另抄的一份 `剧情_37锁着` / `LV2_Pool_Key`（编号 37）已删除，不要再按 37 号柜接回。
+- 改柜子编号/位置后要连同实例上的 Transform override 一起查：Level1 的 `道具/扳手` 曾被实例 override 在旧 37 柜位置 `(-11.05, 0.85, 14.45)`（旧 `交互点_37柜` 也在这），表现为扳手悬空在 20 柜外；2026-11-22 已 Revert 回预制体值 `(-8.5852, 0.0647, 14.5178)`，落在 20 柜底部。查法：`PrefabUtility.GetPropertyModifications(TestRoom)` 里看目标 Transform 的 `m_LocalPosition.*`，或逐个对比实例与预制体源的 local 位置/旋转/缩放。
+- Level1 的 `TestRoom` 曾经在预制体实例上又手抄了一整套 `流程`（旧的 37 柜版）、8 个重复 `交互点_*`，以及 7 个重复组件（`阀_长池` / `轮` / `主阀` / `扳手` / `钥匙` / `触发_下坠` 上的组件副本，引用全空）——2026-11-22 已全部删掉，仅保留预制体自带的那套。若再看到 `GetAddedComponents(TestRoom)` 非空，说明又有人在实例上手抄接线，先确认是不是重复件再决定去留。
 - 给对象补组件不要写 `GetComponent<T>() ?? AddComponent<T>()`：Unity 的伪 null 会让 `??` 判空失效；显式 `if (c == null)`。
 - `InteractableBase.IsAimed()` 要求命中的 Collider 在交互组件所在物体或其子物体上；Collider 不能挂父级/兄弟。
 - 拾取物/阀的 Collider 由脚本所在物体或子物体承担；改预制体后 Level1/Level2 实例的 override（`Lock Mode`、`Hinge`、`Open Angle`、`lockedDialogue`）要确认没有被 Revert。

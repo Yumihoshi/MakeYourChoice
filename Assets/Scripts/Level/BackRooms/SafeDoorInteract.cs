@@ -25,10 +25,10 @@ namespace Game.Level
         string noCardNode = "LV1_SafeDoor";
 
         [SerializeField, LabelText("临时卡失效的剧情节点")]
-        string tempCardNode = "LV2_SafeDoorExpiredA";
+        string tempCardNode = "LV1_SafeDoorExpiredA";
 
         [SerializeField, LabelText("临时卡失效的剧情节点（已经看过柜子 A）")]
-        string tempCardCheckedNode = "LV2_SafeDoorExpiredB";
+        string tempCardCheckedNode = "LV1_SafeDoorExpiredB";
 
         [SerializeField, LabelText("门打开后触发（切换下一节点的接口）")]
         UnityEvent exitOpened = new UnityEvent();

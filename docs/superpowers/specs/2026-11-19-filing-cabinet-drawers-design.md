@@ -4,7 +4,7 @@
 
 关卡二打印室的 `柜子A` 原本是一张 Quad + `YBillboard` 的平面道具，只承担“看一眼、播两段台词”的剧情触发。现在替换为 `Assets/Art/Models/filing-cabinet/source/FilingCabinet_Separated.fbx` 的实体文件柜（`Body` + `Drawer1..4`），要求：
 
-- 保留原来的两个 `DialogueTrigger`（`LV2_CabinetA_First` / `LV2_CabinetA_Second`）和 `GlowCabinetInteract` 的剧情职责；
+- 保留原来的两个 `DialogueTrigger`（`LV1_CabinetA_First` / `LV2_CabinetA_Second`）和 `GlowCabinetInteract` 的剧情职责；
 - 四格抽屉各自可交互开合；
 - 从上往下第三格抽屉里放 `Assets/Art/素材/门禁卡.png`，满足流程后可以交互拿走。
 
@@ -34,9 +34,9 @@
 
 沿用 `Assets/Yarn/Level2.yarn` 里已有的两个节点，不改台词：
 
-- **第一次拉开任意一格抽屉**：`GlowCabinetInteract.OnDrawerOpened()` 在 `!state.CheckedCabinetA` 时 `MarkCheckedCabinetA()` 并播 `LV2_CabinetA_First`（触发 14“只是反光”）。之后不再重复。
+- **第一次拉开任意一格抽屉**：`GlowCabinetInteract.OnDrawerOpened()` 在 `!state.CheckedCabinetA` 时 `MarkCheckedCabinetA()` 并播 `LV1_CabinetA_First`（触发 14“只是反光”）。之后不再重复。
 - **交互第三格里的门禁卡**：
-  - 还没满足 `CheckedCabinetA` 或 `TriedSafeDoorWithTempCard` 时，只重播 `LV2_CabinetA_First`，卡片留在抽屉里；
+  - 还没满足 `CheckedCabinetA` 或 `TriedSafeDoorWithTempCard` 时，只重播 `LV1_CabinetA_First`，卡片留在抽屉里；
   - 两个条件都满足后，`state.TakeRealCard()` + 播 `LV2_CabinetA_Second`（触发 15），卡片 `SetActive(false)` 消失。
 - 锁柜期间（`state.CabinetsLocked`，即刚拿到临时卡、还没试过安全门）只能把已经拉开的抽屉推回去，不能开新抽屉，也不能拿卡；这对应原流程里“柜子暂时锁住”的阶段。
 

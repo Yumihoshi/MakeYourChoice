@@ -124,7 +124,7 @@
     <li><b>南排</b>：6 个，z 4.8..5.4，中心同上；每格抽屉同样挂 <code>EmptyCabinetDrawer</code>。</li>
     <li>内门两侧：2 个抽屉柜模型（抽屉可开），x -10.6..-10.0，z 9.83..10.93 与 12.43..13.53。</li>
     <li>假门两侧：2 个抽屉柜模型（抽屉可开），x -21.0..-20.4，同样两段 z。</li>
-    <li><b>抽屉剧情</b>：<code>= 关卡/储藏室/抽屉剧情</code> 挂 <code>StorageDrawerQuest</code>（<code>requiredDrawers = 3</code>），任意柜子累计拉开 3 格不同抽屉后播一次 <code>LV2_CabinetB</code>（发现维护记录）。</li>
+    <li><b>抽屉剧情</b>：<code>= 关卡/储藏室/抽屉剧情</code> 挂 <code>StorageDrawerQuest</code>（<code>requiredDrawers = 3</code>），任意柜子累计拉开 3 格不同抽屉后播一次 <code>LV1_CabinetB</code>（发现维护记录）。</li>
     <li>柜子A：<code>FilingCabinet_Separated</code> 原模型移到 (3.5, 0, 12.4)，Y180（正面朝南）；<code>GlowCabinetInteract</code> / <code>FilingCabinetDrawer</code> / <code>FilingCabinetCard</code> 一并跟过去。</li>
     <li><b>最上层抽屉不可交互</b>：16 个储藏室柜与柜子A 的 <code>Drawer1</code>（local y = 1.575）都关闭「允许交互」（<code>interactable = false</code>），视线对准时不显示交互提示、按键无效；抽屉碰撞体保留，仍会挡住射线。其余三格照常开合、照常计入抽屉计数。</li>
     <li>复印机：不动，位置 (8.5, 1.61, 8.4)。</li>
@@ -152,7 +152,7 @@
   <ul>
     <li>12 和 13 都在门口，玩家进门一次同时触发：门关上的瞬间播 13 的「门锁上了」，顺序不冲突。</li>
     <li><b>2026-11-20 修正</b>：12 / 13 两个前室触发区实际未放置；关门 + 锁 60 s 由 <code>进入储藏室</code>（触发 10）的 <code>RoomEntryTrigger</code> 执行，目标是 <b>储藏室门（前室↔储藏室）</b>上的 <code>TimedDoorLock</code>，红门（前室↔大厅）不再定时锁。</li>
-    <li>11 号「发现维护记录」（<code>LV2_CabinetB</code>）不再由某一只柜子触发，改由 <code>StorageDrawerQuest</code> 计数：任意柜子累计拉开 <b>3 格不同抽屉</b>后播一次，之后不再触发；拿临时卡后 `CabinetsLocked` 置真，抽屉只能关不能开。</li>
+    <li>11 号「发现维护记录」（<code>LV1_CabinetB</code>）不再由某一只柜子触发，改由 <code>StorageDrawerQuest</code> 计数：任意柜子累计拉开 <b>3 格不同抽屉</b>后播一次，之后不再触发；拿临时卡后 `CabinetsLocked` 置真，抽屉只能关不能开。</li>
     <li>台词：<code>Assets/Yarn/Level2.yarn</code> 的 <code>LV2_08</code> 把「蓝箭头通向隔间区」改成「打印室」，其余节点原文不动。</li>
   </ul>
 
@@ -161,7 +161,7 @@
     <thead><tr><th>文件</th><th>改动</th></tr></thead>
     <tbody>
       <tr><td><code>Assets/Scripts/Level/BackRooms/EmptyCabinetDrawer.cs</code>（新）</td><td>每格抽屉一个：对准正面 + 交互键 → 沿柜子正面滑出 0.35 m，再按滑回；无台词；每格第一次拉开向 <code>StorageDrawerQuest</code> 报数；柜子被锁（拿到临时卡后）时只能关不能开</td></tr>
-      <tr><td><code>Assets/Scripts/Level/BackRooms/StorageDrawerQuest.cs</code>（新）</td><td>储藏室抽屉计数：累计 3 格不同抽屉拉开后播一次 <code>LV2_CabinetB</code>（发现维护记录），并标记 <code>BackRoomFlowState.OpenedCabinetB</code></td></tr>
+      <tr><td><code>Assets/Scripts/Level/BackRooms/StorageDrawerQuest.cs</code>（新）</td><td>储藏室抽屉计数：累计 3 格不同抽屉拉开后播一次 <code>LV1_CabinetB</code>（发现维护记录），并标记 <code>BackRoomFlowState.OpenedCabinetB</code></td></tr>
       <tr><td><code>Assets/Scripts/Level/BackRooms/FilingCabinetDrawer.cs</code></td><td>不改（它带台词/事件，柜子A 仍在用；储藏室不用它）</td></tr>
       <tr><td><code>Assets/Yarn/Level2.yarn</code></td><td>只改 <code>LV2_08</code> 一句</td></tr>
       <tr><td>场景</td><td>其余按 §5–§9 在编辑器 / MCP 里摆</td></tr>

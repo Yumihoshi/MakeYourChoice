@@ -17105,6 +17105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6565319603968978539}
+  - component: {fileID: 1706995237355207978}
   m_Layer: 0
   m_Name: "\u6CF3\u6C60\u623F"
   m_TagString: Untagged
@@ -17134,6 +17135,19 @@ Transform:
   - {fileID: 8101388681588718754}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1706995237355207978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079220191878909272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d038190bcb711e144b3b90a11d912a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Gallery
 --- !u!1 &5093708474654025463
 GameObject:
   m_ObjectHideFlags: 0
@@ -21011,7 +21025,19 @@ MonoBehaviour:
   state: {fileID: 7949714423040596548}
   onNextLevel:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1706995237355207978}
+        m_TargetAssemblyTypeName: Game.SceneLoadRequest, Assembly-CSharp
+        m_MethodName: Load
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6471051037595047322
 GameObject:
   m_ObjectHideFlags: 0

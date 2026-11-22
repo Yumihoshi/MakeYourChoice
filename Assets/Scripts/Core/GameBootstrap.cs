@@ -15,10 +15,21 @@ namespace Game
 	[RequireComponent(typeof(GameCursorState))]
 	public class GameBootstrap : MonoBehaviour
 	{
-		[LabelText("楼层显示"), Required, SerializeField] ElevatorFloorDisplay floorDisplay;
-		[LabelText("电梯运行晃动"), Required, SerializeField] ElevatorRideMotion rideMotion;
+		[LabelText("直接进入（跳过开始菜单与电梯）")]
+		[Tooltip("艺术馆这类由剧情直接切进来的场景打开它：不打开开始菜单、不播电梯到站演出")]
+		[SerializeField] bool directEntry;
+
+		[LabelText("楼层显示"), ShowIf(nameof(ShowElevatorFields)), Required, SerializeField]
+		ElevatorFloorDisplay floorDisplay;
+
+		[LabelText("电梯运行晃动"), ShowIf(nameof(ShowElevatorFields)), Required, SerializeField]
+		ElevatorRideMotion rideMotion;
+
 		[LabelText("到站楼层"), SerializeField] int arrivalFloor = 1;
 		[LabelText("到站音效提前量"), SerializeField] float arrivalSfxLead = 1.5f;
+
+		/// <summary>直接进入模式下隐藏电梯相关引用，避免 Odin 对空引用报校验错误。</summary>
+		bool ShowElevatorFields => !directEntry;
 
 		bool _starting;
 
@@ -49,6 +60,16 @@ namespace Game
 
 		void Start()
 		{
+			// 剧情直接切进来的场景没有开始菜单与电梯演出，光标交给 GameCursorState 自动锁定。
+			if (directEntry)
+			{
+				// UIRoot 要等第一次打开面板时才创建，它自带的旧版事件系统只能在这之后清理；
+				// 直接进入模式没有开始菜单，所以先把 UIRoot 建出来，再统一事件系统。
+				_ = UIKit.Root;
+				UiNavigation.EnsureSingleEventSystem();
+				return;
+			}
+
 			if (floorDisplay == null || rideMotion == null)
 			{
 				Debug.LogError("GameBootstrap 缺少楼层显示或电梯晃动引用，开始菜单将跳过电梯到站演出", this);
@@ -154,7 +175,7 @@ namespace Game
 			_cursor.Settling = false;
 		}
 
-				/// <summary>
+		/// <summary>
 		/// ESC 开关暂停面板；开始菜单打开时忽略，避免在菜单界面弹出暂停面板。
 		/// </summary>
 		static void TogglePausePanel()

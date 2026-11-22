@@ -1,7 +1,7 @@
 # AGENTS.md — MakeYourChoice
 
 游趣无限2026 × 紫与灰gj 48 小时 Game Jam 之后的迭代项目，已有可玩原型，11 月 22 日截止。Unity 2022.3.62f3c1，URP 14.0.12（3D Universal Renderer；2026-11-14 由 2D 渲染转 3D）。
-项目自有场景为 `Assets/Scenes/Level1.unity` 与 `Assets/Scenes/Level2.unity`（旧的 `Game.unity` 已删除；其余 `.unity` 都在插件示例与场景模板目录里）。
+项目自有场景为 `Assets/Scenes/Level1.unity`、`Assets/Scenes/Level2.unity` 与 `Assets/Scenes/Gallery.unity`（旧的 `Game.unity` 已删除；其余 `.unity` 都在插件示例与场景模板目录里）。
 
 ## 策划案（需求与玩法的唯一来源）
 
@@ -28,6 +28,7 @@
 | 剧情对话、3D 飘字 | Yarn Spinner 3.2.8 + `Assets/Scripts/Dialogue`；台词改 `Assets/Yarn/*.yarn`，不要自己写解析器 |
 | 关卡流程、门与传送门 | `Assets/Scripts/Level`（Hall / BackRooms / Portal / Elevator）与 `Assets/Scripts/Player` |
 | 泳池房八步流程（泵提示、池底数字、暗门、长池阀、退水、20 号柜（钥匙开）、主阀、地漏下坠） | `Assets/Scripts/Level/Pool`；接线与踩坑见 `.agent-guides/pool-flow.md`，规格见 `docs/superpowers/specs/2026-11-21-pool-room-flow-design.html` |
+| 艺术馆场景（坠落入场与近雾、杯子收集与提交、豆袋躺下运镜） | `Assets/Scripts/Level/Gallery` + `Assets/Editor/Gallery/GalleryBuilder.cs`；场景 `Assets/Scenes/Gallery.unity`；规格 `docs/superpowers/specs/2026-11-22-gallery-design.html`；接线与踩坑见 `.agent-guides/gallery.md` |
 | 输入（键位 / 手柄） | `Assets/Scripts/Player/PlayerInputRouter.cs`（新版 Input System 动作表） |
 | 交互聚焦与准心 HUD | `Assets/Scripts/Interaction/InteractFocus.cs` + `Assets/Scripts/UI/InteractPromptView.cs` |
 | 可交互物（按键交互） | `Assets/Scripts/Interaction`：`InteractableBase`（抽象基类，视线 Raycast + 交互键）、`DoorInteract`（AutoDoor 门）、`CabinetDoorInteract`（无刚体柜门，绕铰链 Slerp）；用法见 `.agent-guides/doors.md` |

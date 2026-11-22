@@ -23,6 +23,9 @@ namespace Game.Level
         float _pitch;
         float _verticalVelocity;
 
+        /// <summary>当前俯仰角（度，向下为负）；剧情运镜结束后用它把视角还原到玩家原来看的方向。</summary>
+        public float Pitch => _pitch;
+
         void Awake()
         {
             _controller = GetComponent<CharacterController>();

@@ -1,0 +1,70 @@
+---
+description: 改动艺术馆场景（Gallery.unity：几何烘焙、坠落入场与雾、杯子提交流程、豆袋运镜、门）时使用。
+---
+
+# 艺术馆（Gallery）
+
+改动本域前后通读本文件；项目级约束见根 `AGENTS.md`，同目录其他条目按需加载。
+
+规格见 `docs/superpowers/specs/2026-11-22-gallery-design.html`，实施步骤见 `docs/superpowers/plans/2026-11-22-gallery.md`（plan 写完即冻结，改动以本文件与代码为准）。
+
+## 场景与加载
+
+- 场景 `Assets/Scenes/Gallery.unity`，Build index 2（`ProjectSettings/EditorBuildSettings.asset` 里 Level1 → Level2 → Gallery）。
+- 入口链路：`Assets/Prefabs/Level/泳池房.prefab` 里 `建筑/竖井/触发_下坠` 的 `PoolDrainExitTrigger.onNextLevel` 持久监听同预制体根上的 `SceneLoadRequest.Load()`（`sceneName = "Gallery"`）。`LoadSceneMode.Single` 会卸载当前所有场景，这就是「同时卸载前两个场景」，不需要额外的卸载代码。
+- **持久监听只能在同一个预制体内部连**：`PoolDrainExitTrigger` 在预制体资产里，所以 `SceneLoadRequest` 必须挂在 `泳池房.prefab` 根上；挂到场景里的节点上无法从预制体资产引用。
+- 场景骨架（`游戏入口`/`= 玩家`/`= 相机`/`= 对话`/`+ 界面`/`背景音乐`）是从 Level1 复制的：**`= 玩家` 上没有 `PlayerControlLock`、`眼睛/玩家相机` 上没有 `ElevatorRideMotion`**，不要为了「统一」加回来。
+- `GameBootstrap` 勾了 `直接进入`（`directEntry`）：跳过开始菜单与电梯到站演出。UIKit 静态重置（`ResetUIKitState`）与 ESC 暂停仍由它负责，所以这个组件不能删。
+- **从 Level1 复制根节点会丢掉跨根引用**：`+ 界面/低分辨率画面` 的 `LowResDisplay.renderCamera`、`= 对话/飘字相机` 的 `Dialogue3DOverlay.mainCamera`、`= 对话/飘字实例` 的 `WorldLineView.worldCamera` 都指向另一个根节点 `= 相机/主相机`，逐个 `Instantiate` 复制后会全部变 null。`LowResDisplay` 拿不到渲染相机会打一条 Error 就禁用，`画面` 这个全屏 RawImage 永远没有贴图——UGUI 的无贴图 RawImage 是**白色**，于是直接运行 Gallery 就是满屏白。复制完骨架必须回填这三处（`GameBootstrap.floorDisplay`/`rideMotion` 是 `directEntry` 下故意留空的）。改完可以拿 Level1 做一次逐字段比对来查漏。
+- `directEntry` 分支里要先 `_ = UIKit.Root;` 再 `UiNavigation.EnsureSingleEventSystem()`：UIRoot 自带一个旧版事件系统，只有它存在之后才清得掉。没有开始菜单的场景若直接去清，UIRoot 随后会再创建出第二个事件系统，指针事件被两个输入模块各处理一次。
+
+## 几何
+
+- 4 份 Mesh 在 `Assets/Art/Meshes/艺术馆/`，由 `Assets/Editor/Gallery/GalleryBuilder.cs` 的菜单 `Tools ▸ 艺术馆 ▸ 1 生成网格资产` 烘出，再用 `2 摆入当前场景` 放进场景。改地图就改脚本里的 `Map` 字符串再重跑两条菜单。
+- `Map` 符号：`#` 墙 / `.` 地面 / `R` 中心红毯 / `D` 暗橙标记 / `Y` 杯子 / `O` 门 / `B` 豆袋；一列 1 m，行按 z 递增，列按 x 递增。
+- **场外空地不建几何**：x < 6 且 z ≥ 17 的 174 格是建筑外的空地（表格里也是可走的 `.`），`GalleryBuilder` 用 `IsOutsideBuilding` 把它们从地面与天花板集合里剔掉。不加这条过滤就会多出 174 格地板与同量天花板（首跑踩过）。
+- `AddBox` 只写 5 个面（底面不出），**每盒 10 个三角形**；墙网格顶点 2560 / 三角 1280（126 墙盒 + 2 个门楣），地面 284、天花板 286、中心地毯 2。
+- UV 按世界坐标 1 m 一平铺（朝 X 的面用 worldZ、朝 Z 的面用 worldX、竖直方向 worldY；地面/天花用 worldX/worldZ），所以材质 `_BaseMap_ST` 保持 (1,1)、贴图 `wrapMode = Repeat`。
+- 中心地毯是一整张 8×8 Quad（顶点 4），UV 0–1 且 `中心地毯.png` 是 `Clamp`，**不要给它加平铺或 Repeat**，否则用户要求的「一张图铺满红区」会变成九宫格。
+- **中心地毯必须带 MeshCollider**：地面网格只含非红毯格，玩家坠入点 (29, …, 23) 正下方就是红毯，没有碰撞体时玩家会直接穿过地面掉进虚空（表现为雾已恢复、人还在不停下坠）。`GalleryBuilder` 的 `2 摆入当前场景` 已给 `中心地毯` 加 `MeshCollider`，不要当成纯装饰删掉。
+- 门格上方的门楣（2.44–4.35）烘在墙网格里，场景里没有单独的「门楣」物体。
+
+## 入场坠落与雾
+
+- `GalleryEntryFall`（挂在 `= 关卡/艺术馆/流程/入场坠落`）：出生点在红毯正上方 (29, 7.6, 23)，天花板 2×2 洞口在格 (x=28,29)×(z=22,23)。
+- `Awake` 里把 `RenderSettings.fog` 设成黑色线性雾 start 0.2 / end 3.5（当作黑屏用），并 `firstPerson.enabled = false`；`Update` 用 `controller.Move` 自己下落（重力 −22、上限 25 m/s）。
+- 落地判定 `controller.isGrounded || position.y <= 0.05`，另加 3 s 超时兜底；落地后 2 s 把雾拉回 4 / 30，再等 1.73 s 交还控制并播 `Gallery_落地`。
+- 天花板没有 MeshCollider（只渲染），坠落不会撞到它；玩家胶囊底部贴地时 transform.y ≈ 0，所以 `y <= 0.05` 是可靠的地面线。
+
+## 杯子与提交
+
+- 拾取：`CupPickup` → `GalleryCupStation.ReportPickup` → 3D 飘字「杯子 n/3」，拾取后 `SetActive(false)`。
+- 提交：`SubmitDeskInteract` → `GalleryCupStation.TrySubmit`：不足飘「还差 N 个杯子。」，够 3 个飘「三个杯子都放上去了。」并 `paintingDoor.Open()`。
+- 计数组件挂在 `= 关卡/艺术馆/流程/流程状态`；锚点分工：`锚点_提交区`(飘字位置)、`锚点_豆袋`(台词飘字)、`锚点_豆袋视线`(躺下看的房间中心)、`锚点_落地`(落地台词)。**豆袋的视线锚点要独立**，否则锚点贴在豆袋上、玩家贴脸时朝向退化。
+- 提交台是**运行期可见的立方体台子**（`道具/提交台`，0.8 × 0.9 × 1.2，材质 `Assets/Materials/Art/提交台.mat`），不是道具预制体。**不要改回 `Assets/Prefabs/Level/MetalOfficeDesk.prefab`**：它是坏资产，子节点 `MeshFilter` 的网格与材质引用全是 null，实例化出来完全隐形（Level1 里那些「办公桌组」是 4 个 `CubicleV2.prefab` 拼的，与它无关）。
+- `WorldLineView.ShowLine` 同一时刻只允许一条 active，重复调用会 `LogWarning` 并丢弃；`GalleryCupStation.ShowLine` 已先 `DismissActive()`，新加飘字也要照此顺序。
+- 杯子预制体 `Assets/Prefabs/Props/杯子.prefab`：根 scale **1**，子节点 `柱体` localScale 12.5、localPosition (0,0.125,0)（fbx 里 mesh 只有 0.02 单位、且居中，×100 再抬半个身高才 0.25 m 高且底部贴地），根上 BoxCollider center (0,0.125,0) size (0.4,0.25,0.4)。**不要把缩放压到根上**：根 scale 0.125 时碰撞盒世界尺寸只剩 0.05 m，准心打不到（踩过）。
+- `杯子.fbx` 的导入设置已关掉 `importCameras` / `importLights` / `importAnimation`，别再打开——fbx 自带一台相机和一盏灯，实例化前必须删掉 `Camera`/`Light` 子节点。
+
+## 门
+
+- 两扇门都是从 Level1 `= 关卡/大厅/门/蓝门` 复制后改的（`Object.Instantiate` + `MoveGameObjectToScene`），结构仍是 `AutoDoor(mode=Hinge)` + `铰链`(Rigidbody + HingeJoint) + `铰链/门板`(DoorBox + `Door_Office`)。
+- **`AutoDoor.hinge` 的类型是 `HingeJoint` 而不是 `铰链` 的 Transform**（`Assets/Scripts/Level/Door/AutoDoor.cs:29`）。用脚本往里赋 Transform 会被 Unity 静默置 null，必须 `铰链.GetComponent<HingeJoint>()`；漏了这步门照样「打开」，但门板不转（`Awake` 的校验只在 `doorPanel` 不挂在铰链下时报错）。
+- `门_白鱼的画`：根 (3.5,0,7)、铰链在 x=3 一侧，绕远离把手的一侧向提交区方向扫 −95°；门板 1.06×2.44×0.08，比 1 m 门洞宽出的 6 cm 是故意留的，用来盖住框缝。
+- `门_提交区`：根 (6,0,12) 旋转 (0,90,0)、铰链在 z=12 一侧向内开。
+- 门禁不用 `AutoDoor.Locked`（锁住时 `DoorInteract.CanInteract()` 直接 false，玩家连准心都没有），改用 `GalleryDoorInteract : DoorInteract` 重写 `TryOpenDoor()`：未提交时飘「先把杯子交到提交区。」并 `return false`。
+- 门板要整块贴墙面外侧、铰链轴压在门洞边角；不要改成把门板塞进门洞厚度里，否则关不严（细节见 `doors.md`）。
+
+## 豆袋运镜
+
+- `BeanbagInteract` 先 `firstPerson.enabled = false`，再对 `= 玩家/眼睛` 做 DOTween：1.2 s 降到 (0, 0.55, 0.25)、仰角 55°、侧倾 8°、`OutBack` 回弹做「陷进去」；播 `Gallery_豆袋`（「我软脚了。」），等 `DialogueEndedEvent` 后再停 0.6 s、0.8 s 起身回原位，`finally` 恢复 `firstPerson.enabled`。
+- 起身的 yaw 保持当前朝向，pitch 取 `FirstPersonController.Pitch`（`Assets/Scripts/Player/FirstPersonController.cs` 新增的只读属性），这样交还控制后视角不乱跳。
+- **运镜期间不能有其他脚本写 `眼睛` 的 localPosition/localRotation**：`FirstPersonController.Update` 每帧写 `lookPivot.localRotation`，所以必须先禁用组件再动 `眼睛`。
+- 豆袋是 Quad + `豆袋.mat` + `YBillboard`（留空 `targetCamera` 用 `Camera.main`），Quad 可见面朝 −Z，靠 billboard 每帧重写旋转所以初始旋转无所谓；「白鱼的画」是静态挂在 z=1 北墙上的 Quad，必须 `rot (0,180,0)` 才朝房间。
+- 豆袋摆在 (2.2, 0.85, 4.5)：表格格心是 x=1.5，但 1.7 m 宽的图贴上去会把半边塞进 x=0..1 的墙体，所以往房间里让 0.75 m。它的碰撞盒给 1.2 × 1.7 × 0.6 的**有厚度**体积——Quad 旋转 90° 后若厚度取 0.1，世界厚度会被压成 0，准心射线时有时无。
+
+## 台词
+
+- `Assets/Yarn/Gallery.yarn`：`Gallery_落地`、`Gallery_豆袋` 两个节点，`TestDialogue.yarnproject` 的 `sourceFiles: **/*.yarn` 自动收录，不用改工程文件。
+- 台词换行必须写 `<br>`（项目里 Yarn 与 3D 飘字都按 TMP 富文本走），不要写空行或 `\n`。
+- 计数飘字（「杯子 n/3」等）直连 `WorldLineView.ShowLine(text, 999, pos)`，不经过 Yarn——Yarn 是给剧情台词的。

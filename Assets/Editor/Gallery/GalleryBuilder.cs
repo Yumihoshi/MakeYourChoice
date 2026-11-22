@@ -19,6 +19,12 @@ namespace Game.EditorTools
 		const string MaterialFolder = "Assets/Materials/Art";
 
 		// 52 列（x=0..51）× 46 行（z=0..45），一格 1 m。
+		// 表格的列从左往右数，但美术要的是「表格左边 = 场景 -x」，所以落几何时统一把列号镜像一次。
+		const int MapWidth = 52;
+
+		static int MirrorX(int cellX) => MapWidth - 1 - cellX;
+
+		// 52 列（x=0..51）× 46 行（z=0..45），一格 1 m。
 		// 符号：# 墙 / . 地面 / R 中心红毯 / D 暗橙标记（画、提交区）/ Y 杯子 / O 门 / B 豆袋
 		static readonly string[] Map =
 		{
@@ -211,8 +217,8 @@ namespace Game.EditorTools
 
 			foreach (var rect in wallRects)
 			{
-				var x0 = rect.xMin;
-				var x1 = rect.xMax;
+				var x0 = MirrorX(rect.xMax - 1);
+				var x1 = MirrorX(rect.xMin) + 1;
 				var z0 = rect.yMin;
 				var z1 = rect.yMax;
 				AddBox(vertices, triangles, uvs, x0, x1, z0, z1, 0f, CeilingHeight);
@@ -220,7 +226,9 @@ namespace Game.EditorTools
 
 			foreach (var rect in doorRects)
 			{
-				AddBox(vertices, triangles, uvs, rect.xMin, rect.xMax, rect.yMin, rect.yMax, DoorHeight, CeilingHeight);
+				var x0 = MirrorX(rect.xMax - 1);
+				var x1 = MirrorX(rect.xMin) + 1;
+				AddBox(vertices, triangles, uvs, x0, x1, rect.yMin, rect.yMax, DoorHeight, CeilingHeight);
 			}
 
 			mesh.SetVertices(vertices);
@@ -240,8 +248,8 @@ namespace Game.EditorTools
 
 			foreach (var rect in rects)
 			{
-				var x0 = rect.xMin;
-				var x1 = rect.xMax;
+				var x0 = MirrorX(rect.xMax - 1);
+				var x1 = MirrorX(rect.xMin) + 1;
 				var z0 = rect.yMin;
 				var z1 = rect.yMax;
 				AddQuad(
@@ -267,8 +275,8 @@ namespace Game.EditorTools
 
 			foreach (var rect in rects)
 			{
-				var x0 = rect.xMin;
-				var x1 = rect.xMax;
+				var x0 = MirrorX(rect.xMax - 1);
+				var x1 = MirrorX(rect.xMin) + 1;
 				var z0 = rect.yMin;
 				var z1 = rect.yMax;
 				// 朝下的单面：绕序与地面相反，玩家从上方看是背面（被剔除），从下方看正常显示。
@@ -307,10 +315,13 @@ namespace Game.EditorTools
 				maxZ = Mathf.Max(maxZ, cell.y + 1);
 			}
 
+			// 红毯与其它几何一样按表格列镜像：格 [minX, maxX) → 世界 [MapWidth - maxX, MapWidth - minX)。
+			var worldMinX = (float)(MapWidth - maxX);
+			var worldMaxX = (float)(MapWidth - minX);
 			AddQuad(
 				vertices, triangles, uvs,
-				new Vector3(minX, RedCarpetHeight, minZ), new Vector3(minX, RedCarpetHeight, maxZ),
-				new Vector3(maxX, RedCarpetHeight, maxZ), new Vector3(maxX, RedCarpetHeight, minZ),
+				new Vector3(worldMinX, RedCarpetHeight, minZ), new Vector3(worldMinX, RedCarpetHeight, maxZ),
+				new Vector3(worldMaxX, RedCarpetHeight, maxZ), new Vector3(worldMaxX, RedCarpetHeight, minZ),
 				new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(1f, 0f));
 
 			mesh.SetVertices(vertices);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Level
 {
-	/// <summary>艺术馆的收集进度：杯子计数、提交判定、3D 飘字，以及提交后开启的门。</summary>
+	/// <summary>艺术馆的收集进度：杯子计数、提交判定、提交时的 3D 飘字，以及提交后开启的门。</summary>
 	public sealed class GalleryCupStation : MonoBehaviour
 	{
 		[SerializeField, Required, LabelText("3D 飘字")] WorldLineView worldLines;
@@ -24,11 +24,11 @@ namespace Game.Level
 			}
 		}
 
-		/// <summary>拾取一个杯子后调用，在世界位置上飘出当前进度。</summary>
-		public void ReportPickup(Vector3 worldPosition)
+		/// <summary>拾取一个杯子后调用，返回累计数量；拾取台词由调用方按这个数量播放。</summary>
+		public int ReportPickup()
 		{
 			Collected = Mathf.Min(Collected + 1, requiredCups);
-			ShowLine($"杯子 {Collected}/{requiredCups}", worldPosition);
+			return Collected;
 		}
 
 		/// <summary>在提交台交互：数量不足只提示，够了就提交并开门。</summary>

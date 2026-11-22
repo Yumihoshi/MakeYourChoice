@@ -26,6 +26,27 @@ namespace Game.Level
         /// <summary>当前俯仰角（度，向下为负）；剧情运镜结束后用它把视角还原到玩家原来看的方向。</summary>
         public float Pitch => _pitch;
 
+        /// <summary>
+        /// 直接把视角摆到指定朝向。水平转身每帧都由内部的 yaw 写回自身旋转，所以瞬移（例如编辑器传送工具）
+        /// 之后必须走这里，单独改 transform.rotation 会在下一帧被覆盖。
+        /// </summary>
+        /// <param name="yaw">水平朝向（度）。</param>
+        /// <param name="pitch">俯仰角（度，向下为负），会按俯仰上限截断。</param>
+        public void SnapLook(float yaw, float pitch)
+        {
+            _yaw = yaw;
+            _pitch = Mathf.Clamp(pitch, -pitchLimit, pitchLimit);
+            transform.rotation = Quaternion.Euler(0f, _yaw, 0f);
+
+            if (lookPivot == null)
+            {
+                Debug.LogError("FirstPersonController 缺少俯仰节点引用", this);
+                return;
+            }
+
+            lookPivot.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
+        }
+
         void Awake()
         {
             _controller = GetComponent<CharacterController>();

@@ -1,5 +1,5 @@
 ---
-description: 改动泳池房八步流程（抽水泵提示、池底数字、暗门、长池阀、退水、37 柜、主阀、地漏下坠）时使用。
+description: 改动泳池房八步流程（抽水泵提示、池底数字、暗门、长池阀、退水、20 柜（原 37 柜）、主阀、地漏下坠）时使用。
 ---
 
 # 泳池房八步流程
@@ -29,11 +29,13 @@ description: 改动泳池房八步流程（抽水泵提示、池底数字、暗�
 
 ## 容易踩的坑
 
-- `CabinetDoorInteract` 的 `FeedbackLocked` 锁着时仍要求 `CanInteract()` 为真，才能给短句；`SilentLocked` 不可被瞄准。37 柜用前者，00 暗门用后者。
+- `CabinetDoorInteract` 的 `FeedbackLocked` 锁着时仍要求 `CanInteract()` 为真，才能给短句；`SilentLocked` 不可被瞄准。20 柜（原 37 柜）用前者，00 暗门用后者。
 - 锁门/拾取物隐藏后再解锁的目标必须用**常驻空锚点**（`剧情锚点/交互点_*`）挂 `DialogueTrigger`；拾取物会 `SetActive(false)`，不要把 3D 飘字挂在它身上。
-- 00 号牌 `号牌_00` 与 `文字_00` 必须是 `门_暗门/Hinge_FrontDoor/Door_Front` 的子物体；它们曾挂在 `道具` 下，开门时不会跟门板旋转，会留在原地浮空。
+- 号牌与文字必须挂在各自 `Door_Front` 下：00 为 `门_暗门/Hinge_FrontDoor/Door_Front/号牌_00`、`文字_00`；Level2 场景当前 26 个柜子按 01..26 连续编号（原 36 柜=新 20 柜、原 37 柜=新 21 柜），每扇 `储物柜_XX/Hinge_FrontDoor/Door_Front` 下也有 `号牌_XX`、`文字_XX`（同一套本地变换，字号 0.8，编号取柜名）；文字本地 Y 旋转 270° 才正面朝房间，90° 会左右镜像。预制体仍保留 39 个旧编号柜，Level1 不受本次重排影响。它们曾挂在 `道具` 下，开门时不会跟门板旋转，会留在原地浮空。
 - `PoolPickupInteract` 的轮必须等 `WrenchNeedLearned` 才能捡；主阀无扳手时**不能**补置 `WrenchNeedLearned`，否则玩家可绕过暗门。
-- 钥匙只 `Unlock()` 37 门，不自动开；00 暗门由 `PoolNumberSightTrigger` 解锁并 `Open()` 双门。
+- 钥匙只 `Unlock()` 20 门（原 37 柜已改为原 36 柜，即新 20 柜），不自动开；00 暗门由 `PoolNumberSightTrigger` 解锁并 `Open()` 双门。
+- 扳手柜从原 37 改到原 36（新 20）：`CabinetDoorInteract` 已复制到新 20 门，旧 21 门移除；钥匙的 `unlockDoors` 与 `剧情_20锁着` / `剧情_扳手` 的 `textAnchor` 都指向新 20 的 `交互点_20柜`。移动柜子后记得同步这个锚点。
+- Level2 的 20 号柜使用专用 Yarn 节点 `LV2_Pool_Locked20` / `LV2_Pool_Key20`；Level1 测试房仍用 `LV2_Pool_Locked37` / `LV2_Pool_Key`（编号 37）。不要把 Level2 改回共用节点。
 - 给对象补组件不要写 `GetComponent<T>() ?? AddComponent<T>()`：Unity 的伪 null 会让 `??` 判空失效；显式 `if (c == null)`。
 - `InteractableBase.IsAimed()` 要求命中的 Collider 在交互组件所在物体或其子物体上；Collider 不能挂父级/兄弟。
 - 拾取物/阀的 Collider 由脚本所在物体或子物体承担；改预制体后 Level1/Level2 实例的 override（`Lock Mode`、`Hinge`、`Open Angle`、`lockedDialogue`）要确认没有被 Revert。

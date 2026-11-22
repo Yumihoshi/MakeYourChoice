@@ -44,6 +44,16 @@ title: LV2_Pool_Key
 一把小钥匙。<br>上面刻着 37。
 ===
 
+title: LV2_Pool_Locked20
+---
+20 号柜锁着。<br>钥匙应该在长池池底。
+===
+
+title: LV2_Pool_Key20
+---
+一把小钥匙。<br>上面刻着 20。
+===
+
 title: LV2_Pool_Wrench
 ---
 扳手到手了。<br>去主阀那边。

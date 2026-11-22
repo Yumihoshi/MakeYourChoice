@@ -46,7 +46,7 @@ background:var(--accent);color:#fff;font-size:12px;font-weight:700;margin-right:
 <h1>泳池房流程逻辑规格</h1>
 <p class="meta">MakeYourChoice · Unity 2022.3.62f3c1 / URP 14 · 规格日期 2026-11-21 · 基线 <code>docs/superpowers/specs/2026-11-21-pool-room-design.html</code> · 场景 <code>Assets/Scenes/Level1.unity</code> / <code>Assets/Scenes/Level2.unity</code> · 状态：设计已确认，待实现</p>
 
-<div class="lead"><b>一句话</b>：不改泳池房几何，用场景实例上的 <code>PoolFlowState</code> 串起 8 步——更衣室 00 暗门 → 轮与长池退水 → 池底钥匙 → 37 号柜扳手 → 主阀与池核退水 → 地漏下坠。所有交互复用 <code>InteractableBase</code>、<code>CabinetDoorInteract</code>、<code>DialogueTrigger</code>，不新增事件总线、不做存档、不做背包 UI。</div>
+<div class="lead"><b>一句话</b>：不改泳池房几何，用场景实例上的 <code>PoolFlowState</code> 串起 8 步——更衣室 00 暗门 → 轮与长池退水 → 池底钥匙 → 20 号柜扳手 → 主阀与池核退水 → 地漏下坠。所有交互复用 <code>InteractableBase</code>、<code>CabinetDoorInteract</code>、<code>DialogueTrigger</code>，不新增事件总线、不做存档、不做背包 UI。</div>
 
 <h2>0. 范围与前置</h2>
 <div class="grid2">
@@ -54,10 +54,10 @@ background:var(--accent);color:#fff;font-size:12px;font-weight:700;margin-right:
 <h3>本规格包含</h3>
 <ul>
 <li>8 步流程的状态机与门控</li>
-<li>00 暗门、37 号柜的锁与解锁</li>
+<li>00 暗门、20 号柜的锁与解锁</li>
 <li>轮拾取、安装、按住旋转 3 圈</li>
 <li>长池 / 池核两次退水与空气墙关闭</li>
-<li>池底数字、00 号牌、长池新台阶</li>
+<li>池底数字、全部储物柜号牌（00 与 01..54）、长池新台阶</li>
 <li>地漏洞、竖井、下一关接口</li>
 <li>Yarn 节点、触发区与文字锚点</li>
 <li>Level1 实例与 Level2 调试场景各一套接线</li>
@@ -76,7 +76,7 @@ background:var(--accent);color:#fff;font-size:12px;font-weight:700;margin-right:
 </div>
 </div>
 
-<div class="note"><b>已确认的修正</b>：<code>道具/主阀</code> 保留现有 <code>PumpLP_part1</code>，它就是主阀，不再替换成 <code>Valve.prefab</code>；新导入的抽水泵在 <code>Assets/Art/Models/抽水泵/</code>，单独处理后放到泵房基座；删除没有子物体的空轮；<code>储物柜_54</code> 去重复组件；<code>储物柜_37</code> 按本规格加门与柜内扳手；所有拾取物/主阀/阀接口的碰撞盒由实现时统一补。</div>
+<div class="note"><b>已确认的修正</b>：<code>道具/主阀</code> 保留现有 <code>PumpLP_part1</code>，它就是主阀，不再替换成 <code>Valve.prefab</code>；新导入的抽水泵在 <code>Assets/Art/Models/抽水泵/</code>，单独处理后放到泵房基座；删除没有子物体的空轮；<code>储物柜_54</code> 去重复组件；原 37 柜的锁与柜内扳手改到原 36 柜（新 20 柜）；所有拾取物/主阀/阀接口的碰撞盒由实现时统一补。</div>
 
 <h2>1. 玩家流程</h2>
 
@@ -129,11 +129,11 @@ background:var(--accent);color:#fff;font-size:12px;font-weight:700;margin-right:
 <rect x="510" y="320" width="210" height="96" rx="10" fill="#e9f6ee" stroke="#2f855a"/>
 <text x="526" y="346" font-weight="700" fill="#1c2530">6 池底钥匙</text>
 <text x="526" y="368" fill="#4a5563">长池退水后下新台阶</text>
-<text x="526" y="388" fill="#4a5563">捡钥匙（对应 37 柜）</text>
+<text x="526" y="388" fill="#4a5563">捡钥匙（对应 20 柜）</text>
 
 <rect x="270" y="320" width="210" height="96" rx="10" fill="#e9f6ee" stroke="#2f855a"/>
 <text x="286" y="346" font-weight="700" fill="#1c2530">7 扳手 → 主阀</text>
-<text x="286" y="368" fill="#4a5563">开 37 柜拿扳手</text>
+<text x="286" y="368" fill="#4a5563">开 20 柜拿扳手</text>
 <text x="286" y="388" fill="#4a5563">左键启动主阀</text>
 
 <rect x="30" y="320" width="210" height="96" rx="10" fill="#fdf3e0" stroke="#b7791f"/>
@@ -167,13 +167,13 @@ background:var(--accent);color:#fff;font-size:12px;font-weight:700;margin-right:
 <table>
 <thead><tr><th>步骤</th><th>玩家动作</th><th>置位状态</th><th>解锁 / 变化</th></tr></thead>
 <tbody>
-<tr><td><span class="step">1</span>更衣室</td><td>01..54 柜无准心；只能走正门</td><td>—</td><td>00 暗门 <code>SilentLocked</code>，无准心</td></tr>
+<tr><td><span class="step">1</span>更衣室</td><td>01..54 柜门都有号牌与编号，但无准心；只能走正门</td><td>—</td><td>00 暗门也有 00 号牌，<code>SilentLocked</code>，无准心</td></tr>
 <tr><td><span class="step">2</span>泵平台</td><td>站上/靠近抽水泵基座</td><td><code>PumpHintHeard</code></td><td>播 <code>LV2_Pool_PumpHint</code></td></tr>
 <tr><td><span class="step">3</span>池底 00</td><td>在泳池区站到池边，视线真正落到池底数字（不能被池沿、地板等实体挡住）</td><td><code>PoolNumberSeen</code></td><td>00 暗门双门解锁并自动打开；播 <code>LV2_Pool_Number</code></td></tr>
 <tr><td><span class="step">4</span>暗门</td><td>穿过 00 暗门进泵房</td><td><code>WrenchNeedLearned</code></td><td>播 <code>LV2_Pool_NeedWrench</code>；轮变为可捡</td></tr>
 <tr><td><span class="step">5</span>轮与长池</td><td>捡轮、装到长池阀、按住左键转 3 圈</td><td><code>HasWheel</code> → <code>WheelInstalled</code> → <code>LongPoolDrained</code></td><td>长池 3 块水面降完禁用，4 块空气墙关闭</td></tr>
-<tr><td><span class="step">6</span>钥匙</td><td>下长池南叶新台阶，捡池底钥匙</td><td><code>HasKey</code></td><td>37 号柜前门解锁（不自动开）</td></tr>
-<tr><td><span class="step">7</span>扳手与主阀</td><td>开 37 柜拿扳手；点主阀</td><td><code>HasWrench</code> → <code>MainValveOpened</code></td><td>主阀轮转 1.2 s，开始池核退水</td></tr>
+<tr><td><span class="step">6</span>钥匙</td><td>下长池南叶新台阶，捡池底钥匙</td><td><code>HasKey</code></td><td>20 号柜前门解锁（不自动开）</td></tr>
+<tr><td><span class="step">7</span>扳手与主阀</td><td>开 20 柜拿扳手；点主阀</td><td><code>HasWrench</code> → <code>MainValveOpened</code></td><td>主阀轮转 1.2 s，开始池核退水</td></tr>
 <tr><td><span class="step">8</span>池核</td><td>坠入池核，走到地漏，坠落</td><td><code>CoreDrained</code> → <code>NextLevelReached</code></td><td>池核 4 块水面禁用、5 块空气墙关闭；竖井底发下一关事件</td></tr>
 </tbody>
 </table>
@@ -204,10 +204,10 @@ background:var(--accent);color:#fff;font-size:12px;font-weight:700;margin-right:
 <thead><tr><th>可交互物</th><th><code>CanInteract()</code> 条件</th><th>点击结果</th></tr></thead>
 <tbody>
 <tr><td>00 暗门（双门）</td><td><code>!PoolNumberSeen</code> 时 <code>SilentLocked</code>，直接 false</td><td>无准心、无反应；看到 00 后解锁并自动打开</td></tr>
-<tr><td>37 号柜前门</td><td><code>FeedbackLocked</code> 时仍 true（可瞄准）</td><td>没钥匙：播“锁着”；有钥匙：正常开关</td></tr>
+<tr><td>20 号柜前门</td><td><code>FeedbackLocked</code> 时仍 true（可瞄准）</td><td>没钥匙：播“锁着”；有钥匙：正常开关</td></tr>
 <tr><td>轮</td><td><code>WrenchNeedLearned &amp;&amp; !HasWheel &amp;&amp; !WheelInstalled</code></td><td>置 <code>HasWheel</code>，隐藏轮，播捡轮台词</td></tr>
 <tr><td>长池阀接口</td><td><code>!LongPoolDrained</code> 且（<code>HasWheel</code> 或 <code>WheelInstalled</code>）</td><td>未装：装轮；已装：按住旋转</td></tr>
-<tr><td>钥匙</td><td><code>LongPoolDrained &amp;&amp; !HasKey</code></td><td>置 <code>HasKey</code>，隐藏钥匙，解锁 37</td></tr>
+<tr><td>钥匙</td><td><code>LongPoolDrained &amp;&amp; !HasKey</code></td><td>置 <code>HasKey</code>，隐藏钥匙，解锁 20</td></tr>
 <tr><td>扳手</td><td><code>HasKey &amp;&amp; !HasWrench</code></td><td>置 <code>HasWrench</code>，隐藏扳手</td></tr>
 <tr><td>主阀</td><td><code>!CoreDrained &amp;&amp; !_busy</code></td><td>没扳手：首次播提示；有扳手：启动并退水</td></tr>
 <tr><td>地漏竖井底</td><td><code>CoreDrained &amp;&amp; !NextLevelReached</code></td><td>置 <code>NextLevelReached</code>，发下一关事件</td></tr>
@@ -251,7 +251,7 @@ void Update()
 <thead><tr><th>枚举</th><th>可交互条件</th><th>拾取后</th></tr></thead>
 <tbody>
 <tr><td><code>Wheel</code></td><td><code>WrenchNeedLearned &amp;&amp; !HasWheel &amp;&amp; !WheelInstalled</code></td><td><code>TakeWheel()</code>，隐藏轮，播 <code>LV2_Pool_WheelPicked</code></td></tr>
-<tr><td><code>Key</code></td><td><code>LongPoolDrained &amp;&amp; !HasKey</code></td><td><code>TakeKey()</code>，隐藏钥匙，对 37 前门 <code>Unlock()</code>，播 <code>LV2_Pool_Key</code></td></tr>
+<tr><td><code>Key</code></td><td><code>LongPoolDrained &amp;&amp; !HasKey</code></td><td><code>TakeKey()</code>，隐藏钥匙，对 20 前门 <code>Unlock()</code>，播场景配置的钥匙剧情（Level1 <code>LV2_Pool_Key</code>，Level2 <code>LV2_Pool_Key20</code>）</td></tr>
 <tr><td><code>Wrench</code></td><td><code>HasKey &amp;&amp; !HasWrench</code></td><td><code>TakeWrench()</code>，隐藏扳手，播 <code>LV2_Pool_Wrench</code></td></tr>
 </tbody>
 </table>
@@ -295,7 +295,7 @@ public void Open() { /* 未锁、未动、未开时 SetOpenAsync(true).Forget() 
 <tbody>
 <tr><td><code>Unlocked</code></td><td>true</td><td>正常开关</td><td>普通柜门</td></tr>
 <tr><td><code>SilentLocked</code></td><td>false（无准心）</td><td>无反应</td><td>00 暗门，满足第 1 步“不能与储物柜交互”</td></tr>
-<tr><td><code>FeedbackLocked</code></td><td>true（有准心）</td><td>播 <code>lockedDialogue</code>，门不动</td><td>37 号柜，空手点给“锁着”</td></tr>
+<tr><td><code>FeedbackLocked</code></td><td>true（有准心）</td><td>播 <code>lockedDialogue</code>，门不动</td><td>20 号柜，空手点给“锁着”</td></tr>
 </tbody>
 </table>
 <p><code>FeedbackLocked</code> 必须配 <code>lockedDialogue</code>；缺失时 <code>Awake</code> 里 <code>Debug.LogError</code> 并禁用，不静默。</p>
@@ -310,7 +310,7 @@ public void Open() { /* 未锁、未动、未开时 SetOpenAsync(true).Forget() 
 <tr><td><code>道具/抽水泵</code></td><td>场景里原没有；新模型在 <code>Assets/Art/Models/抽水泵/</code>（source OBJ 原始尺寸约 37 × 66 × 31），已生成 <code>Assets/Prefabs/Props/Pump.prefab</code></td><td>预制体实例 root 缩放 0.02（高约 1.3 m），放在泵房基座 <code>(-15.8, 0.15, 27.0)</code>，朝主阀；纯视觉不交互</td></tr>
 <tr><td><code>道具/轮</code> ×2</td><td>有网格的轮在 <code>(-15.843,0.348,21.935)</code>，scale 0.486；另一个同名空物体在 <code>(-17.50,0.225,23.30)</code>，无子物体</td><td><b>删除空轮</b>；保留有网格的轮，加 BoxCollider（本地 2 × 2 × 2，缩放后约 1 m）与 <code>PoolPickupInteract(Wheel)</code>；原位另放空锚点 <code>剧情锚点/交互点_轮</code></td></tr>
 <tr><td><code>储物柜_54</code></td><td><code>Door_Front</code> / <code>Door_Back</code> 各挂了两个 <code>CabinetDoorInteract</code></td><td>各删到只剩一个，避免一次点击开关两次；不参与流程</td></tr>
-<tr><td><code>储物柜_37</code></td><td>前门没有 <code>CabinetDoorInteract</code>；扳手在柜外地板上</td><td>前门补 <code>CabinetDoorInteract</code>（hinge <code>Hinge_FrontDoor</code>、openAngle -90、duration 0.45、<code>FeedbackLocked</code>、<code>lockedDialogue=LV2_Pool_Locked37</code>）；扳手移到柜内约 <code>(-11.05, 0.85, 14.45)</code>，加 BoxCollider（实际 0.45 × 0.12 × 0.2）与 <code>PoolPickupInteract(Wrench)</code>；柜前另放空锚点 <code>剧情锚点/交互点_37柜</code></td></tr>
+<tr><td><code>储物柜_20（原 36）</code></td><td>原 37 柜的 <code>CabinetDoorInteract</code> 已复制到该柜前门；扳手在柜内</td><td>前门保留 <code>CabinetDoorInteract</code>（hinge <code>Hinge_FrontDoor</code>、openAngle -90、duration 0.45、<code>FeedbackLocked</code>、<code>lockedDialogue=剧情_20锁着</code>）；扳手位于柜内约 <code>(-8.44, 0.85, 14.45)</code>，带 BoxCollider 与 <code>PoolPickupInteract(Wrench)</code>；柜前空锚点 <code>剧情锚点/交互点_20柜</code>；原 37 柜（新 21）不再挂锁</td></tr>
 <tr><td>钥匙</td><td><code>Assets/Art/Models/扳手/source/key.fbx</code> 存在，但无 processed 网格/材质/预制体</td><td>按 props.md 归一化到长约 0.33 m，<code>Assets/Prefabs/Props/Key.prefab</code>；放长池南叶池底 <code>(-18.5, -1.42, 33.7)</code>，加 BoxCollider（实际 0.3 × 0.2 × 0.45）与 <code>PoolPickupInteract(Key)</code>；原位另放空锚点 <code>剧情锚点/交互点_钥匙</code></td></tr>
 <tr><td>长池阀接口</td><td><code>立管/弯头/横管/法兰</code> + <code>锚点_轮阀安装位</code>（lp -22.095,2.18,37.8，lr 0,90,0）</td><td>在锚点下建 <code>阀_长池</code>：BoxCollider 覆盖法兰（实际 1.4 × 1.4 × 0.5）+ <code>PoolValveWheelInteract</code>；子物体 <code>轮_已安装</code> 用 <code>Valve.prefab</code>，scale 1，默认 inactive</td></tr>
 </tbody>
@@ -333,7 +333,7 @@ public void Open() { /* 未锁、未动、未开时 SetOpenAsync(true).Forget() 
 <thead><tr><th>内容</th><th>做法</th><th>位置 / 朝向</th></tr></thead>
 <tbody>
 <tr><td>池底数字 <code>00</code></td><td>TMP 3D，字高 0.5 m，亮黄色；对象为 <code>道具/池底数字_00</code>（另有常驻锚点 <code>剧情锚点/交互点_池底数字</code> 供剧情定位）</td><td><code>(-18.5, -1.48, 33.0)</code>，旋转 <code>(-90, 180, 0)</code>，从南岸看正立</td></tr>
-<tr><td>暗门 00 号牌</td><td>0.22 × 0.12 深色小牌 + 白色 TMP <code>00</code>，字高 0.08 m</td><td>暗门前表面 <code>(-20.5, 1.35, 19.20)</code>，面向更衣室（-Z）</td></tr>
+<tr><td>储物柜号牌（00 与 01..54）</td><td>0.18 × 0.12 × 0.02 深色小牌 + 白色 TMP 编号，字号 0.8；00 与 01..54 每扇 <code>Door_Front</code> 各一套，编号取柜名</td><td>门板正面；暗门 00 牌约 <code>(-20.5, 1.35, 19.20)</code>，面向更衣室（-Z）</td></tr>
 </tbody>
 </table>
 <div class="note">池底数字透过 <code>PoolWater.shader</code> 可见（Transparent、ZWrite Off、alpha 0.55）。如果实测太暗，只调 TMP 颜色/亮度，不改水面材质。</div>
@@ -452,9 +452,9 @@ public void Open() { /* 未锁、未动、未开时 SetOpenAsync(true).Forget() 
 <tr><td><code>LV2_Pool_WheelPicked</code></td><td>捡轮</td><td><code>交互点_轮</code></td><td>一个阀轮。长池的阀接口上应该能用。</td></tr>
 <tr><td><code>LV2_Pool_InstallWheel</code></td><td>装上轮</td><td><code>阀_长池</code></td><td>装上了。按住左键，把阀轮转到底。</td></tr>
 <tr><td><code>LV2_Pool_LongDrained</code></td><td>长池退水完成</td><td><code>阀_长池</code></td><td>长池的水退了。池底有东西在反光。</td></tr>
-<tr><td><code>LV2_Pool_Key</code></td><td>捡钥匙</td><td><code>交互点_钥匙</code></td><td>一把小钥匙……柜子上的编号是 37。</td></tr>
-<tr><td><code>LV2_Pool_Locked37</code></td><td>空手点 37 柜门</td><td><code>储物柜_37/Door_Front</code></td><td>锁着。钥匙应该还在长池底下。</td></tr>
-<tr><td><code>LV2_Pool_Wrench</code></td><td>捡扳手</td><td><code>交互点_37柜</code></td><td>一把扳手。主阀应该能用上。</td></tr>
+<tr><td><code>LV2_Pool_Key20</code><br><span class="small">Level2 专用；Level1 仍用 LV2_Pool_Key（37）</span></td><td>捡钥匙</td><td><code>交互点_钥匙</code></td><td>一把小钥匙……柜子上的编号是 20。</td></tr>
+<tr><td><code>LV2_Pool_Locked20</code><br><span class="small">Level2 专用；Level1 仍用 LV2_Pool_Locked37（37）</span></td><td>空手点 20 柜门</td><td><code>储物柜_20/Door_Front</code></td><td>锁着。钥匙应该还在长池底下。</td></tr>
+<tr><td><code>LV2_Pool_Wrench</code></td><td>捡扳手</td><td><code>交互点_20柜</code></td><td>一把扳手。主阀应该能用上。</td></tr>
 <tr><td><code>LV2_Pool_NoWrench</code></td><td>空手点主阀</td><td><code>交互点_主阀</code></td><td>主阀的螺母太大，徒手拧不动。需要扳手。</td></tr>
 <tr><td><code>LV2_Pool_MainValveOpen</code></td><td>有扳手点主阀</td><td><code>交互点_主阀</code></td><td>主阀松动了。池核的水开始往下退。</td></tr>
 <tr><td><code>LV2_Pool_CoreDrained</code></td><td>池核退水完成</td><td><code>交互点_地漏</code></td><td>池核的水也退了。底下有个地漏。</td></tr>
@@ -532,20 +532,20 @@ foreach (var b in blockers) b.gameObject.SetActive(false);</code></pre>
 
 <h3>9.1 正向</h3>
 <ol>
-<li>进入更衣室，对准 01..54 任意柜：无准心、按键无反应；00 暗门也无准心。</li>
+<li>进入更衣室，先看 01..54 任意柜门：都有对应编号牌；对准柜门无准心、按键无反应；00 暗门也有 00 号牌且无准心。</li>
 <li>走正门到泳池房；站上/靠近抽水泵基座：播 <code>LV2_Pool_PumpHint</code>，只播一次。</li>
 <li>在泳池区把视线落到长池南叶池底：看到亮黄色 <code>00</code>，播 <code>LV2_Pool_Number</code>；回更衣室，00 暗门前后双门已打开。</li>
 <li>穿过暗门进泵房：播 <code>LV2_Pool_NeedWrench</code>；泵房地上的轮出现准心。</li>
 <li>捡轮 → 到长池阀接口左键安装 → 按住左键约 4.5 s，轮转 3 圈 → 长池 3 块水面 2 s 内降到 -1.55 并消失，4 块空气墙关闭，播 <code>LV2_Pool_LongDrained</code>。</li>
-<li>从南岸走新台阶下到长池池底，捡钥匙；钥匙消失，37 号柜前门解锁。</li>
-<li>回更衣室开 37 柜，拿扳手；到泵房点主阀，主阀轮转 1.2 s，池核 4 块水面降完消失，5 块空气墙关闭，播 <code>LV2_Pool_CoreDrained</code>。</li>
+<li>从南岸走新台阶下到长池池底，捡钥匙；钥匙消失，20 号柜前门解锁。</li>
+<li>回更衣室开 20 柜，拿扳手；到泵房点主阀，主阀轮转 1.2 s，池核 4 块水面降完消失，5 块空气墙关闭，播 <code>LV2_Pool_CoreDrained</code>。</li>
 <li>从干区平台坠入池核，走到地漏，从 0.9 × 0.9 洞落进竖井；底部触发一次 <code>NextLevelReached</code> 与 <code>onNextLevel</code>。</li>
 </ol>
 
 <h3>9.2 反向</h3>
 <ul>
-<li>没看 00 前，00 暗门无准心；37 柜有准心但只播“锁着”，门不开。</li>
-<li>没钥匙点 37：门不动，不消耗任何东西。</li>
+<li>没看 00 前，00 暗门无准心；20 柜有准心但只播“锁着”，门不开。</li>
+<li>没钥匙点 20：门不动，不消耗任何东西。</li>
 <li>没扳手点主阀：只播短句，池核不退水；重复空手点不重复播。</li>
 <li>没装轮时长池阀无准心；装上轮但没转满 3 圈，长池不退水。</li>
 <li>退水途中再点阀/主阀：无响应；退水完成后再次进入触发区：不重播。</li>
@@ -563,7 +563,7 @@ foreach (var b in blockers) b.gameObject.SetActive(false);</code></pre>
 
 <h2>10. 实施顺序</h2>
 <ol>
-<li><b>道具与碰撞</b>：删空轮、补 54 重复组件、37 前门与柜内扳手、主阀/轮/钥匙/扳手碰撞、处理抽水泵模型并放基座。</li>
+<li><b>道具与碰撞</b>：删空轮、补 54 重复组件、20 前门与柜内扳手、主阀/轮/钥匙/扳手碰撞、处理抽水泵模型并放基座。</li>
 <li><b>状态与交互基类</b>：<code>PoolFlowState</code>、<code>InteractableBase</code> 按住钩子、<code>CabinetDoorInteract</code> 锁模式。</li>
 <li><b>拾取与阀</b>：<code>PoolPickupInteract</code>、<code>PoolValveWheelInteract</code>、<code>PoolMainValveInteract</code>。</li>
 <li><b>退水与下坠</b>：<code>PoolWaterDrain</code>、池底拆洞、地漏边框、竖井、<code>PoolDrainExitTrigger</code>。</li>
@@ -576,10 +576,10 @@ foreach (var b in blockers) b.gameObject.SetActive(false);</code></pre>
 <table>
 <thead><tr><th>#</th><th>决策</th><th>理由 / 来源</th></tr></thead>
 <tbody>
-<tr><td>1</td><td>池底数字与暗门柜编号都用 <code>00</code>，暗门独立编号，不并入 01..54</td><td>用户确认</td></tr>
+<tr><td>1</td><td>池底数字与暗门柜编号都用 <code>00</code>；01..54 也各自挂号牌编号，让 00 混在柜门中；暗门独立编号，不并入 01..54</td><td>用户确认</td></tr>
 <tr><td>2</td><td>轮：左键拾取、左键安装、按住左键转 3 圈</td><td>用户确认；复用现有 Interact 动作</td></tr>
 <tr><td>3</td><td>第 8 步只做到下坠，不做淡出，留下一关接口</td><td>用户确认</td></tr>
-<tr><td>4</td><td>扳手放 37 号柜，钥匙放长池南叶池底</td><td>用户确认</td></tr>
+<tr><td>4</td><td>扳手放 20 号柜，钥匙放长池南叶池底</td><td>用户确认</td></tr>
 <tr><td>5</td><td>长池南叶新增 3 级台阶；现有池核西侧台阶不动</td><td>用户确认</td></tr>
 <tr><td>6</td><td>流程逻辑放场景实例，Level1 / Level2 各接一套；预制体只保留几何/道具</td><td>用户确认；能直接引用各场景自己的对话系统</td></tr>
 <tr><td>7</td><td>锁定反馈用短句剧情，不新增 HUD 文字</td><td>用户确认；现有 <code>InteractPromptView</code> 没有自定义文字</td></tr>
@@ -590,7 +590,7 @@ foreach (var b in blockers) b.gameObject.SetActive(false);</code></pre>
 <tr><td>12</td><td>删除无子物体的空轮；保留有网格的轮</td><td>用户修正</td></tr>
 <tr><td>13</td><td>碰撞盒由实现时统一补；主阀/轮/钥匙/扳手都要能点到</td><td>用户确认</td></tr>
 <tr><td>14</td><td>池底数字判定不用 <code>ScreenVisibility</code>，避免空气墙挡 Linecast</td><td>设计取舍；见 6.2</td></tr>
-<tr><td>15</td><td>00 暗门 <code>SilentLocked</code>，37 柜 <code>FeedbackLocked</code></td><td>设计取舍；同时满足第 1 步“不能交互”和第 7 步“锁着反馈”</td></tr>
+<tr><td>15</td><td>00 暗门 <code>SilentLocked</code>，20 柜 <code>FeedbackLocked</code></td><td>设计取舍；同时满足第 1 步“不能交互”和第 7 步“锁着反馈”</td></tr>
 <tr><td>16</td><td>不做存档、不做背包 UI、不做淡出</td><td>用户确认的本关边界</td></tr>
 </tbody>
 </table>

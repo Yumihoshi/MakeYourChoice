@@ -178,6 +178,8 @@ background:var(--accent);color:#fff;font-size:12px;font-weight:700;margin-right:
 </tbody>
 </table>
 
+<div class="note"><b>长廊入口单向封路（2026-11-22）</b>：从大厅安全门传送进长廊后，玩家一进入 <code>长廊/触发_封路</code>（BoxCollider trigger，z 0.3..2.6），<code>CorridorSealWall</code> 就启用预摆的 <code>长廊/封路墙</code>（整幅 1.46 × 4.38 m，无动画、无音效），物理上堵死返回传送面；反向传送面本身仍在，但玩家再也走不到 <code>PortalPair.triggerDistance</code>（0.18 m）。为避免墙出现的瞬间与玩家胶囊重叠，Level1 <code>大厅/空间叠加</code> 的 <code>PortalPair.landingOffset</code> 由 0.25 前移到 1.2（落点 z=1.2，胶囊 0.9..1.5，墙在 z 0.09..0.21）。Level2 直接出生在长廊内（z=2.23 也在触发区内），进 Play 同样会立墙。</div>
+
 <div class="note"><b>储物柜开放规则（2026-11-22 调整）</b>：Level2 更衣室 01..25 号柜门与 00 暗门都挂 <code>CabinetDoorInteract</code> 并绑定 <code>PoolFlowState</code>。玩家第一次进入长池/池核所在的泳池房（<code>触发_进入泳池房</code>）后，<code>EnteredPoolRoom</code> 置位，这些柜门都可交互并忽略原锁；进入前普通柜与 00 暗门无准心。<b>20 号柜不绑定</b> <code>PoolFlowState</code>，保留原有锁逻辑：拿到池底钥匙前始终以 <code>FeedbackLocked</code> 播“锁着”、门开不了，钥匙调用 <code>Unlock()</code> 后才可手动打开——进入泳池房本身不解锁 20。<b>26 号是长廊→更衣室的唯一入口假柜</b>，它的前后双门<strong>不绑定</strong> <code>PoolFlowState</code>，否则玩家进不了更衣室、也就永远到不了泳池房（2026-11-22 修复）。</div>
 
 <h2>2. 状态机</h2>

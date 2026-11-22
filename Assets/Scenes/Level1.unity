@@ -2154,6 +2154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33092ca12a41a54ba3b6a5a9f1e5be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directEntry: 0
   floorDisplay: {fileID: 1467096124}
   rideMotion: {fileID: 1507380109}
   arrivalFloor: 1
@@ -2450,7 +2451,7 @@ MonoBehaviour:
     clipPlane: {fileID: 532849233}
     material: {fileID: 2100000, guid: 9f62e4b52e8129e4e88c311249c9f8ab, type: 2}
   triggerDistance: 0.18
-  landingOffset: 0.25
+  landingOffset: 1.2
   spaceHeightTolerance: 3
   resolution: {x: 320, y: 180}
   showGuideGizmos: 1

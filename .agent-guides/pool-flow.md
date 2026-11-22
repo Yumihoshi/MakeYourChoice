@@ -19,6 +19,7 @@ description: 改动泳池房八步流程（抽水泵提示、池底数字、暗�
 - `PoolStoryTrigger`：泵平台提示、暗门内侧“要扳手”两个区域触发。
 - `PoolRoomEntryTrigger`：玩家进入长池/池核所在泳池房的一次性区域触发；`OnTriggerEnter/Stay` 检查 `Player` 标签与 `GameCursorState.IsPlaying`，置 `EnteredPoolRoom`。
 - `PoolDrainExitTrigger`：竖井底一次性触发，只置 `NextLevelReached` 并调 `On Next Level`，不加载场景、不淡出。
+- `CorridorSealWall`（`Assets/Scripts/Level/Trigger/`，同为 `Game.Level`）：长廊入口单向封路；进入触发区后启用预摆墙，一次性，无动画无音效。
 
 ## 场景接线
 
@@ -45,4 +46,5 @@ description: 改动泳池房八步流程（抽水泵提示、池底数字、暗�
 - 给对象补组件不要写 `GetComponent<T>() ?? AddComponent<T>()`：Unity 的伪 null 会让 `??` 判空失效；显式 `if (c == null)`。
 - `InteractableBase.IsAimed()` 要求命中的 Collider 在交互组件所在物体或其子物体上；Collider 不能挂父级/兄弟。
 - 拾取物/阀的 Collider 由脚本所在物体或子物体承担；改预制体后 Level1/Level2 实例的 override（`Lock Mode`、`Hinge`、`Open Angle`、`lockedDialogue`）要确认没有被 Revert。
+- **长廊入口单向封路（2026-11-22）**：`泳池房.prefab/长廊` 下预摆 `封路墙`（1.46×4.38×0.12，local y=2.17、z=0.15，初始 inactive）与 `触发_封路`（BoxCollider trigger，local z=1.45、size z=2.3，即 z 0.3..2.6，挂 `CorridorSealWall`）。玩家进入触发区后启用整幅墙，一次性、无动画无音效。**因此 Level1 `大厅/空间叠加` 的 `PortalPair.landingOffset` 从 0.25 改到 1.2**：墙 z 0.09..0.21 与玩家胶囊（半径 0.3）会重叠，落点必须让胶囊南端（z−0.3）大于墙北面 0.21；改回 0.25 玩家一落地就会被墙挤住。反向传送面仍启用，但墙挡在 z 0.15，玩家永远到不了 0.18 m 的触发距离。Level2 出生点 z=2.23 也在触发区内，进 Play 就会立墙。
 - 长池阀 `道具/管道_轮阀接口/锚点_轮阀安装位/阀_长池` 必须是锚点的**子物体**（local 位置/旋转归零、scale 1），`轮_已安装` 是 `阀_长池` 的子物体（local 归零、scale 0.486，旋转轴动画才会带着轮一起转）。管道/法兰在 6080fd7 里被整体下移到 y=1.553，而 `阀_长池` 当时是 `道具` 下的固定坐标 2.18，结果装轮后轮悬在法兰上方 0.627 m（2026-11-22 修回预制体：阀挂到锚点下、轮 scale 0.486、`交互点_阀_长池` 同步到 1.553）。以后调管道高度只动 `管道_轮阀接口`，阀和锚点会跟着走；不要再把阀挂到 `道具` 下写死坐标。

@@ -34,8 +34,10 @@ namespace Game.Level
         UnityEvent exitOpened = new UnityEvent();
 
         /// <summary>门在拿到真卡之前一直是锁着的，靠得太近也不会自己升起。</summary>
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             if (door == null)
             {
                 Debug.LogError($"{name} 没有指定安全门，门会一直锁不上。", this);

@@ -32,6 +32,7 @@
 | 交互聚焦与准心 HUD | `Assets/Scripts/Interaction/InteractFocus.cs` + `Assets/Scripts/UI/InteractPromptView.cs` |
 | 可交互物（按键交互） | `Assets/Scripts/Interaction`：`InteractableBase`（抽象基类，视线 Raycast + 交互键）、`DoorInteract`（AutoDoor 门）、`CabinetDoorInteract`（无刚体柜门，绕铰链 Slerp）；用法见 `.agent-guides/doors.md` |
 | 关卡几何、第一人称视角 | ProBuilder（5.2.4）搭 3D 几何 + Cinemachine 第一人称 |
+| 窄道（柜内空腔、侧身门洞）通行 | `Assets/Scripts/Level/Trigger/PlayerCapsuleZone.cs`：框内临时缩小 `CharacterController.radius`；做法与踩坑见 `.agent-guides/player-and-input.md` |
 | 编辑器增强 | Odin Inspector、vFolders（编辑器工具，运行时代码不要依赖） |
 | 道具模型、外部 FBX 预处理 | `Assets/Prefabs/Props` + `Assets/Art/Models`；Blender 拆分与缩放烘焙见 `.agent-guides/props.md` |
 

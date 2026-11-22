@@ -31,8 +31,9 @@ namespace Game.Level
         /// <summary>目标状态是否为打开；开始打开时为 true，开始关闭时为 false。</summary>
         public bool IsOpen => _open;
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _closedLocalPosition = transform.localPosition;
         }
 

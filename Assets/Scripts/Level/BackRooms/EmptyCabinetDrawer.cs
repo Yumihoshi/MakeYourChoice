@@ -29,8 +29,9 @@ namespace Game.Level
         bool _open;
         bool _counted;
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _closedLocalPosition = transform.localPosition;
         }
 

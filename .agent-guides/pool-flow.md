@@ -42,3 +42,4 @@ description: 改动泳池房八步流程（抽水泵提示、池底数字、暗�
 - 给对象补组件不要写 `GetComponent<T>() ?? AddComponent<T>()`：Unity 的伪 null 会让 `??` 判空失效；显式 `if (c == null)`。
 - `InteractableBase.IsAimed()` 要求命中的 Collider 在交互组件所在物体或其子物体上；Collider 不能挂父级/兄弟。
 - 拾取物/阀的 Collider 由脚本所在物体或子物体承担；改预制体后 Level1/Level2 实例的 override（`Lock Mode`、`Hinge`、`Open Angle`、`lockedDialogue`）要确认没有被 Revert。
+- 长池阀 `道具/管道_轮阀接口/锚点_轮阀安装位/阀_长池` 必须是锚点的**子物体**（local 位置/旋转归零、scale 1），`轮_已安装` 是 `阀_长池` 的子物体（local 归零、scale 0.486，旋转轴动画才会带着轮一起转）。管道/法兰在 6080fd7 里被整体下移到 y=1.553，而 `阀_长池` 当时是 `道具` 下的固定坐标 2.18，结果装轮后轮悬在法兰上方 0.627 m（2026-11-22 修回预制体：阀挂到锚点下、轮 scale 0.486、`交互点_阀_长池` 同步到 1.553）。以后调管道高度只动 `管道_轮阀接口`，阀和锚点会跟着走；不要再把阀挂到 `道具` 下写死坐标。

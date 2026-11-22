@@ -41,8 +41,8 @@ description: 改动艺术馆场景（Gallery.unity：几何烘焙、坠落入场
 ## 杯子与提交
 
 - 拾取：`CupPickup` → `GalleryCupStation.ReportPickup()`（返回累计数）→ 用该杯子挂的 `DialogueTrigger` 播 `Gallery_杯子_{n}`（Yarn + 3D 飘字，锚点是 `剧情锚点/锚点_杯子_A|B|C`，与杯子同位置），再 `SetActive(false)`。三条文案按累计数量选，所以杯子随便哪个先捡都对。
-- 提交：`SubmitDeskInteract` → `GalleryCupStation.TrySubmit`：不足飘「还差 N 个杯子。」，够 3 个飘「三个杯子都放上去了。」并 `paintingDoor.Open()`。
-- 计数组件挂在 `= 关卡/艺术馆/流程/流程状态`；锚点分工：`锚点_提交区`(飘字位置)、`锚点_豆袋`(台词飘字)、`锚点_豆袋视线`(躺下看的房间中心)、`锚点_落地`(落地台词)。**豆袋的视线锚点要独立**，否则锚点贴在豆袋上、玩家贴脸时朝向退化。
+- 提交：`SubmitDeskInteract` → `GalleryCupStation.TrySubmit`：不足或已提交时直连 `ShowLine` 飘「还差 N 个杯子。」/「已经交过了。」；够 3 个时走 `submitDialogue.StartDialogue()` 播 Yarn 节点 `Gallery_提交`（「三个杯子都放上去了。」，复用 DialogueTrigger + 3D 飘字/对话框回退），同时 `paintingDoor.Open()`。
+- 计数组件挂在 `= 关卡/艺术馆/流程/流程状态`；锚点分工：`锚点_提交区`(提交台正上方 (102.1,1.2,22)，提交台词与动态提示都落在这里)、`锚点_豆袋`(台词飘字)、`锚点_豆袋视线`(躺下看的房间中心)、`锚点_落地`(落地台词)。**豆袋的视线锚点要独立**，否则锚点贴在豆袋上、玩家贴脸时朝向退化。
 - 提交台是**运行期可见的立方体台子**（`道具/提交台`，0.8 × 0.9 × 1.2，材质 `Assets/Materials/Art/提交台.mat`，位置 (101, 0.45, 22)），不是道具预制体。**不要改回 `Assets/Prefabs/Level/MetalOfficeDesk.prefab`**：它是坏资产，子节点 `MeshFilter` 的网格与材质引用全是 null，实例化出来完全隐形（Level1 里那些「办公桌组」是 4 个 `CubicleV2.prefab` 拼的，与它无关）。
 - `WorldLineView.ShowLine` 同一时刻只允许一条 active，重复调用会 `LogWarning` 并丢弃；`GalleryCupStation.ShowLine` 已先 `DismissActive()`，新加飘字也要照此顺序。
 - 杯子预制体 `Assets/Prefabs/Props/杯子.prefab`：根 scale **1**，子节点 `柱体` localScale 12.5、localPosition (0,0.125,0)、localRotation (-90,0,0)（fbx 里 mesh 只有 0.02 单位、高度轴是模型 +Z 且居中，×100 转正再抬半个身高才 0.25 m 高且底部贴地），根上 BoxCollider center (0,0.125,0) size (0.4,0.25,0.4)。**不要把缩放压到根上**：根 scale 0.125 时碰撞盒世界尺寸只剩 0.05 m，准心打不到（踩过）。
@@ -69,9 +69,9 @@ description: 改动艺术馆场景（Gallery.unity：几何烘焙、坠落入场
 
 ## 台词
 
-- `Assets/Yarn/Gallery.yarn`：`Gallery_落地`、`Gallery_豆袋`、`Gallery_杯子_1|2|3` 五个节点，`TestDialogue.yarnproject` 的 `sourceFiles: **/*.yarn` 自动收录，不用改工程文件。
+- `Assets/Yarn/Gallery.yarn`：`Gallery_落地`、`Gallery_豆袋`、`Gallery_杯子_1|2|3`、`Gallery_提交` 六个节点，`TestDialogue.yarnproject` 的 `sourceFiles: **/*.yarn` 自动收录，不用改工程文件。
 - 台词换行必须写 `<br>`（项目里 Yarn 与 3D 飘字都按 TMP 富文本走），不要写空行或 `\n`。
-- 拾取计数走 Yarn（`Gallery_杯子_1|2|3` 三条固定文案，按累计数量挑节点）；**提交提示仍直连 `WorldLineView.ShowLine(text, 999, pos)`**，因为「还差 N 个」的数量是动态的，写不进静态节点。
+- 拾取计数与提交成功句走 Yarn（`Gallery_杯子_1|2|3` 按累计数量挑节点；提交成功固定播 `Gallery_提交`，锚点是 `锚点_提交区`）；**只有「还差 N 个」「已经交过了」这类动态提示直连 `WorldLineView.ShowLine(text, 999, pos)`**，因为数量写不进静态节点。
 
 ## 调试工具（传送）
 

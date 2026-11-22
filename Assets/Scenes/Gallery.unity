@@ -3511,6 +3511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldLines: {fileID: 2003946455}
+  submitDialogue: {fileID: 1630640615}
   paintingDoor: {fileID: 422081796}
   requiredCups: 3
 --- !u!4 &1067578224
@@ -5083,6 +5084,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1630640614}
+  - component: {fileID: 1630640615}
   m_Layer: 0
   m_Name: "\u951A\u70B9_\u63D0\u4EA4\u533A"
   m_TagString: Untagged
@@ -5099,12 +5101,28 @@ Transform:
   m_GameObject: {fileID: 1630640613}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 98.8, y: 1.2, z: 22}
+  m_LocalPosition: {x: 102.1, y: 1.2, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 879078248}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1630640615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630640613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 134144183}
+  presenter: {fileID: 134144182}
+  textAnchor: {fileID: 1630640614}
+  nodeName: "Gallery_\u63D0\u4EA4"
 --- !u!134 &1637526602
 PhysicMaterial:
   m_ObjectHideFlags: 0
@@ -5276,7 +5294,7 @@ Transform:
   m_GameObject: {fileID: 1697049931}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710677, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 91.5, y: 0, z: 24}
+  m_LocalPosition: {x: 90.585, y: 0, z: 24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5318,7 +5336,7 @@ MonoBehaviour:
   leftLeaf: {fileID: 0}
   rightLeaf: {fileID: 0}
   hinge: {fileID: 520014685}
-  hingeOpenAngle: -95
+  hingeOpenAngle: -90
   hingeSpeed: 150
   hingeGain: 4
   hingeCloseSpeed: 0

@@ -8,6 +8,7 @@ namespace Game.Level
 	public sealed class GalleryCupStation : MonoBehaviour
 	{
 		[SerializeField, Required, LabelText("3D 飘字")] WorldLineView worldLines;
+		[SerializeField, Required, LabelText("提交成功台词")] DialogueTrigger submitDialogue;
 		[SerializeField, Required, LabelText("提交后开启的门")] AutoDoor paintingDoor;
 		[SerializeField, LabelText("需要的杯子数"), MinValue(1)] int requiredCups = 3;
 
@@ -17,9 +18,9 @@ namespace Game.Level
 
 		void Awake()
 		{
-			if (worldLines == null || paintingDoor == null)
+			if (worldLines == null || submitDialogue == null || paintingDoor == null)
 			{
-				Debug.LogError("GalleryCupStation 缺少飘字系统或门引用", this);
+				Debug.LogError("GalleryCupStation 缺少飘字系统、提交台词或门引用", this);
 				enabled = false;
 			}
 		}
@@ -47,7 +48,7 @@ namespace Game.Level
 			}
 
 			Submitted = true;
-			ShowLine("三个杯子都放上去了。", worldPosition);
+			submitDialogue.StartDialogue();
 			paintingDoor.Open();
 			return true;
 		}

@@ -1,5 +1,5 @@
 ---
-description: 改动或新增门（AutoDoor 三种模式、铰链运动、锁定/定时门）时使用。
+description: 改动或新增门（AutoDoor 三种模式、铰链运动、锁定/定时门、柜门泳池房解锁）时使用。
 ---
 
 # 门（AutoDoor）
@@ -25,7 +25,9 @@ description: 改动或新增门（AutoDoor 三种模式、铰链运动、锁定/
 - 转动期间给门板碰撞体的 `excludeLayers` 加上 `Player` 层（与 `HingeDoorMotion` 同规则：放行而不是关碰撞体），结束时恢复；不要在协程里做（项目禁用协程）。
 - `eye` 留空时由 `InteractableBase.Awake` 取 `Camera.main`（取不到 LogError 并禁用），不要绑 `玩家_测试` 那套测试容器——它会被 `TestSandboxGuard` 销毁，换场景/换玩家实例就失效。
 - 关卡二长廊口的「假柜」是两段式：走廊侧先开背门（`Hinge_BackDoor`，+90°），进柜体空腔后再开前门（`Hinge_FrontDoor`，−90°）进更衣室。柜体 2026-11-21 已改回常规尺寸，门洞用补墙封住，几何做法见 `props.md`。
+- **`储物柜_26` 的前后双门不能绑 `poolFlowState`**：它是长廊→更衣室的唯一入口，绑了之后进入泳池房前 `CanInteract()` 为 false、无准心，玩家会卡在更衣室外（2026-11-22 修复）。参与泳池房流程门控的是 01..25 号柜门与 00 暗门；20 号柜也不绑定，保持 `FeedbackLocked` + 钥匙 `Unlock()`（见 `pool-flow.md`）。
 - 更衣室北墙的 `门_暗门` 也是同一套两段式（`Door_Front` −90° 朝更衣室、`Door_Back` +90° 朝泵房），柜体同样常规尺寸、两侧补墙；两处通道的中线余量都只有约 ±0.05 m。
+- `poolFlowState` 可选：Level2 更衣室 01..25 号 `Door_Front` 与 00 暗门都绑定 `流程/流程状态`（**26 号入口假柜不绑**）；玩家首次进入长池/池核所在的泳池房（`流程/触发_进入泳池房` 的 `PoolRoomEntryTrigger`）后 `EnteredPoolRoom` 置位，这些柜门可交互并忽略原锁。**20 号柜不绑**：它始终是 `FeedbackLocked`，没拿钥匙进入泳池房也只播“锁着”，钥匙 `Unlock()` 后才可开。进入前普通柜与 00 暗门无准心。留空保持旧锁逻辑（Level1 预制体实例）。
 
 ## 关卡二更衣室门（复用办公室门）
 

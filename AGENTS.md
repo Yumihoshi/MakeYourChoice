@@ -27,7 +27,7 @@
 | 存档、读档 | Easy Save 3 |
 | 剧情对话、3D 飘字 | Yarn Spinner 3.2.8 + `Assets/Scripts/Dialogue`；台词改 `Assets/Yarn/*.yarn`，不要自己写解析器 |
 | 关卡流程、门与传送门 | `Assets/Scripts/Level`（Hall / BackRooms / Portal / Elevator）与 `Assets/Scripts/Player` |
-| 泳池房八步流程（泵提示、池底数字、暗门、长池阀、退水、37 柜、主阀、地漏下坠） | `Assets/Scripts/Level/Pool`；接线与踩坑见 `.agent-guides/pool-flow.md`，规格见 `docs/superpowers/specs/2026-11-21-pool-room-flow-design.html` |
+| 泳池房八步流程（泵提示、池底数字、暗门、长池阀、退水、20 号柜（钥匙开）、主阀、地漏下坠） | `Assets/Scripts/Level/Pool`；接线与踩坑见 `.agent-guides/pool-flow.md`，规格见 `docs/superpowers/specs/2026-11-21-pool-room-flow-design.html` |
 | 输入（键位 / 手柄） | `Assets/Scripts/Player/PlayerInputRouter.cs`（新版 Input System 动作表） |
 | 交互聚焦与准心 HUD | `Assets/Scripts/Interaction/InteractFocus.cs` + `Assets/Scripts/UI/InteractPromptView.cs` |
 | 可交互物（按键交互） | `Assets/Scripts/Interaction`：`InteractableBase`（抽象基类，视线 Raycast + 交互键）、`DoorInteract`（AutoDoor 门）、`CabinetDoorInteract`（无刚体柜门，绕铰链 Slerp）；用法见 `.agent-guides/doors.md` |

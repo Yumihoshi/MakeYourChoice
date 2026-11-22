@@ -31,6 +31,9 @@ namespace Game.Level
         [SerializeField, LabelText("初始锁状态")]
         LockMode lockMode = LockMode.Unlocked;
 
+        [SerializeField, LabelText("泳池房流程状态"), Tooltip("留空时保持原有锁逻辑；绑定后，玩家进入泳池房即可忽略锁并打开")]
+        PoolFlowState poolFlowState;
+
         [SerializeField, ShowIf(nameof(lockMode), LockMode.FeedbackLocked), LabelText("上锁提示剧情")]
         DialogueTrigger lockedDialogue;
 
@@ -75,19 +78,27 @@ namespace Game.Level
                 return false;
             }
 
+            if (poolFlowState != null)
+            {
+                return poolFlowState.EnteredPoolRoom || IsFeedbackLocked;
+            }
+
             return !(_locked && lockMode == LockMode.SilentLocked);
         }
 
         protected override void OnInteract()
         {
-            if (_locked)
+            if (poolFlowState == null || !poolFlowState.EnteredPoolRoom)
             {
-                if (IsFeedbackLocked && lockedDialogue != null)
+                if (_locked)
                 {
-                    lockedDialogue.StartDialogue();
-                }
+                    if (IsFeedbackLocked && lockedDialogue != null)
+                    {
+                        lockedDialogue.StartDialogue();
+                    }
 
-                return;
+                    return;
+                }
             }
 
             SetOpenAsync(!_open).Forget();

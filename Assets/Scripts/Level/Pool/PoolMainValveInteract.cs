@@ -63,6 +63,7 @@ namespace Game.Level
 
             if (!state.HasWrench)
             {
+                state.MarkWrenchNeedLearned();
                 if (noWrenchDialogue != null)
                 {
                     noWrenchDialogue.StartDialogue();

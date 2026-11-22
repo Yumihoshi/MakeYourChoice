@@ -1,21 +1,25 @@
+using Game.Dialogue;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Level
 {
     /// <summary>
-    /// 玩家第一次进入长池 / 池核所在的泳池房时置位，供更衣室柜门判断是否已允许打开。
+    /// 玩家第一次进入泳池房时置位并播一段旁白，供更衣室柜门判断是否已允许打开。
     /// </summary>
     public sealed class PoolRoomEntryTrigger : MonoBehaviour
     {
         [SerializeField, Required, LabelText("流程状态")]
         PoolFlowState state;
 
+        [SerializeField, Required, LabelText("进入泳池房剧情")]
+        DialogueTrigger dialogue;
+
         void Awake()
         {
-            if (state == null)
+            if (state == null || dialogue == null)
             {
-                Debug.LogError("PoolRoomEntryTrigger 缺少流程状态引用", this);
+                Debug.LogError("PoolRoomEntryTrigger 缺少流程状态或剧情引用", this);
                 enabled = false;
             }
         }
@@ -43,6 +47,7 @@ namespace Game.Level
             }
 
             state.MarkEnteredPoolRoom();
+            dialogue.StartDialogue();
         }
     }
 }

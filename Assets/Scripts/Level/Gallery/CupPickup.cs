@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Level
 {
-	/// <summary>捡起一个杯子：上报进度、按当前进度播 3D 台词，然后隐藏自己。</summary>
+	/// <summary>捡起一个杯子：上报进度、播该杯子绑定的 3D 台词，然后隐藏自己。</summary>
 	public sealed class CupPickup : InteractableBase
 	{
 		[SerializeField, Required, LabelText("杯子站")] GalleryCupStation station;
@@ -26,8 +26,8 @@ namespace Game.Level
 
 		protected override void OnInteract()
 		{
-			var collected = station.ReportPickup();
-			pickupDialogue.StartDialogue($"Gallery_杯子_{collected}");
+			station.ReportPickup();
+			pickupDialogue.StartDialogue();
 			gameObject.SetActive(false);
 		}
 	}

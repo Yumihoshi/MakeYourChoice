@@ -10,24 +10,26 @@ using UnityEngine;
 namespace Game.Level
 {
 	/// <summary>
-	/// 与豆袋交互：先做躺下回弹的运镜，再播「我软脚了」，台词播完后自动起身并交还控制。
+	/// 与豆袋交互：看过白鱼的画之后才能躺下；躺下播完台词后画面淡出到黑屏并停住。
 	/// </summary>
 	public sealed class BeanbagInteract : InteractableBase
 	{
 		[SerializeField, Required, LabelText("第一人称控制")] FirstPersonController firstPerson;
 		[SerializeField, Required, LabelText("相机枢轴（眼睛）")] Transform lookPivot;
 		[SerializeField, Required, LabelText("躺下剧情")] DialogueTrigger dialogue;
+		[SerializeField, Required, LabelText("杯子站")] GalleryCupStation station;
 		[SerializeField, LabelText("躺下朝向锚点")] Transform roomAnchor;
+		[SerializeField, LabelText("黑屏层")] CanvasGroup blackout;
 
 		[SerializeField, LabelText("躺下时长")] float lieDownSeconds = 1.2f;
 		[SerializeField, LabelText("躺下高度")] float lieHeight = 0.55f;
 		[SerializeField, LabelText("躺下前移")] float lieForward = 0.25f;
 		[SerializeField, LabelText("躺下仰角")] float liePitch = 55f;
 		[SerializeField, LabelText("躺下侧倾")] float lieRoll = 8f;
-		[SerializeField, LabelText("台词结束后停留")] float restSeconds = 0.6f;
-		[SerializeField, LabelText("起身时长")] float standUpSeconds = 0.8f;
+		[SerializeField, LabelText("黑屏时长")] float fadeSeconds = 2.5f;
 
 		bool _busy;
+		bool _fadedToBlack;
 
 		protected override void Awake()
 		{
@@ -37,14 +39,22 @@ namespace Game.Level
 				return;
 			}
 
-			if (firstPerson == null || lookPivot == null || dialogue == null)
+			if (firstPerson == null || lookPivot == null || dialogue == null || station == null)
 			{
-				Debug.LogError("BeanbagInteract 缺少第一人称控制、相机枢轴或躺下剧情引用", this);
+				Debug.LogError("BeanbagInteract 缺少第一人称控制、相机枢轴、躺下剧情或杯子站引用", this);
 				enabled = false;
 			}
 		}
 
-		protected override bool CanInteract() => !_busy && firstPerson != null && dialogue != null && !dialogue.IsRunning;
+		protected override bool CanInteract()
+		{
+			return !_busy
+				&& station != null
+				&& station.PaintingSeen
+				&& firstPerson != null
+				&& dialogue != null
+				&& !dialogue.IsRunning;
+		}
 
 		protected override void OnInteract() => Lie().Forget();
 
@@ -92,15 +102,15 @@ namespace Game.Level
 				dialogue.StartDialogue();
 				await completion.Task.AttachExternalCancellation(destroyCancellationToken);
 
-				await UniTask.Delay(TimeSpan.FromSeconds(restSeconds), DelayType.DeltaTime, cancellationToken: destroyCancellationToken);
+				if (blackout != null)
+				{
+					blackout.gameObject.SetActive(true);
+					blackout.alpha = 0f;
+					await blackout.DOFade(1f, fadeSeconds).WaitForCompletionAsync(destroyCancellationToken);
+					blackout.blocksRaycasts = true;
+				}
 
-				var standUp = DOTween.Sequence();
-				standUp.Append(lookPivot.DOLocalMove(startPosition, standUpSeconds).SetEase(Ease.InOutQuad));
-				standUp.Join(lookPivot.DOLocalRotateQuaternion(Quaternion.Euler(firstPerson.Pitch, 0f, 0f), standUpSeconds).SetEase(Ease.InOutQuad));
-				await standUp.WaitForCompletionAsync(destroyCancellationToken);
-
-				lookPivot.localPosition = startPosition;
-				lookPivot.localRotation = Quaternion.Euler(firstPerson.Pitch, 0f, 0f);
+				_fadedToBlack = true;
 			}
 			catch (OperationCanceledException)
 			{
@@ -109,7 +119,7 @@ namespace Game.Level
 			finally
 			{
 				registration.UnRegister();
-				if (firstPerson != null)
+				if (!_fadedToBlack && firstPerson != null)
 				{
 					firstPerson.enabled = true;
 				}

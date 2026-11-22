@@ -24,7 +24,10 @@ namespace Game.Level
         [SerializeField, Required, LabelText("退水控制")]
         PoolWaterDrain drain;
 
-        [SerializeField, Required, LabelText("安装剧情")]
+        [SerializeField, Required, LabelText("缺轮提示剧情")]
+        DialogueTrigger noWheelDialogue;
+
+        [SerializeField, LabelText("安装剧情")]
         DialogueTrigger installDialogue;
 
         [SerializeField, LabelText("旋转速度（度/秒）")]
@@ -45,17 +48,16 @@ namespace Game.Level
             }
 
             if (state == null || wheel == null || rotateAxis == null || pickupVisual == null || drain == null
-                || installDialogue == null)
+                || noWheelDialogue == null)
             {
-                Debug.LogError("PoolValveWheelInteract 缺少流程状态 / 轮 / 旋转轴 / 拾取物 / 退水控制 / 安装剧情引用", this);
+                Debug.LogError("PoolValveWheelInteract 缺少流程状态 / 轮 / 旋转轴 / 拾取物 / 退水控制 / 缺轮剧情引用", this);
                 enabled = false;
             }
         }
 
         protected override bool CanInteract()
         {
-            return state != null && !state.LongPoolDrained && !_draining
-                   && (state.HasWheel || state.WheelInstalled);
+            return state != null && !state.LongPoolDrained && !_draining;
         }
 
         protected override bool IsHoldInteraction
@@ -65,21 +67,31 @@ namespace Game.Level
 
         protected override void OnInteract()
         {
-            if (state == null || state.WheelInstalled)
+            if (state == null || state.WheelInstalled || state.LongPoolDrained)
             {
                 return;
             }
 
-            if (wheel == null || pickupVisual == null || installDialogue == null)
+            if (!state.HasWheel)
             {
-                Debug.LogError("PoolValveWheelInteract 缺少轮 / 拾取物 / 安装剧情引用", this);
+                noWheelDialogue.StartDialogue();
+                return;
+            }
+
+            if (wheel == null || pickupVisual == null)
+            {
+                Debug.LogError("PoolValveWheelInteract 缺少轮 / 拾取物引用", this);
                 return;
             }
 
             state.MarkWheelInstalled();
             pickupVisual.SetActive(false);
             wheel.gameObject.SetActive(true);
-            installDialogue.StartDialogue();
+
+            if (installDialogue != null)
+            {
+                installDialogue.StartDialogue();
+            }
         }
 
         protected override void OnInteractHeld(float deltaTime)

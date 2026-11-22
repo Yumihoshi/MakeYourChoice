@@ -5,16 +5,17 @@ using UnityEngine;
 namespace Game.Level
 {
     /// <summary>
-    /// 关卡二的房间入口：玩家第一次走进打印室（触发 8）或储藏室（触发 10）时播放一次剧情。
-    /// 触发区用房间内部的 BoxCollider 当范围，进入储藏室时还会让储藏室门（前室与储藏室之间）关上并锁一分钟。
+    /// 办公室区域的房间入口：玩家第一次走进前室（触发 10）、储藏室（触发 11）或打印室（触发 16）时播放一次剧情。
+    /// 走进储藏室时还会让 <see cref="StorageLockdown"/> 把前室与储藏室的门关上并锁一分钟。
     /// </summary>
     public sealed class RoomEntryTrigger : MonoBehaviour
     {
         /// <summary>触发区所在的房间。</summary>
         public enum Room
         {
-            [LabelText("打印室（触发 8）")] PrintRoom,
-            [LabelText("储藏室（触发 10）")] Storage,
+            [LabelText("打印室（触发 16）")] PrintRoom,
+            [LabelText("前室（触发 10）")] PrepRoom,
+            [LabelText("储藏室（触发 11）")] Storage,
         }
 
         [SerializeField, Required, LabelText("关卡状态")]
@@ -32,8 +33,8 @@ namespace Game.Level
         [SerializeField, LabelText("房间")]
         Room room = Room.PrintRoom;
 
-        [SerializeField, LabelText("储藏室门定时锁")]
-        TimedDoorLock storageDoorLock;
+        [SerializeField, LabelText("储藏室关门倒计时")]
+        StorageLockdown lockdown;
 
         void Update()
         {
@@ -42,7 +43,7 @@ namespace Game.Level
                 return;
             }
 
-            if (room == Room.PrintRoom ? state.EnteredPrintRoom : state.EnteredStorage)
+            if (HasEntered())
             {
                 return;
             }
@@ -61,12 +62,31 @@ namespace Game.Level
             {
                 state.MarkEnteredPrintRoom();
             }
-            else if (state.EnterStorage() && storageDoorLock != null)
+            else if (room == Room.PrepRoom)
             {
-                storageDoorLock.LockForAWhile();
+                state.MarkEnteredPrepRoom();
+            }
+            else
+            {
+                state.MarkStorageTrapped();
+                if (lockdown != null)
+                {
+                    lockdown.BeginLockdown();
+                }
             }
 
             dialogue.StartDialogue();
+        }
+
+        /// <summary>这个房间的入口剧情是否已经播过。</summary>
+        bool HasEntered()
+        {
+            return room switch
+            {
+                Room.PrintRoom => state.EnteredPrintRoom,
+                Room.PrepRoom => state.EnteredPrepRoom,
+                _ => state.StorageTrapped,
+            };
         }
     }
 }

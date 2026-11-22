@@ -4,72 +4,110 @@ title: LV2_CabinetA_Second
 ……好吧。你比我想的细心。我确实不知道夹层。（拿到门禁卡）
 ===
 
+title: LV2_Pool_ChangingRoom
+---
+这里是更衣室。先别急着开柜子——它们现在是锁着的。
+不是剧情需要，我还不知道在怎么用他们。
+===
+
+title: LV2_Pool_EnterPool
+---
+这里是泳池房。水其实不深，人不会淹死——前提是没下去。
+===
+
+title: LV2_Pool_CabinetLocked
+---
+你看……真的是锁着的。我也有写不下去的地方。
+===
+
 title: LV2_Pool_PumpHint
 ---
-抽水泵没有反应。<br>得先打开主阀，水压才上得来。
+让我想想……下一关是在地漏下面！
+不过你不能下水——真是恶趣味设定——想办法把水排干吧哈哈……
+===
+
+title: LV2_Pool_PumpFirst
+---
+你要用这个吗？我估计这得压个10000次……
+===
+
+title: LV2_Pool_PumpTen
+---
+你真的确定要用这个吗？好吧，我不拦你。
+===
+
+title: LV2_Pool_PumpHundred
+---
+你居然真的在按这个没有动画，没有音效，没有任何反馈的抽水泵……
+原本我真的想让你压10000次的……不过我打算放过你了……
+===
+
+title: LV2_Pool_PumpEmpty
+---
+这里已经没有一滴水了！
 ===
 
 title: LV2_Pool_Number
 ---
-池底有个数字……00。<br>更衣室那排柜子里，00 号是假的。
+池底有个数字……不知道是做什么用的……或许还有别的东西。
 ===
 
-title: LV2_Pool_NeedWrench
+title: LV2_Pool_ValveHint
 ---
-主阀锈死了。<br>得找一把扳手才能拧动。
+这里看起来能装什么东西……似乎还能排水……
 ===
 
-title: LV2_Pool_WheelPicked
+title: LV2_Pool_DarkRoom
 ---
-一个阀轮。<br>长池西墙的管道上缺的就是它。
-===
-
-title: LV2_Pool_InstallWheel
----
-轮装上了。<br>按住左键，把它转到底。
-===
-
-title: LV2_Pool_LongDrained
----
-长池的水退下去了。<br>池底露出来了。
-===
-
-title: LV2_Pool_Locked37
----
-37 号柜锁着。<br>钥匙应该在长池池底。
-===
-
-title: LV2_Pool_Key
----
-一把小钥匙。<br>上面刻着 37。
-===
-
-title: LV2_Pool_Locked20
----
-20 号柜锁着。<br>钥匙应该在长池池底。
-===
-
-title: LV2_Pool_Key20
----
-一把小钥匙。<br>上面刻着 20。
-===
-
-title: LV2_Pool_Wrench
----
-扳手到手了。<br>去主阀那边。
+这里怎么有个房间。
 ===
 
 title: LV2_Pool_NoWrench
 ---
-主阀的螺母太大，徒手拧不动。<br>需要扳手。
+启动这个应该就能把池核排空了……不过需要扳手……
+===
+
+title: LV2_Pool_WheelPicked
+---
+似乎可以放在什么地方。
+===
+
+title: LV2_Pool_InstallWheel
+---
+轮装上了。按住左键，把它转到底。
+===
+
+title: LV2_Pool_LongDrained
+---
+长池的水退下去了。池底露出来了。
+===
+
+title: LV2_Pool_Locked20
+---
+20 号柜锁着。钥匙应该在长池池底。
+===
+
+title: LV2_Pool_Key20
+---
+看来你还记得我说还有别的东西。
+===
+
+title: LV2_Pool_CabinetsThree
+---
+你是打算把所有的储物柜都打开吗？
+===
+
+title: LV2_Pool_Wrench
+---
+好了，现在让我们打开主阀吧！
 ===
 
 title: LV2_Pool_MainValveOpen
 ---
-主阀松动了。<br>池核的水开始往下退。
+话说——地漏下面是什么呢？
 ===
 
 title: LV2_Pool_CoreDrained
 ---
-池核的水也退干净了。<br>地漏下面有风。
+池底已经干透了。
 ===

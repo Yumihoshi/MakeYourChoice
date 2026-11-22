@@ -5,8 +5,8 @@ using UnityEngine;
 namespace Game.Level
 {
     /// <summary>
-    /// 文件柜的一格抽屉：对准抽屉正面按交互键切换开/关，沿柜体正面方向滑出固定行程。
-    /// 第一次拉开任意一格时通知 <see cref="GlowCabinetInteract"/> 播放触发 14 的剧情。
+    /// 文件柜 A 的一格抽屉：对准抽屉正面按交互键切换开/关，沿柜体正面方向滑出固定行程。
+    /// 拉开第三层时通知 <see cref="GlowCabinetInteract"/> 播放触发 21 / 22。
     /// </summary>
     public sealed class FilingCabinetDrawer : InteractableBase
     {
@@ -15,6 +15,9 @@ namespace Game.Level
 
         [SerializeField, Required, LabelText("关卡状态")]
         BackRoomFlowState state;
+
+        [SerializeField, LabelText("是不是第三层")]
+        bool thirdLayer;
 
         [SerializeField, LabelText("允许交互")]
         bool interactable = true;
@@ -47,7 +50,7 @@ namespace Game.Level
             _closedLocalPosition = transform.localPosition;
         }
 
-        /// <summary>进过打印室、柜子剧情没在播；锁柜期间只能把已经打开的抽屉关回去。</summary>
+        /// <summary>进过打印室、柜子剧情没在播时允许开合。</summary>
         protected override bool CanInteract()
         {
             if (!interactable || cabinet == null || state == null)
@@ -55,36 +58,21 @@ namespace Game.Level
                 return false;
             }
 
-            if (!state.EnteredPrintRoom || !cabinet.CanUseDrawers)
-            {
-                return false;
-            }
-
-            return _open || !state.CabinetsLocked;
+            return state.EnteredPrintRoom && cabinet.CanUseDrawers;
         }
 
         protected override void OnInteract()
         {
-            if (!_open && state.CabinetsLocked)
-            {
-                return;
-            }
-
             _open = !_open;
             if (_open)
             {
-                cabinet.OnDrawerOpened();
+                cabinet.OnDrawerOpened(thirdLayer);
             }
 
             transform.DOKill();
-            transform.DOLocalMove(TargetLocalPosition(), duration).SetEase(Ease.OutCubic);
-        }
-
-        Vector3 TargetLocalPosition()
-        {
-            return _open
-                ? _closedLocalPosition + Vector3.forward * openDistance
-                : _closedLocalPosition;
+            transform.DOLocalMove(
+                _open ? _closedLocalPosition + Vector3.forward * openDistance : _closedLocalPosition,
+                duration).SetEase(Ease.OutCubic);
         }
     }
 }

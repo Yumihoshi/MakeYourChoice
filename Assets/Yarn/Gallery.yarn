@@ -1,29 +1,44 @@
 title: Gallery_落地
 ---
-……地漏底下居然有房间。<br>地毯是软的，空气是暖的。
+欢迎来到艺术馆。你从地漏掉下来的样子，我写了两版，最后选了这一版。
+===
+
+title: Gallery_SubmitRoomEmpty
+---
+这里好像可以放什么东西。
+===
+
+title: Gallery_SubmitRoomWithCups
+---
+艺术馆找到的杯子似乎可以放到桌子上。
+===
+
+title: Gallery_杯子_A
+---
+有人用它喝过什么东西，然后忘了洗。
+===
+
+title: Gallery_杯子_B
+---
+杯身上印着“世界最佳程序”。当然不是给我的。
+===
+
+title: Gallery_杯子_C
+---
+怎么会有人热衷于收集杯子呢……
+===
+
+title: Gallery_MazeTimeout
+---
+抱歉，我看不下去了……让我施加点小魔法吧。
+===
+
+title: Gallery_Painting
+---
+这是白鱼老师的神迹，看来被上任管理员珍藏了。
 ===
 
 title: Gallery_豆袋
 ---
-我软脚了。
-===
-
-title: Gallery_杯子_1
----
-杯子 1/3
-===
-
-title: Gallery_杯子_2
----
-杯子 2/3
-===
-
-title: Gallery_杯子_3
----
-杯子 3/3
-===
-
-title: Gallery_提交
----
-三个杯子都放上去了。
+哦，你软脚了——让我扶你起来……
 ===

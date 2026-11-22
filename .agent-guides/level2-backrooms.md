@@ -10,7 +10,7 @@ description: 改动关卡二储藏室/打印室、柜子抽屉、复印机或对
 
 `Assets/Scripts/Level/BackRooms`（`BackRoomFlowState` 记录 8、10–16 号触发点、`InteractableBase` 瞄准+交互基类、`RoomEntryTrigger` 走进房间播剧情、`BlueArrowInteract` 追问蓝箭头、`CopierInteract` 拿临时门禁卡、`StorageDrawerQuest`（储藏室抽屉计数：任意柜子累计拉开 3 格不同抽屉后播一次 `LV2_CabinetB`，只播一次）、`EmptyCabinetDrawer`（储藏室每格抽屉开关；
 
-每格第一次拉开向 `StorageDrawerQuest` 报数；拿临时卡后 `CabinetsLocked` 只能关）、`GlowCabinetInteract`（柜子A 协调器，普通 MonoBehaviour；第一次拉开任意抽屉播 14，取第三格门禁卡播 15）、`FilingCabinetDrawer`（柜子A 四格抽屉，各自开关）、`FilingCabinetCard`（柜子A 第三格真门禁卡，跟随 Drawer3；用临时卡试过安全门、且该抽屉完全关过一次后才从底板下露出）；所有柜子（16 个储藏室柜 + 柜子A）的**最上层 `Drawer1` 不可交互**（脚本的「允许交互」`interactable` 设为 false，不显示提示、按键无效，碰撞体保留）、`SafeDoorInteract` 安全门、`BreathGlow` 紫色呼吸光），台词在 `Assets/Yarn/Level2.yarn`（`LV2_*` 节点），场景节点 `关卡/储藏室` 与 `关卡/打印室`（各含 `建筑` / `道具`，`关卡/大厅/门` 下是两扇北门）。
+每格第一次拉开向 `StorageDrawerQuest` 报数；拿临时卡后 `CabinetsLocked` 只能关）、`GlowCabinetInteract`（柜子A 协调器，普通 MonoBehaviour；第一次拉开任意抽屉播 14，取第三格门禁卡播 15）、`FilingCabinetDrawer`（柜子A 四格抽屉，各自开关）、`FilingCabinetCard`（柜子A 第三格真门禁卡，跟随 Drawer3 升起显示；露出后玩家可瞄准卡片按交互键拾取，拾取后收起）；所有柜子（16 个储藏室柜 + 柜子A）的**最上层 `Drawer1` 不可交互**（脚本的「允许交互」`interactable` 设为 false，不显示提示、按键无效，碰撞体保留）、`SafeDoorInteract` 安全门、`BreathGlow` 紫色呼吸光），台词在 `Assets/Yarn/Level2.yarn`（`LV2_*` 节点），场景节点 `关卡/储藏室` 与 `关卡/打印室`（各含 `建筑` / `道具`，`关卡/大厅/门` 下是两扇北门）。
 
 ## 房间几何、门与道具位置
 

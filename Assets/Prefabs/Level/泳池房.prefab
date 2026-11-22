@@ -490,7 +490,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: d34c956c9b26e6e499079160537360ab, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1301,6 +1301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: {fileID: 7949714423040596548}
+  dialogue: {fileID: 6316835786101945990}
 --- !u!1 &267436291738466848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,7 +1805,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 04cacb426692a1f46b20905b5232fb16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2221,6 +2222,54 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &538266608385878479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910377529123121439}
+  - component: {fileID: 6316835786101945990}
+  m_Layer: 0
+  m_Name: "\u5267\u60C5_\u8FDB\u5165\u6CF3\u6C60\u623F"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &910377529123121439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538266608385878479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2899586557169437883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6316835786101945990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538266608385878479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  presenter: {fileID: 0}
+  textAnchor: {fileID: 6441119277233053779}
+  nodeName: LV2_Pool_EnterPool
 --- !u!1 &545813433642488143
 GameObject:
   m_ObjectHideFlags: 0
@@ -5089,7 +5138,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 31efd986d40820744ada00c0dfeb74fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6075,6 +6124,16 @@ Transform:
   - {fileID: 466270571767732097}
   - {fileID: 2310986673363739852}
   - {fileID: 7913824728741867288}
+  - {fileID: 2036761969640354035}
+  - {fileID: 2112657461237091846}
+  - {fileID: 9147934175998456059}
+  - {fileID: 7392821882621776107}
+  - {fileID: 4363818593470242730}
+  - {fileID: 5526565871548770969}
+  - {fileID: 5516429311194767547}
+  - {fileID: 1838107702564250812}
+  - {fileID: 5999135002092134624}
+  - {fileID: 910377529123121439}
   m_Father: {fileID: 8101388681588718754}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1764593876098133288
@@ -7009,6 +7068,54 @@ MonoBehaviour:
   presenter: {fileID: 0}
   textAnchor: {fileID: 3351284550020821963}
   nodeName: LV2_Pool_Locked20
+--- !u!1 &1878200642264393074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9147934175998456059}
+  - component: {fileID: 5920105023031189733}
+  m_Layer: 0
+  m_Name: "\u5267\u60C5_\u6CF5\u5341\u6B21"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9147934175998456059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878200642264393074}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2899586557169437883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5920105023031189733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878200642264393074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  presenter: {fileID: 0}
+  textAnchor: {fileID: 6441119277233053779}
+  nodeName: LV2_Pool_PumpTen
 --- !u!1 &1883629704046360694
 GameObject:
   m_ObjectHideFlags: 0
@@ -9767,7 +9874,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2594536441153367170}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9604bd333ed52974dbfac4a7d1b2d54c, type: 3}
   m_Name: 
@@ -9775,6 +9882,7 @@ MonoBehaviour:
   beat: 1
   state: {fileID: 7949714423040596548}
   dialogue: {fileID: 2397318306646102041}
+  backRoomState: {fileID: 0}
 --- !u!1 &2633435508006301239
 GameObject:
   m_ObjectHideFlags: 0
@@ -11161,6 +11269,54 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3202974692649741678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4363818593470242730}
+  - component: {fileID: 6829969903231771802}
+  m_Layer: 0
+  m_Name: "\u5267\u60C5_\u6CF5\u7A7A"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4363818593470242730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3202974692649741678}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2899586557169437883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6829969903231771802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3202974692649741678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  presenter: {fileID: 0}
+  textAnchor: {fileID: 6441119277233053779}
+  nodeName: LV2_Pool_PumpEmpty
 --- !u!1 &3237175208297716595
 GameObject:
   m_ObjectHideFlags: 0
@@ -11962,7 +12118,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4b4604dba1c763049a584f26883f93a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12983,6 +13139,54 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 1.8, z: 1.856}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &3715965923682235419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5999135002092134624}
+  - component: {fileID: 6550129486527488699}
+  m_Layer: 0
+  m_Name: "\u5267\u60C5_\u8FDB\u5165\u66F4\u8863\u5BA4"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5999135002092134624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3715965923682235419}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2899586557169437883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6550129486527488699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3715965923682235419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  presenter: {fileID: 0}
+  textAnchor: {fileID: 3351284550020821963}
+  nodeName: LV2_Pool_ChangingRoom
 --- !u!1 &3766696264187141302
 GameObject:
   m_ObjectHideFlags: 0
@@ -14038,6 +14242,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8982502121185138257}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4248357930817722394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1838107702564250812}
+  - component: {fileID: 7907772807846658717}
+  m_Layer: 0
+  m_Name: "\u5267\u60C5_\u5F00\u67DC\u4E09\u6B21"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1838107702564250812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4248357930817722394}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2899586557169437883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7907772807846658717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4248357930817722394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  presenter: {fileID: 0}
+  textAnchor: {fileID: 3351284550020821963}
+  nodeName: LV2_Pool_CabinetsThree
 --- !u!1 &4282574241362191411
 GameObject:
   m_ObjectHideFlags: 0
@@ -15415,6 +15667,8 @@ Transform:
   - {fileID: 8923067351419069163}
   - {fileID: 1075214389980333285}
   - {fileID: 1288395740827124269}
+  - {fileID: 8545225583372453366}
+  - {fileID: 2072595516205075486}
   m_Father: {fileID: 6565319603968978539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4705161814404414085
@@ -16863,6 +17117,54 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &5023195607940967975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2112657461237091846}
+  - component: {fileID: 8037883848404973958}
+  m_Layer: 0
+  m_Name: "\u5267\u60C5_\u6CF5\u7B2C\u4E00\u6B21"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2112657461237091846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023195607940967975}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2899586557169437883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8037883848404973958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023195607940967975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  presenter: {fileID: 0}
+  textAnchor: {fileID: 6441119277233053779}
+  nodeName: LV2_Pool_PumpFirst
 --- !u!1 &5046658778504655721
 GameObject:
   m_ObjectHideFlags: 0
@@ -19156,7 +19458,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4b4604dba1c763049a584f26883f93a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20316,6 +20618,76 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6155838967854186691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2072595516205075486}
+  - component: {fileID: 2907093602260860202}
+  - component: {fileID: 1540705558060845380}
+  m_Layer: 0
+  m_Name: "\u89E6\u53D1_\u8FDB\u5165\u66F4\u8863\u5BA4"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2072595516205075486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6155838967854186691}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.2, z: 15.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8101388681588718754}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2907093602260860202
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6155838967854186691}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 2.4, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1540705558060845380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6155838967854186691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9604bd333ed52974dbfac4a7d1b2d54c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beat: 0
+  state: {fileID: 7949714423040596548}
+  dialogue: {fileID: 6550129486527488699}
+  backRoomState: {fileID: 0}
 --- !u!1 &6206860488325204190
 GameObject:
   m_ObjectHideFlags: 0
@@ -20490,6 +20862,7 @@ MonoBehaviour:
   beat: 0
   state: {fileID: 7949714423040596548}
   dialogue: {fileID: 1697237033735057968}
+  backRoomState: {fileID: 0}
 --- !u!1 &6261852018768542666
 GameObject:
   m_ObjectHideFlags: 0
@@ -21575,6 +21948,54 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6546775359673467424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2036761969640354035}
+  - component: {fileID: 5776636371259898635}
+  m_Layer: 0
+  m_Name: "\u5267\u60C5_\u50A8\u7269\u67DC\u9501\u7740"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2036761969640354035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6546775359673467424}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2899586557169437883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5776636371259898635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6546775359673467424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  presenter: {fileID: 0}
+  textAnchor: {fileID: 3351284550020821963}
+  nodeName: LV2_Pool_CabinetLocked
 --- !u!1 &6585187509215994183
 GameObject:
   m_ObjectHideFlags: 0
@@ -23723,8 +24144,56 @@ MonoBehaviour:
   floatRestY: -1.5
   duration: 2
   lowerY: -1.55
-  longPoolDialogue: {fileID: 844721190911281199}
-  coreDialogue: {fileID: 6105556138766960439}
+  longPoolDialogue: {fileID: 0}
+  coreDialogue: {fileID: 0}
+--- !u!1 &7149486102189992910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7392821882621776107}
+  - component: {fileID: 8854566968526329655}
+  m_Layer: 0
+  m_Name: "\u5267\u60C5_\u6CF5\u4E00\u767E\u6B21"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7392821882621776107
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149486102189992910}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2899586557169437883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8854566968526329655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149486102189992910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  presenter: {fileID: 0}
+  textAnchor: {fileID: 6441119277233053779}
+  nodeName: LV2_Pool_PumpHundred
 --- !u!1 &7180498011680060694
 GameObject:
   m_ObjectHideFlags: 0
@@ -24346,7 +24815,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 04cacb426692a1f46b20905b5232fb16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26361,7 +26830,8 @@ MonoBehaviour:
   rotateAxis: {fileID: 3268520000730800624}
   pickupVisual: {fileID: 4333038794124988986}
   drain: {fileID: 96803167096705072}
-  installDialogue: {fileID: 1725672732307767240}
+  noWheelDialogue: {fileID: 3851836979305726786}
+  installDialogue: {fileID: 0}
   degreesPerSecond: 240
   requiredDegrees: 1080
 --- !u!1 &8195119120258160047
@@ -26412,6 +26882,52 @@ MonoBehaviour:
   presenter: {fileID: 0}
   textAnchor: {fileID: 6063100552290382247}
   nodeName: LV2_Pool_InstallWheel
+--- !u!1 &8202228039923453061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8545225583372453366}
+  - component: {fileID: 7975298152109640926}
+  m_Layer: 0
+  m_Name: "\u67DC\u5B50\u8FDB\u5EA6"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8545225583372453366
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8202228039923453061}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8101388681588718754}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7975298152109640926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8202228039923453061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2073692ad3011b848ae30ed348265c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 7949714423040596548}
+  thirdDialogue: {fileID: 7907772807846658717}
 --- !u!1 &8211271704429592444
 GameObject:
   m_ObjectHideFlags: 0
@@ -26928,6 +27444,54 @@ Transform:
   - {fileID: 5373754066669528374}
   m_Father: {fileID: 6565319603968978539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8312219478331525853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5526565871548770969}
+  - component: {fileID: 3851836979305726786}
+  m_Layer: 0
+  m_Name: "\u5267\u60C5_\u9600\u7F3A\u8F6E"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5526565871548770969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312219478331525853}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2899586557169437883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3851836979305726786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312219478331525853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  presenter: {fileID: 0}
+  textAnchor: {fileID: 6063100552290382247}
+  nodeName: LV2_Pool_ValveHint
 --- !u!1 &8319200767299312199
 GameObject:
   m_ObjectHideFlags: 0
@@ -27657,6 +28221,54 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5367388032717175445}
   m_maskType: 0
+--- !u!1 &8801371650204770269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5516429311194767547}
+  - component: {fileID: 7975547025839908668}
+  m_Layer: 0
+  m_Name: "\u5267\u60C5_\u6697\u95E8\u6253\u5F00"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5516429311194767547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8801371650204770269}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2899586557169437883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7975547025839908668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8801371650204770269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1030e8cb866744ea19ab0126275057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  presenter: {fileID: 0}
+  textAnchor: {fileID: 3046758152799588409}
+  nodeName: LV2_Pool_DarkRoom
 --- !u!1 &8822354875917351055
 GameObject:
   m_ObjectHideFlags: 0
@@ -28497,7 +29109,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 04cacb426692a1f46b20905b5232fb16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29373,9 +29985,12 @@ MonoBehaviour:
   hinge: {fileID: 7857316021834641293}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &7857316021834641293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7803968225682255893, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -29479,9 +30094,12 @@ MonoBehaviour:
   hinge: {fileID: 7576785221800164773}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &7576785221800164773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7803968225682255893, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -29652,6 +30270,9 @@ MonoBehaviour:
   lockMode: 0
   poolFlowState: {fileID: 0}
   lockedDialogue: {fileID: 0}
+  cabinetQuest: {fileID: 0}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!1 &7630358080896715347 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7982699177165769017, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -29677,6 +30298,9 @@ MonoBehaviour:
   lockMode: 0
   poolFlowState: {fileID: 0}
   lockedDialogue: {fileID: 0}
+  cabinetQuest: {fileID: 0}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &7737473768412181375 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7803968225682255893, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -29893,9 +30517,12 @@ MonoBehaviour:
   hinge: {fileID: 8946205186224466718}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &8053305829418675355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -29999,9 +30626,12 @@ MonoBehaviour:
   hinge: {fileID: 9024659646696021476}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &7987785873412446817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -30105,9 +30735,12 @@ MonoBehaviour:
   hinge: {fileID: 8742181117859788953}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &7689385797729353500 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -30411,9 +31044,12 @@ MonoBehaviour:
   hinge: {fileID: 4984149326662028713}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!1001 &3516561163392986955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30517,9 +31153,12 @@ MonoBehaviour:
   hinge: {fileID: 6665352179278208862}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!1001 &3569472402914920373
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30751,9 +31390,12 @@ MonoBehaviour:
   hinge: {fileID: 6197959258264722104}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!1001 &4333937448157465768
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30857,9 +31499,12 @@ MonoBehaviour:
   hinge: {fileID: 5794020440847006909}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!1001 &4986024414562905530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30948,9 +31593,12 @@ MonoBehaviour:
   hinge: {fileID: 2989450107667848623}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &2989450107667848623 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7803968225682255893, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -31054,9 +31702,12 @@ MonoBehaviour:
   hinge: {fileID: 2319222943498399457}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &2319222943498399457 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7803968225682255893, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -31160,9 +31811,12 @@ MonoBehaviour:
   hinge: {fileID: 2418235665742428871}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &2418235665742428871 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7803968225682255893, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -31266,9 +31920,12 @@ MonoBehaviour:
   hinge: {fileID: 2529876777113023935}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &2529876777113023935 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7803968225682255893, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -31375,6 +32032,9 @@ MonoBehaviour:
   lockMode: 2
   poolFlowState: {fileID: 0}
   lockedDialogue: {fileID: 3352851498809399880}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &3359911920581600376 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -31556,9 +32216,12 @@ MonoBehaviour:
   hinge: {fileID: 4491782569110530159}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &3292796251671654378 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -31662,9 +32325,12 @@ MonoBehaviour:
   hinge: {fileID: 4479977366074943375}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &3298969610120880138 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -31784,6 +32450,9 @@ MonoBehaviour:
   lockMode: 1
   poolFlowState: {fileID: 7949714423040596548}
   lockedDialogue: {fileID: 0}
+  cabinetQuest: {fileID: 0}
+  firstOpenDialogue: {fileID: 7975547025839908668}
+  countsForQuest: 0
 --- !u!4 &3205244975285725827 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -31887,9 +32556,12 @@ MonoBehaviour:
   hinge: {fileID: 4196649291580887371}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &3015483789803345614 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -31993,9 +32665,12 @@ MonoBehaviour:
   hinge: {fileID: 4283649825301778313}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &2924749437412132876 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -32173,9 +32848,12 @@ MonoBehaviour:
   hinge: {fileID: 3507819368178673414}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &2542880043885518979 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -32279,9 +32957,12 @@ MonoBehaviour:
   hinge: {fileID: 3646202040301252571}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &2413280292833486942 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198913456538285968, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -32395,9 +33076,12 @@ MonoBehaviour:
   hinge: {fileID: 381820494009072881}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &9042239235391550127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1476407563615141451, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -32676,9 +33360,12 @@ MonoBehaviour:
   hinge: {fileID: 1761026252593796806}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &6935665548164241560 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1476407563615141451, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -32782,9 +33469,12 @@ MonoBehaviour:
   hinge: {fileID: 1947276965122534176}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &7148933410766906750 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1476407563615141451, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -32888,9 +33578,12 @@ MonoBehaviour:
   hinge: {fileID: 1481439250370960263}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &7836019519560455641 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1476407563615141451, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -32994,9 +33687,12 @@ MonoBehaviour:
   hinge: {fileID: 1681027590779986911}
   openAngle: -90
   duration: 0.45
-  lockMode: 0
+  lockMode: 2
   poolFlowState: {fileID: 7949714423040596548}
-  lockedDialogue: {fileID: 0}
+  lockedDialogue: {fileID: 5776636371259898635}
+  cabinetQuest: {fileID: 7975298152109640926}
+  firstOpenDialogue: {fileID: 0}
+  countsForQuest: 1
 --- !u!4 &8026600589730344321 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1476407563615141451, guid: 233032b8809a99c429612ccf41a165b6, type: 3}
@@ -33077,10 +33773,64 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3867796613657237599, guid: 8aedf0c91a17bcb4f878957413c06501, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5410520226695229300}
+    - targetCorrespondingSourceObject: {fileID: 3867796613657237599, guid: 8aedf0c91a17bcb4f878957413c06501, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3759984679811034892}
   m_SourcePrefab: {fileID: 100100000, guid: 8aedf0c91a17bcb4f878957413c06501, type: 3}
 --- !u!4 &4634853695884528235 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4532587339004756709, guid: 8aedf0c91a17bcb4f878957413c06501, type: 3}
   m_PrefabInstance: {fileID: 9130118928726837390}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5411530484497436881 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3867796613657237599, guid: 8aedf0c91a17bcb4f878957413c06501, type: 3}
+  m_PrefabInstance: {fileID: 9130118928726837390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5410520226695229300
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5411530484497436881}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 25, y: 30, z: 25}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3759984679811034892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5411530484497436881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d896a853019a84f80b4bf6b9ace756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eye: {fileID: 0}
+  maxDistance: 3
+  state: {fileID: 7949714423040596548}
+  drain: {fileID: 96803167096705072}
+  firstDialogue: {fileID: 8037883848404973958}
+  tenDialogue: {fileID: 5920105023031189733}
+  hundredDialogue: {fileID: 8854566968526329655}
+  emptyDialogue: {fileID: 6829969903231771802}
+  tenThreshold: 10
+  hundredThreshold: 100

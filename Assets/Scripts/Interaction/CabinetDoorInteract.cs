@@ -37,11 +37,21 @@ namespace Game.Level
         [SerializeField, ShowIf(nameof(lockMode), LockMode.FeedbackLocked), LabelText("上锁提示剧情")]
         DialogueTrigger lockedDialogue;
 
+        [SerializeField, LabelText("开柜进度")]
+        PoolCabinetQuest cabinetQuest;
+
+        [SerializeField, LabelText("首次打开时剧情")]
+        DialogueTrigger firstOpenDialogue;
+
+        [SerializeField, LabelText("计入开柜次数")]
+        bool countsForQuest = true;
+
         Collider _panelCollider;
         Quaternion _closedRotation;
         bool _open;
         bool _moving;
         bool _locked;
+        bool _reportedOpen;
 
         /// <summary>锁着时是否仍然显示准心并给短句反馈。</summary>
         bool IsFeedbackLocked => _locked && lockMode == LockMode.FeedbackLocked;
@@ -154,6 +164,20 @@ namespace Game.Level
 
                 _open = open;
                 _moving = false;
+
+                if (open && !_reportedOpen)
+                {
+                    _reportedOpen = true;
+                    if (firstOpenDialogue != null)
+                    {
+                        firstOpenDialogue.StartDialogue();
+                    }
+
+                    if (countsForQuest && cabinetQuest != null)
+                    {
+                        cabinetQuest.ReportOpened(this);
+                    }
+                }
             }
         }
 

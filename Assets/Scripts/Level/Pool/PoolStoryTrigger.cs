@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace Game.Level
 {
-    /// <summary>区域触发的一次性剧情：泵平台提示、暗门内侧“要扳手”。</summary>
+    /// <summary>区域触发的一次性剧情：进入更衣室、站上泵平台、在暗门内侧意识到需要扳手。</summary>
     public sealed class PoolStoryTrigger : MonoBehaviour
     {
         public enum Beat
         {
+            ChangingRoom,
             PumpHint,
             NeedWrench
         }
@@ -21,6 +22,9 @@ namespace Game.Level
 
         [SerializeField, Required, LabelText("剧情")]
         DialogueTrigger dialogue;
+
+        [SerializeField, LabelText("大厅安全门状态（仅进入更衣室需要）")]
+        BackRoomFlowState backRoomState;
 
         void OnTriggerEnter(Collider other)
         {
@@ -35,23 +39,39 @@ namespace Game.Level
                 return;
             }
 
-            if (beat == Beat.PumpHint)
+            switch (beat)
             {
-                if (state.PumpHintHeard)
-                {
-                    return;
-                }
+                case Beat.ChangingRoom:
+                    if (state.EnteredChangingRoom)
+                    {
+                        return;
+                    }
 
-                state.MarkPumpHintHeard();
-            }
-            else
-            {
-                if (state.WrenchNeedLearned)
-                {
-                    return;
-                }
+                    if (backRoomState != null && !backRoomState.SafeDoorOpened)
+                    {
+                        return;
+                    }
 
-                state.MarkWrenchNeedLearned();
+                    state.MarkEnteredChangingRoom();
+                    break;
+
+                case Beat.PumpHint:
+                    if (state.PumpHintHeard)
+                    {
+                        return;
+                    }
+
+                    state.MarkPumpHintHeard();
+                    break;
+
+                case Beat.NeedWrench:
+                    if (state.WrenchNeedLearned)
+                    {
+                        return;
+                    }
+
+                    state.MarkWrenchNeedLearned();
+                    break;
             }
 
             dialogue.StartDialogue();

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Game.Level
 {
     /// <summary>
-    /// 关卡二打印室的复印机：跟着蓝箭头进打印室之后交互一次，拿到临时门禁卡（触发 12）。
+    /// 打印室的复印机：进过打印室之后交互一次，拿到临时门禁卡（触发 18）。
     /// 拿到之后不能再交互。
     /// </summary>
     public sealed class CopierInteract : InteractableBase

@@ -137,7 +137,6 @@ namespace Game.Level
                     if (door != null)
                     {
                         door.Unlock();
-                        door.Open();
                     }
                 }
             }

@@ -57,7 +57,7 @@ namespace Game.Level
 
             return kind switch
             {
-                Kind.Wheel => state.WrenchNeedLearned && !state.HasWheel && !state.WheelInstalled,
+                Kind.Wheel => !state.HasWheel && !state.WheelInstalled,
                 Kind.Key => state.LongPoolDrained && !state.HasKey,
                 Kind.Wrench => state.HasKey && !state.HasWrench,
                 _ => false

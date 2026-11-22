@@ -6,7 +6,7 @@ namespace Game.Level
 {
     /// <summary>
     /// 储藏室的抽屉剧情：任意柜子累计拉开够 <see cref="requiredDrawers"/> 格之后，
-    /// 播一次“发现维护记录”（触发 11），之后不再触发。
+    /// 播一次“发现维护记录”（触发 24），之后不再触发。
     /// </summary>
     public sealed class StorageDrawerQuest : MonoBehaviour
     {

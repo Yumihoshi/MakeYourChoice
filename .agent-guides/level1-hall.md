@@ -8,7 +8,11 @@ description: 改动关卡一大厅流程、触发区、红字/视线判定或安
 
 ## 流程脚本、安全门与触发区
 
-`Assets/Scripts/Level/Hall`（`HallFlowState` 关卡开关状态、`ElevatorDoorInteract` 瞄准电梯门按交互键开门、`RedTextSightTrigger` 红字要在可视距离内、视线对准且真的出现在画面里、`DoorListenTrigger` 门前听 3 s、`ElevatorCountdown` 电梯内倒计时结局、`HallEntryTrigger` 第一次进入大厅），触发区在 `关卡/电梯/触发` 与 `关卡/大厅/触发`。
+`Assets/Scripts/Level/Hall`（`HallFlowState` 关卡开关状态、`ElevatorDoorInteract` 瞄准电梯门按交互键开门、`RedTextSightTrigger` 红字要在可视距离内、视线对准且真的出现在画面里、`DoorListenTrigger` 门前听 3 s、`ElevatorCountdown` 电梯内两段倒计时、`HallEntryTrigger` 第一次进入大厅），触发区在 `关卡/电梯/触发` 与 `关卡/大厅/触发`。
+
+电梯区域的剧情顺序按 `docs/Back D Room (3).xlsx` 的「电梯区域」表：开场独白 → 开门 → 电梯里满 2 分钟提醒（`LV1_ElevatorWait`）→ 满 5 分钟「最速传说」结局台词（`LV1_Timeout`）；看红字会锁门，门前听 3 秒风声（`LV1_Listen`）播完才解锁。
+
+`ElevatorCountdown` 的两段计时接线在 `关卡/电梯/触发/电梯倒计时`：`hintDialogue` 指向 `触发/等待旁白`（节点 `LV1_ElevatorWait`、锚点 `剧情锚点/倒计时_台词点`），`endingDialogue` 指向同一物体上的 `DialogueTrigger`（节点 `LV1_Timeout`）；默认 120 s / 300 s，开门后停止，菜单打开或任一段剧情播放时不累计。
 
 大厅被一整块 `关卡/大厅/建筑/中间墙`（12.8×3×0.3，z=1.5，实心无洞）隔开，两边各留 2.6 m 缝隙；
 

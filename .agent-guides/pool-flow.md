@@ -31,6 +31,7 @@ description: 改动泳池房八步流程（抽水泵提示、池底数字、暗�
 
 - `CabinetDoorInteract` 的 `FeedbackLocked` 锁着时仍要求 `CanInteract()` 为真，才能给短句；`SilentLocked` 不可被瞄准。37 柜用前者，00 暗门用后者。
 - 锁门/拾取物隐藏后再解锁的目标必须用**常驻空锚点**（`剧情锚点/交互点_*`）挂 `DialogueTrigger`；拾取物会 `SetActive(false)`，不要把 3D 飘字挂在它身上。
+- 00 号牌 `号牌_00` 与 `文字_00` 必须是 `门_暗门/Hinge_FrontDoor/Door_Front` 的子物体；它们曾挂在 `道具` 下，开门时不会跟门板旋转，会留在原地浮空。
 - `PoolPickupInteract` 的轮必须等 `WrenchNeedLearned` 才能捡；主阀无扳手时**不能**补置 `WrenchNeedLearned`，否则玩家可绕过暗门。
 - 钥匙只 `Unlock()` 37 门，不自动开；00 暗门由 `PoolNumberSightTrigger` 解锁并 `Open()` 双门。
 - 给对象补组件不要写 `GetComponent<T>() ?? AddComponent<T>()`：Unity 的伪 null 会让 `??` 判空失效；显式 `if (c == null)`。

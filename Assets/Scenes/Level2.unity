@@ -1606,6 +1606,14 @@ PrefabInstance:
       propertyPath: eye
       value: 
       objectReference: {fileID: 589896264}
+    - target: {fileID: 5061851168175645999, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+      propertyPath: m_fontSize
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5061851168175645999, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 5079220191878909272, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
       propertyPath: m_Name
       value: "\u6CF3\u6C60\u623F"
@@ -1714,10 +1722,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7693005951223288511, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 6813289690155153639, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 6813289690155153639, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 7693005951223288511, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: fd0bcf43e2723cf4ea4b799f87bbf8e8, type: 3}

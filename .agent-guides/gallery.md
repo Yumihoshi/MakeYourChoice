@@ -52,7 +52,8 @@ description: 改动艺术馆场景（Gallery.unity：几何烘焙、坠落入场
 - 两扇门都是从 Level1 `= 关卡/大厅/门/蓝门` 复制后改的（`Object.Instantiate` + `MoveGameObjectToScene`），结构仍是 `AutoDoor(mode=Hinge)` + `铰链`(Rigidbody + HingeJoint) + `铰链/门板`(DoorBox + `Door_Office`)。
 - **`AutoDoor.hinge` 的类型是 `HingeJoint` 而不是 `铰链` 的 Transform**（`Assets/Scripts/Level/Door/AutoDoor.cs:29`）。用脚本往里赋 Transform 会被 Unity 静默置 null，必须 `铰链.GetComponent<HingeJoint>()`；漏了这步门照样「打开」，但门板不转（`Awake` 的校验只在 `doorPanel` 不挂在铰链下时报错）。
 - `门_白鱼的画`：根 (48.5,0,7)、铰链在 x=49 一侧，绕远离把手的一侧向提交区方向扫 +95°（镜像前是 −95°，`HingeDoorMotion` 运行期会关掉铰链限位与电机，只有 `hingeOpenAngle` 的符号决定开门方向）；门板 1.06×2.44×0.08，比 1 m 门洞宽出的 6 cm 是故意留的，用来盖住框缝。
-- `门_提交区`：根 (46,0,12) 旋转 (0,270,0)、铰链在 z=12 一侧向内开。
+- `门_提交区`：根 (46,0,12) 旋转 (0,270,0)、铰链在 z=12 一侧，**向房间里开 −95°**（`hingeOpenAngle = -95`、`HingeJoint.limits = -95..0`）。原先用的是 +95°、朝走廊方向开，门板转完正好落在 1 m 厚的门洞厚度里（实测覆盖到墙格 z=12 x=44 与 x=45），看上去就是「门卡在墙里」；改成朝房间开后门板完全落在房间里，不再和墙格重叠。
+- **壁厚 1 m 时开门方向要朝空的一侧**：门板铰在门洞的某个边角、转动 95° 后门板会横躺在门洞附近，若那一侧是相邻墙垛（门洞两侧的墙格）就会插进墙里。验证办法：把 `铰链.localRotation` 设成 `AngleAxis(hingeOpenAngle, Vector3.up)`，用门板四个角的世界 XZ 取 `floor` 得到覆盖的格，再和 `AITemp/gallery_cells.csv` 的镜像墙格表比对（表列 c → 世界 x = 51 − c），结果必须不含任何墙格。
 - 门禁不用 `AutoDoor.Locked`（锁住时 `DoorInteract.CanInteract()` 直接 false，玩家连准心都没有），改用 `GalleryDoorInteract : DoorInteract` 重写 `TryOpenDoor()`：未提交时飘「先把杯子交到提交区。」并 `return false`。
 - 门板要整块贴墙面外侧、铰链轴压在门洞边角；不要改成把门板塞进门洞厚度里，否则关不严（细节见 `doors.md`）。
 

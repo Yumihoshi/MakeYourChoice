@@ -1643,7 +1643,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520014683}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.656613e-10, y: 1.22, z: -0.0040016174}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1679,8 +1679,8 @@ HingeJoint:
   m_ExtendedLimits: 0
   m_UseAcceleration: 0
   m_Limits:
-    min: 0
-    max: 95
+    min: -95
+    max: 0
     bounciness: 0
     bounceMinVelocity: 0
     contactDistance: 0
@@ -5318,7 +5318,7 @@ MonoBehaviour:
   leftLeaf: {fileID: 0}
   rightLeaf: {fileID: 0}
   hinge: {fileID: 520014685}
-  hingeOpenAngle: 95
+  hingeOpenAngle: -95
   hingeSpeed: 150
   hingeGain: 4
   hingeCloseSpeed: 0
@@ -5933,7 +5933,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910819957}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 1.22, z: 0.004000187}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -158,15 +158,15 @@
 <p class="sub">三张 PNG 的导入设置（Filter / Compression / wrap）在编辑器里改，不手写 <code>.meta</code>。</p>
 
 <h2>五、门</h2>
-<p>两扇门都复用 Level1 办公室门的做法：根节点 <code>AutoDoor(mode = Hinge)</code> + 交互组件，子节点 <code>铰链</code>（Rigidbody + HingeJoint）下挂 <code>门板</code>（<code>DoorBox</code> 网格 + <code>Door_Office.mat</code>）。门洞只有 1 m 宽，门板从 1.54 m 等比压到 0.98 m（缩放 0.636 于宽度轴）。</p>
+<p>两扇门都复用 Level1 办公室门的做法：根节点 <code>AutoDoor(mode = Hinge)</code> + 交互组件，子节点 <code>铰链</code>（Rigidbody + HingeJoint）下挂 <code>门板</code>（<code>DoorBox</code> 网格 + <code>Door_Office.mat</code>）。门洞只有 1 m 宽，门板从 1.54 m 等比压到 1.06 m（缩放 0.688 于宽度轴），比门洞宽出 6 cm 用来盖住框缝。</p>
 <pre>门_白鱼的画                       AutoDoor(Hinge) + GalleryDoorInteract
 └ 铰链                            Rigidbody(kinematic) + HingeJoint，轴竖在门洞边
-  └ 门板                          DoorBox 网格 + Door_Office.mat，0.98 × 2.44 × 0.08
+  └ 门板                          DoorBox 网格 + Door_Office.mat，1.06 × 2.44 × 0.08
 建筑/门楣_白鱼的画                 1 × 1.91 × 1 盒，y = 2.44 → 4.35</pre>
 <table>
 <tr><th style="width:22%">门</th><th>位置</th><th>铰链 / 开向</th><th>锁</th></tr>
 <tr><td><code>门_白鱼的画</code></td><td>墙 z = 6、格 x = 48（提交区 ↔ 白鱼画间）</td><td>铰链在 <b>x = 49</b> 端（把手在 x = 48.5），向提交区一侧扫开 +95°</td><td>提交满 3 个前不可开，交互时飘提示</td></tr>
-<tr><td><code>门_提交区</code></td><td>墙 x = 46、格 z = 11（走廊 ↔ 提交区）</td><td>铰链在 <b>z = 12</b> 端，向提交区内侧扫开</td><td>无</td></tr>
+<tr><td><code>门_提交区</code></td><td>墙 x = 46、格 z = 11（走廊 ↔ 提交区）</td><td>铰链在 <b>z = 12</b> 端，向房间内扫开 <b>−95°</b>（朝走廊开会横躺在 1 m 厚的门洞里，看上去像卡在墙上）</td><td>无</td></tr>
 </table>
 <blockquote><b>不能靠 <code>AutoDoor.Locked</code> 做「提交前不开」</b>：<code>DoorInteract.CanInteract()</code> 会把 <code>Locked</code> 的门直接排除，玩家连准心提示都看不到。正确做法是子类化 <code>DoorInteract</code> 重写 <code>TryOpenDoor()</code>，返回 <code>false</code> 并飘一句提示（Level1 电梯门同款）。</blockquote>
 

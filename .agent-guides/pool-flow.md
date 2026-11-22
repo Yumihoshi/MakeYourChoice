@@ -15,7 +15,7 @@ description: 改动泳池房八步流程（抽水泵提示、池底数字、暗�
 - `PoolValveWheelInteract`：长池阀；第一次左键装轮，之后**按住左键**累计 1080° 后长池退水。
 - `PoolMainValveInteract`：主阀；无扳手只播提示（不置 `WrenchNeedLearned`），有扳手转 1.2 s 后池核退水。
 - `PoolWaterDrain`：一次退水；水面本地 y 在 2 s 内降到 -1.55 后禁用，空气墙同帧禁用；长池/池核各调一次。
-- `PoolNumberSightTrigger`：池底数字的一次性视线判定，不用 `ScreenVisibility`（池边空气墙会挡 `Physics.Linecast`）。
+- `PoolNumberSightTrigger`：池底数字的一次性视线判定：观察区 + 距离 + 视口 + 水平夹角 + 可见几何遮挡（`RaycastNonAlloc` 跳过无渲染器的空气墙，地板/池壁等有渲染器的实体算遮挡）。不要改回 `ScreenVisibility`（池边空气墙会挡 `Physics.Linecast`），也不能只做视口判定——隔着池沿和地板会误触发。
 - `PoolStoryTrigger`：泵平台提示、暗门内侧“要扳手”两个区域触发。
 - `PoolDrainExitTrigger`：竖井底一次性触发，只置 `NextLevelReached` 并调 `On Next Level`，不加载场景、不淡出。
 

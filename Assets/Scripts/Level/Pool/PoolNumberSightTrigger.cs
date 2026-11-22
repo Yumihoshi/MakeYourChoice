@@ -37,6 +37,8 @@ namespace Game.Level
         [SerializeField, LabelText("对准角度")]
         float maxAngle = 20f;
 
+        readonly RaycastHit[] _sightHits = new RaycastHit[16];
+
         bool _fired;
 
         void Awake()
@@ -120,6 +122,11 @@ namespace Game.Level
                 return;
             }
 
+            if (!HasLineOfSight())
+            {
+                return;
+            }
+
             _fired = true;
             state.MarkPoolNumberSeen();
 
@@ -136,6 +143,57 @@ namespace Game.Level
             }
 
             dialogue.StartDialogue();
+        }
+
+        /// <summary>
+        /// 眼睛到数字之间是否没有可见几何遮挡。空气墙只有碰撞体、没有渲染器，忽略；
+        /// 地板、池壁等有渲染器的实体视为遮挡。
+        /// </summary>
+        bool HasLineOfSight()
+        {
+            var origin = eye.position;
+            var toTarget = target.position - origin;
+            var distance = toTarget.magnitude;
+            if (distance <= 0.0001f)
+            {
+                return true;
+            }
+
+            var count = Physics.RaycastNonAlloc(
+                origin,
+                toTarget / distance,
+                _sightHits,
+                distance,
+                ~0,
+                QueryTriggerInteraction.Ignore);
+
+            for (var i = 0; i < count; i++)
+            {
+                var hit = _sightHits[i];
+                var hitTransform = hit.collider.transform;
+                if (hitTransform == target || hitTransform.IsChildOf(target) || target.IsChildOf(hitTransform))
+                {
+                    continue;
+                }
+
+                if (HasVisibleRenderer(hit.collider))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        static bool HasVisibleRenderer(Collider collider)
+        {
+            var renderer = collider.GetComponent<Renderer>();
+            if (renderer == null)
+            {
+                renderer = collider.GetComponentInChildren<Renderer>();
+            }
+
+            return renderer != null && renderer.enabled && renderer.gameObject.activeInHierarchy;
         }
     }
 }

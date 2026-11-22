@@ -66,7 +66,7 @@
 <main>
 
 <h1>艺术馆场景设计规格</h1>
-<p class="sub">从泳池房地漏坠入的第四层空间：黑雾坠落、杯子迷宫、白鱼的画。表格 1 格 = Unity 1 m。</p>
+<p class="sub">从泳池房地漏坠入的第四层空间：黑雾坠落、杯子迷宫、白鱼的画。表格 1 格 = Unity 2 m，墙体仍 1 m 厚（居中在 2 m 的墙格里）。</p>
 <div class="meta">
   <span>项目 <b>MakeYourChoice</b></span>
   <span>Unity <b>2022.3.62f3c1 / URP 14</b></span>
@@ -76,7 +76,7 @@
 </div>
 
 <h2>一、目标与流程</h2>
-<p>玩家在泳池房走完八步、从地漏坠下，画面直切艺术馆：落在中心红毯上方，四周被黑雾裹住只能看见脚下；落地后雾散开，进入 52×45 m 的迷宫，收集三只杯子，到提交区提交，开启「白鱼的画」房间，与豆袋交互躺下，听见「我软脚了」。</p>
+<p>玩家在泳池房走完八步、从地漏坠下，画面直切艺术馆：落在中心红毯上方，四周被黑雾裹住只能看见脚下；落地后雾散开，进入 104×90 m 的迷宫，收集三只杯子，到提交区提交，开启「白鱼的画」房间，与豆袋交互躺下，听见「我软脚了」。</p>
 <div class="flow">
   <div class="step hl"><div class="t">1 坠落</div><div class="d">泳池房地漏竖井底触发 <code>SceneLoadRequest</code>，<code>LoadSceneMode.Single</code> 一次性换场景（旧场景全卸载）</div></div>
   <div class="step"><div class="t">2 黑雾</div><div class="d">出生在红毯上方 7.6 m 的天花板洞外，雾 0.2→3.5 m、纯黑</div></div>
@@ -101,7 +101,7 @@
 <tr><td><code>= 相机</code></td><td><code>显示相机</code>（Camera + UniversalAdditionalCameraData，供低分辨率像素化）+ <code>主相机</code>（Camera + AudioListener + CinemachineBrain）</td></tr>
 <tr><td><code>+ 界面</code></td><td><code>低分辨率画面</code>（LowResDisplay）/ <code>遮罩</code> / <code>画面</code> / <code>事件系统</code> / <code>准心提示</code>（InteractPromptView）</td></tr>
 <tr><td><code>= 对话</code></td><td><code>飘字画面 / 飘字图 / 飘字相机（Dialogue3DOverlay）/ 对话画面 / 对话框 / 对话系统（DialogueRunner + FloatingDialoguePresenter）/ 飘字实例（WorldLineView）</code></td></tr>
-<tr><td><code>= 玩家</code></td><td><code>= 玩家.prefab</code> 实例，出生点 (23, 7.6, 23)，朝 −Z</td></tr>
+<tr><td><code>= 玩家</code></td><td><code>= 玩家.prefab</code> 实例，出生点 (46, 7.6, 46)，朝 −Z</td></tr>
 <tr><td><code>= 关卡/艺术馆</code></td><td>子分组 <code>建筑 / 灯光 / 流程 / 剧情锚点 / 门 / 道具</code></td></tr>
 </table>
 <blockquote>这三棵子树（<code>= 相机</code>、<code>+ 界面</code>、<code>= 对话</code>）从 Level1 整棵复制后重绑引用：低分辨率管线、3D 飘字的 <code>Dialogue3D</code> 层与主相机 <code>cullingMask</code> 排除关系都必须与 Level1 一致，自建极容易漏层导致飘字重影。</blockquote>
@@ -118,16 +118,16 @@
 
 <h3>3.3 坠落与雾</h3>
 <div class="timeline">
-  <div class="k">0 s</div><div class="bar"><span style="width:6%"></span><div class="lab">场景就位：雾 0.2 / 3.5（黑），玩家在 (23, 7.6, 23)</div></div>
-  <div class="k">0 → 0.83 s</div><div class="bar"><span style="width:38%"></span><div class="lab">自由落体 −22 m/s²，上限 25 m/s，穿过 2×2 天花板洞</div></div>
+  <div class="k">0 s</div><div class="bar"><span style="width:6%"></span><div class="lab">场景就位：雾 0.2 / 3.5（黑），玩家在 (46, 7.6, 46)</div></div>
+  <div class="k">0 → 0.83 s</div><div class="bar"><span style="width:38%"></span><div class="lab">自由落体 −22 m/s²，上限 25 m/s，穿过 4×4 天花板洞</div></div>
   <div class="k">0.83 s</div><div class="bar b3"><span style="width:46%"></span><div class="lab">落地：雾开始 2 s 线性恢复到 4 / 30</div></div>
   <div class="k">1.73 s</div><div class="bar b2"><span style="width:70%"></span><div class="lab">交还控制 + 飘「地漏下面……是一整座艺术馆。」</div></div>
   <div class="k">2.83 s</div><div class="bar" style="background:#e8e4da"><span style="width:100%"></span><div class="lab">雾恢复完毕，进入正常探索</div></div>
 </div>
 <table>
 <tr><th style="width:30%">参数</th><th>值</th></tr>
-<tr><td>出生点 / 朝向</td><td>(23, 7.6, 23)，朝 −Z（面向红毯房北侧的两个开口）</td></tr>
-<tr><td>天花板洞</td><td>2×2 m，格 x=22..23 / z=22..23，正好以红毯中心 (23, 23) 为心</td></tr>
+<tr><td>出生点 / 朝向</td><td>(46, 7.6, 46)，朝 −Z（面向红毯房北侧的两个开口）</td></tr>
+<tr><td>天花板洞</td><td>4×4 m（2 m 格 × 2 列 × 2 行），世界 x ∈ [44,48] × z ∈ [44,48]，正好以红毯中心 (46, 46) 为心</td></tr>
 <tr><td>近雾</td><td><code>fogStart 0.2 / fogEnd 3.5 / 黑色 / 线性</code>——洞外一片黑，只看得见脚下的洞与落点</td></tr>
 <tr><td>恢复后</td><td><code>fogStart 4 / fogEnd 30</code>（Level1 现值），2 s 线性过渡</td></tr>
 <tr><td>控制锁</td><td><code>GalleryEntryFall</code> 禁用 <code>FirstPersonController</code>（它每帧写「眼睛」旋转，不禁用会与运镜打架）；<code>y ≤ 0.05 || controller.isGrounded</code> 双条件判定落地</td></tr>
@@ -135,17 +135,18 @@
 <p><b>为什么用雾当黑屏</b>：需求本身就是「只看得见近处」，把雾直接压到 3.5 m 既满足坠落时的可视范围，又顺带把场景切换的黑屏省了——不需要额外的 Canvas 淡入淡出系统。</p>
 
 <h2>四、几何生成</h2>
-<p>用逐格摆放 Cube 会有约 2400 个物体（含碰撞体与渲染器），场景打开与静态合批都会吃不消。改为<b>一次性编辑器脚本读取网格 → 贪心合并矩形 → 生成 3 份合并 Mesh</b>（脚本 <code>AITemp/GalleryBuilder.cs</code>，菜单 <code>Tools/艺术馆/生成几何</code>，产物落盘进库，脚本本身不入库）。</p>
+<p>用逐格摆放 Cube 会有约 2400 个物体（含碰撞体与渲染器），场景打开与静态合批都会吃不消。改为<b>一次性编辑器脚本读取网格 → 贪心合并矩形 → 生成 3 份合并 Mesh</b>（脚本 <code>Assets/Editor/Gallery/GalleryBuilder.cs</code>，菜单 <code>Tools ▸ 艺术馆 ▸ 1 生成网格资产</code> 烘 Mesh、<code>2 摆入当前场景</code> 摆进场景）。</p>
 <table>
 <tr><th>物体</th><th>来源格</th><th>合并结果</th><th>碰撞</th></tr>
-<tr><td><code>建筑/墙</code></td><td>776 个 <code>#</code></td><td>126 个 1 m 厚盒，约 1512 三角</td><td>一个静态 <code>MeshCollider</code></td></tr>
-<tr><td><code>建筑/地面</code></td><td>1376 个非红毯地面格</td><td>139 个矩形，只出顶面，约 278 三角</td><td>一个静态 <code>MeshCollider</code></td></tr>
-<tr><td><code>建筑/天花板</code></td><td>内部 2214 格（挖掉 2×2 洞）</td><td>5 个矩形，底面 y = 4.35，厚 0.1</td><td>无（玩家不会从上方落回）</td></tr>
-<tr><td><code>建筑/中心地毯</code></td><td>红毯 64 格</td><td>一张 8×8 Quad，y = 0.012</td><td>一个 <code>MeshCollider</code>（坠入点正下方是红毯，地面网格不含这 64 格）</td></tr>
+<tr><td><code>建筑/墙</code></td><td>776 个 <code>#</code> + 2 个门楣</td><td>781 个盒（每格一个 5 面盒），墙厚 1 m 居中在 2 m 格内，共 7780 三角</td><td>一个静态 <code>MeshCollider</code></td></tr>
+<tr><td><code>建筑/地面</code></td><td>整片建筑投影（含墙下，避开场外空地）</td><td>2 个矩形（L 形分两块），只出顶面，4 三角</td><td>一个静态 <code>MeshCollider</code></td></tr>
+<tr><td><code>建筑/天花板</code></td><td>整片建筑投影（挖掉 4×4 洞）</td><td>5 个矩形，底面 y = 4.35，厚 0.1</td><td>无（玩家不会从上方落回）</td></tr>
+<tr><td><code>建筑/中心地毯</code></td><td>红毯 64 格</td><td>一张 16×16 Quad，y = 0.012</td><td>一个 <code>MeshCollider</code>（地毯抬到 y = 0.012，需要自己的碰撞体托住坠入点）</td></tr>
 </table>
+<blockquote><b>尺寸（2026-11-22 拓宽）</b>：一格 <b>2 m</b>（<code>CellSize = 2f</code>），墙体固定 <b>1 m</b> 厚（<code>WallThickness = 1f</code>）并<b>居中在 2 m 的墙格里</b>，于是墙面之间净宽约 <b>3 m</b>（原 1 m 格距下是 1 m，拓宽到 2 倍是数学上能做到的最近值）。墙格按四邻定朝向：左右有墙沿 x 走、厚度压 z，上下有墙沿 z 走、厚度压 x，两边都有（拐角/丁字）整格 2×2 填实，避免接缝漏缝。地面与天花板不再逐格铺，改成<b>整片建筑投影</b>（<code>FootprintPieces</code> 两块，避开场外 174 格），这样墙脚、墙顶那 0.5 m 露边不会出现空隙。</blockquote>
 <h3>4.1 UV 与平铺</h3>
 <p>UV <b>按世界坐标写进 Mesh</b>：朝 X 的墙面 <code>u = worldZ</code>，朝 Z 的墙面 <code>u = worldX</code>，统一 <code>v = worldY</code>；地面 <code>u = worldX, v = worldZ</code>。于是所有材质 <code>_BaseMap_ST</code> 保持 (1, 1)，<b>贴图 1 m 一次、拐角自动对齐</b>，以后换贴图不必反算 ST（<code>.agent-guides/level-geometry.md</code> 记录过按面反算 ST 的痛苦）。</p>
-<p>红毯 Quad 天生成 0–1，一张图盖满 8×8 m；抬高 12 mm 避免与地面共面 z-fighting。</p>
+<p>红毯 Quad 天生成 0–1，一张图盖满 16×16 m；抬高 12 mm 避免与地面共面 z-fighting。</p>
 <h3>4.2 材质</h3>
 <table>
 <tr><th style="width:26%">材质</th><th>贴图</th><th>设置</th></tr>
@@ -158,27 +159,27 @@
 <p class="sub">三张 PNG 的导入设置（Filter / Compression / wrap）在编辑器里改，不手写 <code>.meta</code>。</p>
 
 <h2>五、门</h2>
-<p>两扇门都复用 Level1 办公室门的做法：根节点 <code>AutoDoor(mode = Hinge)</code> + 交互组件，子节点 <code>铰链</code>（Rigidbody + HingeJoint）下挂 <code>门板</code>（<code>DoorBox</code> 网格 + <code>Door_Office.mat</code>）。门洞只有 1 m 宽，门板从 1.54 m 等比压到 1.06 m（缩放 0.688 于宽度轴），比门洞宽出 6 cm 用来盖住框缝。</p>
+<p>两扇门都复用 Level1 办公室门的做法：根节点 <code>AutoDoor(mode = Hinge)</code> + 交互组件，子节点 <code>铰链</code>（Rigidbody + HingeJoint）下挂 <code>门板</code>（<code>DoorBox</code> 网格 + <code>Door_Office.mat</code>）。门洞 2 m 宽，门板从 1.54 m 等比放大到 2.06 m（缩放 1.337 于宽度轴），比门洞宽出 6 cm 用来盖住框缝。</p>
 <pre>门_白鱼的画                       AutoDoor(Hinge) + GalleryDoorInteract
 └ 铰链                            Rigidbody(kinematic) + HingeJoint，轴竖在门洞边
-  └ 门板                          DoorBox 网格 + Door_Office.mat，1.06 × 2.44 × 0.08
-建筑/门楣_白鱼的画                 1 × 1.91 × 1 盒，y = 2.44 → 4.35</pre>
+  └ 门板                          DoorBox 网格 + Door_Office.mat，2.06 × 2.44 × 0.08
+建筑/门楣_白鱼的画                 2 × 1.91 × 1 盒，y = 2.44 → 4.35</pre>
 <table>
 <tr><th style="width:22%">门</th><th>位置</th><th>铰链 / 开向</th><th>锁</th></tr>
-<tr><td><code>门_白鱼的画</code></td><td>墙 z = 6、格 x = 48（提交区 ↔ 白鱼画间）</td><td>铰链在 <b>x = 49</b> 端（把手在 x = 48.5），向提交区一侧扫开 +95°</td><td>提交满 3 个前不可开，交互时飘提示</td></tr>
-<tr><td><code>门_提交区</code></td><td>墙 x = 46、格 z = 11（走廊 ↔ 提交区）</td><td>铰链在 <b>z = 12</b> 端，向房间内扫开 <b>−95°</b>（朝走廊开会横躺在 1 m 厚的门洞里，看上去像卡在墙上）</td><td>无</td></tr>
+<tr><td><code>门_白鱼的画</code></td><td>行 z=6（世界 z ∈ [12,14]）、格 x=3（世界 x ∈ [96,98]），提交区 ↔ 白鱼画间</td><td>铰链在 <b>x = 98</b> 端，向提交区一侧扫开 +95°</td><td>提交满 3 个前不可开，交互时飘提示</td></tr>
+<tr><td><code>门_提交区</code></td><td>格 x=6（世界 x ∈ [90,92]）、行 z=11（世界 z ∈ [22,24]），走廊 ↔ 提交区</td><td>铰链在 <b>z = 24</b> 端，向房间内扫开 <b>−95°</b>（朝走廊开会扫进相邻墙垛，看上去像卡在墙上）</td><td>无</td></tr>
 </table>
 <blockquote><b>不能靠 <code>AutoDoor.Locked</code> 做「提交前不开」</b>：<code>DoorInteract.CanInteract()</code> 会把 <code>Locked</code> 的门直接排除，玩家连准心提示都看不到。正确做法是子类化 <code>DoorInteract</code> 重写 <code>TryOpenDoor()</code>，返回 <code>false</code> 并飘一句提示（Level1 电梯门同款）。</blockquote>
 
 <h2>六、道具摆放</h2>
 <table>
 <tr><th style="width:20%">道具</th><th>位置</th><th>做法</th></tr>
-<tr><td>杯子 A</td><td>(31.5, 0, 43.5)</td><td rowspan="3"><code>Assets/Art/Models/杯子.fbx</code> 实例，等比缩到约 0.25 m 高；根上 0.4 m <code>BoxCollider</code> + <code>CupPickup</code>（射线必须命中自身或子物体）</td></tr>
-<tr><td>杯子 B</td><td>(14.5, 0, 5.5)</td></tr>
-<tr><td>杯子 C</td><td>(1.5, 0, 34.5)（贴西外墙，留 0.5 m）</td></tr>
-<tr><td>豆袋</td><td>(49.8, 0.85, 4.5)</td><td>Quad 1.7 × 1.7 + <code>豆袋.jpg</code> + <code>YBillboard</code>，始终绕 Y 轴朝向玩家；碰撞盒 1.2 × 1.7 × 0.6。表格格心是 x=50.5，但 1.7 m 宽的图贴上去会把半边塞进 x=50..51 的墙里，所以往房间内让 0.75 m</td></tr>
-<tr><td>白鱼的画</td><td>北墙内侧</td><td><code>白鱼的灵魂大手子.jpg</code> Quad 2.8 × 1.75 @ (48.5, 2.2, 1.03)；<code>画框.png</code> Quad 3.05 × 2.0 @ z = 1.02 作外框</td></tr>
-<tr><td>提交台</td><td>(50.5, 0.45, 11)</td><td>落地实现改为可见的立方体台子 0.8 × 0.9 × 1.2 + <code>Assets/Materials/Art/提交台.mat</code>（暖橙色），<code>SubmitDeskInteract</code> 挂在台子上。原方案要复用的 <code>Assets/Prefabs/Level/MetalOfficeDesk.prefab</code> 是坏资产——子节点 <code>MeshFilter</code> 的网格与材质引用全为空，摆进场景完全隐形（Level1 的「办公桌组」用的是 4 个 <code>CubicleV2.prefab</code>，不是它）</td></tr>
+<tr><td>杯子 A</td><td>(63, 0, 87)</td><td rowspan="3"><code>Assets/Art/Models/杯子.fbx</code> 实例，等比缩到约 0.25 m 高；根上 0.4 m <code>BoxCollider</code> + <code>CupPickup</code>（射线必须命中自身或子物体）</td></tr>
+<tr><td>杯子 B</td><td>(29, 0, 11)</td></tr>
+<tr><td>杯子 C</td><td>(3, 0, 69)（贴西外墙，留 0.5 m）</td></tr>
+<tr><td>豆袋</td><td>(99.6, 0.85, 9)</td><td>Quad 1.7 × 1.7 + <code>豆袋.jpg</code> + <code>YBillboard</code>，始终绕 Y 轴朝向玩家；碰撞盒 1.2 × 1.7 × 0.6。表格格心是 x=101，但 1.7 m 宽的图贴上去会把半边塞进 x=102 的墙体，所以往房间内让 0.75 m</td></tr>
+<tr><td>白鱼的画</td><td>北墙内侧</td><td><code>白鱼的灵魂大手子.jpg</code> Quad 2.8 × 1.75 @ (97, 2.2, 1.53)；<code>画框.png</code> Quad 3.05 × 2.0 @ z = 1.52 作外框</td></tr>
+<tr><td>提交台</td><td>(101, 0.45, 22)</td><td>落地实现改为可见的立方体台子 0.8 × 0.9 × 1.2 + <code>Assets/Materials/Art/提交台.mat</code>（暖橙色），<code>SubmitDeskInteract</code> 挂在台子上。原方案要复用的 <code>Assets/Prefabs/Level/MetalOfficeDesk.prefab</code> 是坏资产——子节点 <code>MeshFilter</code> 的网格与材质引用全为空，摆进场景完全隐形（Level1 的「办公桌组」用的是 4 个 <code>CubicleV2.prefab</code>，不是它）</td></tr>
 </table>
 <h3>6.1 光照</h3>
 <p>封顶后方向光照不进来：一盏方向光（intensity 0.3、偏冷）打底 + <b>6 盏暖色点光</b>——红毯正上方洞口 1 盏（range 12 / intensity 4，让红毯成为唯一视觉焦点）、两间房各 1 盏、主走廊 3 盏。控制在 8 盏以内，避开 URP 前向 additional light 的上限。</p>

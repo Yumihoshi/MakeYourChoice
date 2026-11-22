@@ -16,7 +16,7 @@ namespace Game.EditorTools
 		const string SubmitDoorPanelPath = "门/门_提交区/铰链/门板";
 
 		/// <summary>红毯中心，杯子按「从大厅走过来」的方向挑站位。</summary>
-		static readonly Vector3 CarpetCenter = new Vector3(23f, 0f, 23f);
+		static readonly Vector3 CarpetCenter = new Vector3(46f, 0f, 46f);
 
 		[MenuItem("Tools/艺术馆/传送/杯子 A", true)]
 		static bool CanTeleport() => Application.isPlaying;
